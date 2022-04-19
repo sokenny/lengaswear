@@ -1,0 +1,26 @@
+// pixel sizes
+$pxs1: 16px;
+$pxs2: 32px;
+$pxs3: 64px;
+$pxs4: 128px;
+
+// font sizes
+$fs1: 16px;
+$fs2: 24px;
+$fs3: 32px;
+$fs4: 40px;
+$fs5: 48px;
+$fs6: 56px;
+$fs7: 64px;
+$fs8: 72px;
+
+// colors
+$colors : (
+    gold: #BC8C3E
+);
+
+@function color ($color-name) {
+    @return map-get($colors, $color-name)
+}
+
+

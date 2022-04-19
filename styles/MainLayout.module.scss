@@ -1,0 +1,40 @@
+@import './variables.scss';
+
+.Nav{
+    padding: var(--sp1);
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    >div{
+        display: flex;
+    }
+
+    ul{
+        display: flex;
+
+        li{
+            margin-right: $pxs3;
+            font-family: Manrope;
+            font-weight: 400;
+        }
+
+        li:last-child{
+            margin-right: 0;
+        }
+
+        li:hover{
+            color: color(gold);
+            cursor: pointer;
+        }
+    }
+
+    .Nav__logo{
+        margin-right: $pxs4;
+    }
+}

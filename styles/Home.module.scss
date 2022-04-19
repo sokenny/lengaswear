@@ -1,0 +1,76 @@
+@import '../styles/variables';
+
+.HeroBanner{
+    padding: var(--sp3);
+    background-color: red;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    color: white;
+
+    .HeroBanner__title{
+        font-size: 96px;
+        margin-bottom: $pxs2;
+        font-family: Bitter;
+        font-weight: 400;
+    }
+    .HeroBanner__subtitle{
+        font-size: $fs2;
+        text-transform: uppercase;
+        color: color(gold);
+        font-weight: 500;
+        letter-spacing: 0.255em;
+        text-transform: uppercase;
+    }
+}
+
+.FeaturedCategories{
+    padding: var(--sp1);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    >div{
+        background-color: red;
+        height: 760px;
+        padding: $pxs3;
+        display: flex;
+        align-items: flex-end;
+        color: white;
+        background-size: cover;
+        background-position: center;
+
+        h3{
+            font-size: $fs3;
+            margin-bottom: 10px;
+        }
+    }
+
+    .FeaturedCategories__watches{
+        width: 60%;
+    }
+    .FeaturedCategories__wallets{
+        width: 38%;
+    }
+}
+
+.ArrowCta{
+    display: flex;
+    font-family: Manrope;
+    cursor: pointer;
+
+    >div:first-child{
+        margin-right: 15px;
+    }
+
+    >div{
+        transition: .2s ease-in-out;
+    }
+}
+
+.ArrowCta:hover div:last-child{
+    transform: translateX(10px);
+}
