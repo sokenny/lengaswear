@@ -1,22 +1,29 @@
 @import './variables.scss';
 
 .Nav{
-    padding: var(--sp1);
     color: white;
-    padding-top: 20px;
-    padding-bottom: 20px;
     position: fixed;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
-
+    
     >div{
+        transition: .2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--sp1);
+        padding-bottom: 5px;
+        padding-top: 5px;
+        margin: 10px;
+        border: 1px solid transparent;
+    }
+
+    >div>div{
         display: flex;
     }
 
     ul{
         display: flex;
+        align-items: center;
 
         li{
             margin-right: $pxs3;
@@ -36,5 +43,14 @@
 
     .Nav__logo{
         margin-right: $pxs4;
+    }
+}
+
+.Nav-scrolled{
+
+    >div{
+        color: color(b1);
+        background-color: rgba(255,255,255,0.95);
+        border-color: rgba(0,0,0,0.1);
     }
 }

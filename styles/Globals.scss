@@ -1,9 +1,18 @@
 @import './variables';
 
+@font-face {
+  font-family: 'Silk Serif';
+  src: url('/fonts/SilkSerif/Silk Serif Light.otf') format('opentype');
+}
+
 :root {
   --sp1: 64px 5vw;
   --sp2: 64px 10vw;
   --sp3: 64px 15vw;
+
+  @include bigDesktop{
+    --sp1: 64px 15vw;
+  }
 }
 
 html,
@@ -34,6 +43,13 @@ h1, h2, h3{
   margin: 0;
 }
 
+h3{
+  font-family: Silk Serif;
+}
+
 p{
   margin: 0;
+  font-family: Manrope;
+  color: color(g1);
+  font-weight: 300;
 }

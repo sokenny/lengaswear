@@ -16,11 +16,46 @@ $fs8: 72px;
 
 // colors
 $colors : (
-    gold: #BC8C3E
+    gold: #BC8C3E,
+
+    w1: #FBFBFB,
+    w2: #FAFAFA,
+    
+    g1: #757575,
+
+    b1: #1B1B1B,
 );
 
 @function color ($color-name) {
     @return map-get($colors, $color-name)
 }
 
+$mobile: 800px;
+$smallDesktop: 1050px;
+$desktop: 1300px;
+$bigDesktop: 1600px;
 
+
+@mixin mobile {
+    @media (max-width: #{$mobile}) {
+        @content;
+    }
+}
+
+@mixin smallDesktop {
+    @media (max-width: #{$smallDesktop}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+@mixin bigDesktop {
+    @media (min-width: #{$bigDesktop}) {
+        @content;
+    }
+}
