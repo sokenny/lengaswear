@@ -1,8 +1,17 @@
+import { useState, useEffect } from "react";
 import { NextPage } from "next"
 import Head from "next/head"
-import { returns, shipping, safePurchase, safe } from "@/utils/icons";
+import { returns, shipping, safePurchase, safe, star, arrow } from "@/utils/icons";
 import styles from '../styles/Home.module.scss';
 import { ReactNode } from "react";
+
+type TestimonialsType = {stars: number, quote: string, name: string, location: string}[]
+
+const testimonials:TestimonialsType = [
+    {stars: 4, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
+    {stars: 5, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
+    {stars: 3, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
+]
 
 const Home: NextPage = () => {
     return (
@@ -11,11 +20,15 @@ const Home: NextPage = () => {
             <div className={styles.Home__container}>
                 <FeaturedCategories />
                 <StoreInfo />
-                <AssetAndText title="Sustentable y artesanal" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas"} />} />
+                <AssetAndText title="Sustentable y artesanal" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas"} color="gray" />} />
             </div>
             <HeroStripe title="Plantas un árbol" description="Con tu compra, en conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia." cta="Leer más" image="/bosque-de-lengas.webp" />
             <div className={styles.Home__container}>
                 <Gallery />
+            </div>
+            <Testimonials testimonials={testimonials} />
+            <div className={styles.Home__container}>
+                <Newsletter />
             </div>
         </div>
     )
@@ -60,13 +73,14 @@ const FeaturedCategories:React.FC = () => {
 
 type ArrowCtaProps = {
     cta: string,
+    color?: string,
 }
 
-const ArrowCta:React.FC<ArrowCtaProps> = ({cta}) => {
+const ArrowCta:React.FC<ArrowCtaProps> = ({cta, color="white"}) => {
     return (
         <div className={styles.ArrowCta}>
             <div>{cta}</div>
-            <div>{`-->`}</div>
+            <div>{arrow(25, color)}</div>
         </div>
     )
 }
@@ -111,7 +125,7 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, image, ct
     return (
         <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`}>
             <div className={styles.AssetAndText__asset}>
-                <div style={{backgroundImage: `url(${image})`}}></div>
+                <img src={image}/>
             </div>
             <div className={styles.AssetAndText__text}>
                 <h3>{title}</h3>
@@ -165,6 +179,56 @@ const Gallery:React.FC = () => {
                     <img src="/gallery/relojes-de-madera-artesanales-4.webp" alt="" />
                 </div>
             </div>
+        </section>
+    )
+}
+
+type TestimonialsProps = {
+    testimonials: TestimonialsType,
+}
+
+const Testimonials:React.FC<TestimonialsProps> = ({testimonials}) => {
+    return (
+        <section className={styles.Testimonials}>
+            <div>
+                <h3>¿Qué opinan los que usan Lengas?</h3>
+                <div className={styles.Testimonials__section}>
+                    <div className={styles.Testimonials__set}>
+                        {testimonials.map((testimonial, index)=>
+                            <div className={styles.Testimonials__testimonial}>
+                                <div className={styles.Testimonials__stars}>{
+                                    [...Array(5)].map((_, i)=>
+                                        <div>{star(20, testimonial.stars>=i+1 ? "gold" : "lightgray")}</div>
+                                    )}
+                                </div>
+                                <div className={styles.Testimonials__quote}>{testimonial.quote}</div>
+                                <div className={styles.Testimonials__name}>{testimonial.name}</div>
+                                <div className={styles.Testimonials__location}>{testimonial.location}</div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+const EmailInput:React.FC<{email:string, onChange:(val:string)=>void}> = ({email, onChange}) => {
+    return (
+        <div className={styles.EmailInput}>
+            <input type="email" value={email} placeholder="Tu Email" onChange={(e)=>onChange(e.target.value)} />
+            <div>{arrow(25, "gray")}</div>
+        </div>
+    )
+}   
+
+const Newsletter:React.FC = () => {
+
+    const [email, setEmail] = useState<string>("")
+
+    return (
+        <section className={styles.Newsletter}>
+            <AssetAndText assetLeft={false} title="Suscribite a nuestro Newsletter!" description="Mantenete informado acerca de nuevos lanzamientos y novedades sobre el impacto que nuestro proyecto está generando. (agregaria algo sobre dtos para incentivar)" image="/reloj-patagonia-madera-argentina.webp" ctaSection={<EmailInput email={email} onChange={setEmail} />} />
         </section>
     )
 }

@@ -143,6 +143,8 @@
 .AssetAndText{
     display: flex;
     justify-content: space-between;
+    text-align: left;
+    flex-direction: row-reverse;
 
     .AssetAndText__text{
         width: 50%;
@@ -170,20 +172,17 @@
     }
 
     .AssetAndText__asset{
-        width: 50%;
         height: 760px;
-        
-        >div{
-            width: 80%;
+
+        >img{
             height: 100%;
-            background-size: cover;
-            background-position: center;
+            max-width: 100%;
         }
     }
 }
 
 .AssetAndText-assetLeft{
-    text-align: left;
+    flex-direction: row;
 }
 
 .HeroStripe{
@@ -258,4 +257,89 @@
             height: 300px;
         }
     }
+}
+
+.Testimonials{
+    padding: var(--sp1);
+    font-family: Manrope;
+    background-color: color(w2);
+    border: 1px solid rgba(0,0,0,0.1);
+
+    >div{
+        padding: 0 100px;
+        
+        h3{
+            margin-bottom: $pxs3;
+            font-size: $fs3;
+            font-family: Silk Serif;
+            font-weight: 300;
+        }
+        
+        .Testimonials__section{
+            .Testimonials__set{
+                display: flex;
+                justify-content: space-between;
+                
+                .Testimonials__testimonial{
+                    width: 250px;
+
+                    .Testimonials__stars{
+                        display: flex;
+                        margin-bottom: 15px;
+
+                        >div{
+                            margin-right: 5px;
+                        }
+                    }
+
+                    .Testimonials__quote{
+                        margin-bottom: 20px;
+                    }
+
+                    .Testimonials__name{
+                        font-size: 18px;
+                        color: color(gold);
+                    }
+                    .Testimonials__location{
+                        color: color(g1);
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.EmailInput{
+    position: relative;
+    display: flex;
+    width: fit-content;
+    width: 185px;
+
+    input{
+        border: none;
+        border-bottom: 1px solid color(g1);
+        outline: none;
+        font-size: 16px;
+        font-family: Manrope;
+        padding-bottom: 3px;
+        padding-right: 50px;
+        width: 100%;
+        color: color(g1);
+    }
+    input::placeholder{
+        color: color(g1);
+    }
+
+    >div{
+        transition: .2s ease-in-out;
+        position: absolute;
+        right: 0;
+        padding: 0 10px 0 20px;
+        cursor: pointer;
+    }
+}
+
+.EmailInput:hover div{
+    transform: translateX(10px);
 }

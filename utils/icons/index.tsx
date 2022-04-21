@@ -3,6 +3,8 @@ import React, { ReactNode } from "react";
 const colors:{} = {
     gold: '#BC8C3E',
     white: '#ffffff',
+    gray: '#757575',
+    lightgray: '#E5E5E5',
     black: '#000000',
 }
 
@@ -27,4 +29,12 @@ export const safePurchase = (size:number=20, color:string="white"):ReactNode => 
 
 export const safe = (size:number=20, color:string="white"):ReactNode => <svg width={size} height={size / 0.86} viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M9.5 0L18.1735 1.826C18.6559 1.928 19 2.333 19 2.802V12.789C19 14.795 17.9413 16.669 16.1796 17.781L9.5 22L2.82044 17.781C1.05767 16.668 0 14.795 0 12.79V2.802C0 2.333 0.344111 1.928 0.8265 1.826L9.5 0ZM9.5 2.049L2.11111 3.604V12.789C2.11111 14.126 2.81622 15.375 3.99106 16.117L9.5 19.597L15.0089 16.117C16.1838 15.375 16.8889 14.127 16.8889 12.79V3.604L9.5 2.05V2.049ZM14.1993 7.222L15.6929 8.636L8.97539 15L4.49667 10.757L5.98922 9.343L8.97433 12.171L14.1993 7.221V7.222Z" fill={colors[color as keyof {}]} />
+</svg>
+
+export const star = (size:number=20, color:string="white"):ReactNode => <svg width={size} height={size} viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.57445 14.5L3.69645 18.09L5.29445 11.39L0.0644531 6.91L6.92945 6.36L9.57445 0L12.2195 6.36L19.0855 6.91L13.8545 11.39L15.4525 18.09L9.57445 14.5Z" fill={colors[color as keyof {}]} />
+</svg>
+
+export const arrow = (size:number=20, color:string="white"):ReactNode => <svg width={size} height={size/3.5} viewBox="0 0 21 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19.541 2.6143L17.4966 0.545384L18.0355 0L21 3L18.0355 6L17.4966 5.45462L19.541 3.3857H0V2.6143H19.541Z" fill={colors[color as keyof {}]}/>
 </svg>
