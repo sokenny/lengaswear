@@ -1,0 +1,47 @@
+@import '../../../styles/variables';
+
+
+.AssetAndText{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    flex-direction: row-reverse;
+
+    .text{
+        width: 50%;
+        padding: $pxs3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h3{
+            margin-bottom: $pxs1;
+            font-size: $fs3;
+            font-weight: 400;
+        }
+
+        p{
+            max-width: 300px;
+        }
+
+        .ctaSection{
+            margin-top: $pxs3;
+            color: color(g1);
+            font-weight: 300;
+        }
+
+    }
+
+    .asset{
+        height: 760px;
+
+        >img{
+            height: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+.AssetAndText-assetLeft{
+    flex-direction: row;
+}

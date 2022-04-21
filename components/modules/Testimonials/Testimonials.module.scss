@@ -1,0 +1,52 @@
+@import '../../../styles/variables';
+
+.Testimonials{
+    padding: var(--sp1);
+    font-family: Manrope;
+    background-color: color(w2);
+    border: 1px solid rgba(0,0,0,0.1);
+
+    >div{
+        padding: 0 100px;
+        
+        h3{
+            margin-bottom: $pxs3;
+            font-size: $fs3;
+            font-family: Silk Serif;
+            font-weight: 300;
+        }
+        
+        .section{
+            .set{
+                display: flex;
+                justify-content: space-between;
+                
+                .testimonial{
+                    width: 250px;
+
+                    .stars{
+                        display: flex;
+                        margin-bottom: 15px;
+
+                        >div{
+                            margin-right: 5px;
+                        }
+                    }
+
+                    .quote{
+                        margin-bottom: 20px;
+                    }
+
+                    .name{
+                        font-size: 18px;
+                        color: color(gold);
+                    }
+                    .location{
+                        color: color(g1);
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

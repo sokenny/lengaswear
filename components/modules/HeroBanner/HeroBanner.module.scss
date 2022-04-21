@@ -1,0 +1,26 @@
+@import '../../../styles/variables';
+
+.HeroBanner{
+    padding: var(--sp3);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    color: white;
+
+    .title{
+        font-size: 96px;
+        margin-bottom: $pxs2;
+        font-weight: 400;
+    }
+    .subtitle{
+        font-size: $fs2;
+        text-transform: uppercase;
+        color: color(gold);
+        font-weight: 500;
+        letter-spacing: 0.255em;
+        text-transform: uppercase;
+    }
+}

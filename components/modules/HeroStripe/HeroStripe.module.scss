@@ -1,0 +1,23 @@
+@import '../../../styles/variables';
+
+.HeroStripe{
+    padding: var(--sp1);
+    color: white;
+    background-size: cover;
+    background-position: center;
+    padding-top: 120px;
+    padding-bottom: 120px;
+
+    >div{
+        h3{
+            font-size: $fs3;
+            margin-bottom: $pxs2;
+            font-weight: 300;
+        }
+        p{
+            max-width: 400px;
+            color: white;
+            margin-bottom: $pxs3;
+        }
+    }
+}

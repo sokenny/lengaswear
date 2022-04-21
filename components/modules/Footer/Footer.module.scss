@@ -1,0 +1,55 @@
+@import '../../../styles/variables';
+
+
+.Footer{
+    color: white;
+    padding: var(--sp1);
+    display: flex;
+    justify-content: space-between;
+    background-color: color(b1);
+    font-family: Manrope;
+    font-weight: 300;
+
+    .links{
+        display: flex;
+
+        >ul{
+            margin: 0;
+            margin-right: 100px;
+
+            >li:first-child{
+                font-weight: 600;
+                margin-bottom: $pxs2;
+            }
+
+            >li{
+                margin-bottom: 8px;
+            }
+
+            >li:hover{
+                color: color(gold);
+                cursor: pointer;
+            }
+        }
+        >ul:last-child{
+            margin-right: 0;
+        }
+    }
+
+    .social{
+        >div:first-child{
+            font-weight: 600;
+            margin-bottom: $pxs2;
+        }
+        >div:nth-child(2){
+            margin-bottom: $pxs2;
+        }
+        >div:last-child{
+            display: flex;
+
+            >div{
+                margin-left: 20px;
+            }
+        }
+    }
+}
