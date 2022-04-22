@@ -13,10 +13,10 @@ const StoreInfo:React.FC = () => {
 
     return (
         <section className={styles.StoreInfo}>
-            <div className={styles.StoreInfo__info}>
+            <div className={styles.info}>
                 {items.map((item)=>
-                    <div className={styles.StoreInfo__item} key={item.title}>
-                        <div className={styles.StoreInfo__icon}>{item.icon}</div>
+                    <div className={styles.item} key={item.title}>
+                        <div className={styles.icon}>{item.icon}</div>
                         <div>
                             <div>{item.title}</div>
                             <div>{item.text}</div>
@@ -25,7 +25,7 @@ const StoreInfo:React.FC = () => {
                 )
                 }
             </div>
-            <div className={styles.StoreInfo__image}></div>            
+            <div className={styles.image}></div>            
         </section>
     )
 }

@@ -9,10 +9,10 @@ const colors:{} = {
 }
 
 export const cart = (size:number=20, color:string="white"):ReactNode => <svg width={size} height={size / 1.25} viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 1H19L17.5 10H5.5L4 1Z" stroke={colors[color as keyof {}]} stroke-linecap="square"/>
-    <path d="M7 15C7.55228 15 8 14.5523 8 14C8 13.4477 7.55228 13 7 13C6.44772 13 6 13.4477 6 14C6 14.5523 6.44772 15 7 15Z" stroke={colors[color as keyof {}]} stroke-linecap="square"/>
-    <path d="M16 15C16.5523 15 17 14.5523 17 14C17 13.4477 16.5523 13 16 13C15.4477 13 15 13.4477 15 14C15 14.5523 15.4477 15 16 15Z" stroke={colors[color as keyof {}]} stroke-linecap="square"/>
-    <path d="M4 1H1" stroke={colors[color as keyof {}]} stroke-linecap="square"/>
+    <path d="M4 1H19L17.5 10H5.5L4 1Z" stroke={colors[color as keyof {}]} strokeLinecap="square"/>
+    <path d="M7 15C7.55228 15 8 14.5523 8 14C8 13.4477 7.55228 13 7 13C6.44772 13 6 13.4477 6 14C6 14.5523 6.44772 15 7 15Z" stroke={colors[color as keyof {}]} strokeLinecap="square"/>
+    <path d="M16 15C16.5523 15 17 14.5523 17 14C17 13.4477 16.5523 13 16 13C15.4477 13 15 13.4477 15 14C15 14.5523 15.4477 15 16 15Z" stroke={colors[color as keyof {}]} strokeLinecap="square"/>
+    <path d="M4 1H1" stroke={colors[color as keyof {}]} strokeLinecap="square"/>
 </svg>
 
 export const returns = (size:number=20, color:string="white"):ReactNode => <svg width={size} height={size} viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -53,3 +53,32 @@
         }
     }
 }
+
+.Footer-white{
+    background-color: color(w2);
+    border-top: 1px solid rgba(0,0,0,0.1);
+
+    .links{
+
+        >ul{
+            color: color(g1);
+
+            >li:first-child{
+                cursor: initial;
+                font-weight: 500;
+                margin-bottom: $pxs2;
+                color: color(b1);
+            }
+        }
+    }
+
+    .social{
+        >div:first-child{
+            cursor: initial;
+            font-weight: 500;
+            margin-bottom: $pxs2;
+            color: color(b1);
+        }
+        color: color(g1);
+    }
+}

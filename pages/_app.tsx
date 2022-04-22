@@ -1,11 +1,14 @@
-import '../styles/globals.css'
 import MainLayout from '@/components/layouts/MainLayout'
 import type { AppProps } from 'next/app'
 import '../styles/Globals.scss';
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomAppProps extends Omit<AppProps, "Component"> {
+  Component: AppProps["Component"] & { nav?: React.ReactNode, footer?: React.ReactNode };
+}
+
+function MyApp({ Component, pageProps }: CustomAppProps) {
   return (
-    <MainLayout>
+    <MainLayout nav={Component.nav} footer={Component.footer}>
       <Component {...pageProps} />
     </MainLayout>
   )

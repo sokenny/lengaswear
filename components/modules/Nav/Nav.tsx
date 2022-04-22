@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useScrollPosition } from "@/utils/index";
 import { cart } from "@/utils/icons";
 import styles from './Nav.module.scss';
@@ -12,7 +13,7 @@ const Nav:React.FC<NavProps> = ({theme}) => {
     const hasScrolled = scrollPosition > 0;
 
     return (
-        <nav className={`${styles.Nav} ${hasScrolled ? styles['Nav-scrolled'] : ''}`}>
+        <nav className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''}`}>
             <div>
                 <div>
                     {/* <div className={styles.Nav__logo}>
@@ -20,7 +21,9 @@ const Nav:React.FC<NavProps> = ({theme}) => {
                     </div> */}
                     <ul>
                         <li>Nosotros</li>
-                        <li>Relojes</li>
+                        <Link href="/relojes">
+                            <li>Relojes</li>
+                        </Link>
                         <li>Billeteras</li>
                     </ul>
                 </div>
@@ -29,7 +32,7 @@ const Nav:React.FC<NavProps> = ({theme}) => {
                         <li>Soporte</li>
                         <li>arg</li>
                         <li>
-                            <div>{cart(undefined, hasScrolled ? "black" : "white")}</div>
+                            <div>{cart(undefined, (hasScrolled || theme === "scrolled") ? "black" : "white")}</div>
                         </li>
                     </ul>
                 </div>

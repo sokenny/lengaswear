@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 import Image from "next/image";
 import styles from './Footer.module.scss';
 
@@ -8,9 +8,12 @@ type FooterProps = {
 
 const Footer:React.FC<FooterProps> = ({theme}) => {
     return (
-        <footer className={styles.Footer}>
+        <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''}`}>
+            
             <div className={styles.logo}>
-                <Image src="/lengas.png" width={120} height={120} />
+                <Link href="/">
+                    <Image src="/lengas.png" width={120} height={120} />
+                </Link>
             </div>
             <div className={styles.links}>
                 <ul>
@@ -22,7 +25,9 @@ const Footer:React.FC<FooterProps> = ({theme}) => {
                 <ul>
                     <li>Productos</li>
                     <li>Billeteras</li>
-                    <li>Relojes</li>
+                    <Link href="/relojes">
+                        <li>Relojes</li>
+                    </Link>
                 </ul>
                 <ul>
                     <li>Soporte</li>
