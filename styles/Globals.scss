@@ -20,7 +20,7 @@ body {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
-  font-family: Montserrat;
+  font-family: Manrope;
   letter-spacing: 1px;
     
     a {
@@ -52,4 +52,15 @@ p{
   font-family: Manrope;
   color: color(g1);
   font-weight: 300;
+}
+
+.container{
+  padding: var(--sp1);
+
+  >section{
+      margin-bottom: $pxs3;
+  }
+  >section:last-child{
+      margin-bottom: 0;
+  }
 }

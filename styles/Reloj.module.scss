@@ -1,0 +1,178 @@
+@import './variables';
+
+.Reloj{
+    min-height: 120vh;
+
+    .Reloj__header{
+        display: flex;
+        width: 100%;
+
+        .Reloj__topGallery{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+
+            >div{
+                width: 100%;
+                margin-bottom: 10px;
+                background-color: lightblue;
+            }
+
+            >div:nth-child(1){
+                height: 90vh;
+            }
+            >div:nth-child(2){
+                height: 320px;
+            }
+            >div:nth-child(3){
+                height: 320px;
+            }
+            >div:nth-child(4){
+                height: 600px;
+                position: relative;
+
+                >div:first-child{
+                    width: 100%;
+                    height: 100%;
+                }
+                >div:last-child{
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    transform: translateX(100%);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+        }
+
+        .Reloj__headerInfo{
+            height: 100vh;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            padding: 100px;
+            position: fixed;
+            right: 0;
+
+            >div{
+                width: 350px;
+                color: color(g1);
+
+                h1{
+                    font-family: Silk Serif;
+                    text-transform: uppercase;
+                    font-size: $fs3;
+                    color: color(b1);
+                }
+
+                .Reloj__description{
+                    font-family: Manrope;
+                    color: color(g1);
+                    margin-bottom: $pxs2;
+
+                    >div{
+                        margin-bottom: 11px;
+                    }
+                    >div:last-child{
+                        margin-bottom: 0;
+                    }
+                }
+
+                .Reloj__price{
+                    font-size: $fs2;
+                    color: color(gold);
+                    font-weight: 600;
+                    font-family: Manrope;
+                    margin-bottom: 20px;
+                }
+
+                >button{
+                    margin-bottom: 42px;
+                }
+                
+                .Reloj__verMas{
+                    margin-bottom: 42px;
+
+                    >div{
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .Reloj__slightGray{
+        background-color: color(w2);
+
+        .Reloj__azar{
+            display: flex;
+
+            >div{
+                width: 50%;
+            }
+
+            >div:first-child{
+                >div{
+                    height: 200px;
+                    width: 200px;
+                }
+                background-color: red;
+            } 
+
+            >div:last-child{
+                padding: 64px;
+            }
+        }
+
+        .Reloj__overlapSections{
+            >section{
+                margin: -100px 0;
+
+                @include smallDesktop{
+                    margin: 0;
+                }
+            }
+            >section:first-child{
+                margin-top: 0;
+            }
+            >section:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.PurchaseInfo{
+    display: flex;
+    flex-direction: column;
+
+    .PurchaseInfo__item{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        >div:first-child{
+            margin-right: 15px;
+        }
+    }
+}
+
+.TitleWDescription{
+    width: 350px;
+
+    h2{
+        font-size: 28px;
+        font-family: Silk Serif;
+        margin-bottom: 12px;
+        font-weight: 400;
+    }
+    >div{
+        font-size: 14px;
+        font-family: Manrope;
+        color: color(g1);
+    }
+}

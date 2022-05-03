@@ -1,14 +1,5 @@
 @import '../styles/variables';
 
 .Home{
-    .Home__container{
-        padding: var(--sp1);
-
-        >section{
-            margin-bottom: $pxs3;
-        }
-        >section:last-child{
-            margin-bottom: 0;
-        }
-    }
+    
 }

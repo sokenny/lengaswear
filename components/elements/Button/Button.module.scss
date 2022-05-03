@@ -1,0 +1,17 @@
+@import '../../../styles/variables';
+
+.Button{
+    background-color: color(b1);
+    color: white;
+    text-transform: uppercase;
+    padding: 10px 26px;
+    outline: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.Button:hover{
+    background-color: transparent;
+    border-color: color(b1);
+    color: color(b1);
+}

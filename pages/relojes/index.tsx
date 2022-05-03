@@ -41,15 +41,17 @@ type RelojItemProps = {
 
 const RelojItem:React.FC<RelojItemProps> = ({reloj}) => {
     return (
-        <div className={styles.RelojItem}>
-            <div className={styles.RelojItem__image}>
-                <img src={reloj.image} alt="" />
+        <Link href={`/relojes/${reloj.name}`}>
+            <div className={styles.RelojItem}>
+                <div className={styles.RelojItem__image}>
+                    <img src={reloj.image} alt="" />
+                </div>
+                <div>
+                    <h3>{reloj.name}</h3>
+                    <div>{reloj.price}</div>
+                </div>
             </div>
-            <div>
-                <h3>{reloj.name}</h3>
-                <div>{reloj.price}</div>
-            </div>
-        </div>
+        </Link>
     )
 }
 
