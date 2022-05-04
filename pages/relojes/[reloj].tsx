@@ -8,6 +8,8 @@ import Nav from '@/components/modules/Nav/Nav'
 import Button from '@/components/elements/Button/Button'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
+import Image from 'next/image';
+import Head from 'next/head';
 import styles from '../../styles/Reloj.module.scss'
 
 const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
@@ -26,14 +28,26 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
     }
 
     return (
+        <>
+        <Head>
+            <title>{reloj} | Relojes | Lengas</title>
+        </Head>
         <div className={styles.Reloj}>
             <section className={styles.Reloj__header}>
                 <div className={styles.Reloj__topGallery}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div>
+                        <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-1.webp`} layout="fill" objectFit='cover' />
+                    </div>
+                    <div>
+                        <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-2.webp`} layout="fill" objectFit='cover' />
+                    </div>
+                    <div>
+                        <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-3.webp`} layout="fill" objectFit='cover' />
+                    </div>
                     <div ref={lastPicRef}>
-                        <div></div>
+                        <div>
+                            <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-4.webp`} layout="fill" objectFit='cover' />
+                        </div>
                         <div>
                             <TitleWDescription title="El tuyo es único" description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." />
                         </div>
@@ -62,23 +76,18 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
             </div>
             <div className={styles.Reloj__slightGray}>
                 <div className='container'>
-                    <section className={styles.Reloj__azar}>
-                        <div>
-                            <div></div>
-                        </div>
-                        <div>
-                            <TitleWDescription title="No dejamos nada al azar" description="Representando todos los valores que Lengas simboliza. Como la transparencia, la sustentabilidad y la simplicidad." />
-                        </div>
-                    </section>
+                    <SuiGeneris reloj={reloj} />
                     <div className={styles.Reloj__overlapSections}>
                         <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
-                        <AssetAndText title="Acero aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
+                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
                         <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
                         <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
                     </div>
                 </div>
             </div>
+            <WatchSpecs />
         </div>
+        </>
     )
 }
 
@@ -115,6 +124,91 @@ const TitleWDescription:React.FC<{title:string, description:string}> = ({title, 
     
 interface IParams extends ParsedUrlQuery {
     reloj: string
+}
+
+const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
+
+    const [hovering, setHovering] = useState<string>("")
+    const materials = ['cristal', 'madera', 'aluminio']
+
+    return (
+        <section className={styles.Reloj__azar}>
+            <div>
+                <DisAssembly reloj={reloj} hovering={hovering} />
+            </div>
+            <div>
+                <TitleWDescription title="No dejamos nada al azar" description="Representando todos los valores que Lengas simboliza. Como la transparencia, la sustentabilidad y la simplicidad." />
+                <div className={styles.Reloj__materiales}>
+                    <div>
+                        {materials.map((material)=>
+                            <div className={styles.Reloj__material} onMouseEnter={()=>setHovering(material)} onMouseLeave={()=>setHovering("")} key={material}></div>
+                        )}
+                    </div>
+                    <div>Materiales que te van a encantar</div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hovering}) => {
+
+    const divRef = useRef<HTMLDivElement>(null)
+    const onScreen = useOnScreen(divRef)
+    const [float, setFloat] = useState<boolean>(false)
+    const [translate, setTranslate] = useState<boolean>(false)
+
+    useEffect(()=>{
+       let timeoutId:ReturnType<typeof setTimeout>
+       if(onScreen && !translate){
+           timeoutId = setTimeout(() => {
+               setTranslate(true)
+           }, 300);
+       } 
+       return ()=>clearTimeout(timeoutId)
+    }, [onScreen])
+
+    useEffect(()=>{
+        const timeoutId:ReturnType<typeof setTimeout>  = setTimeout(()=>{
+            setFloat(translate)
+        }, 300)
+        return ()=>clearTimeout(timeoutId)
+    }, [translate])
+
+    return (
+        <div className={`${styles.DisAssembly} ${translate ? styles['DisAssembly-translate'] : ''} ${float ? styles['DisAssembly-float'] : ''}`} ref={divRef}>
+            <div className={hovering !== '' && hovering !== 'cristal' ? styles['DisAssembly__piece-notHovered'] : ''}>
+                <img src='/relojes/cristal.webp' />
+            </div>
+            <div className={hovering !== '' && hovering !== 'madera' ? styles['DisAssembly__piece-notHovered'] : ''}>
+                <img src={`/relojes/mecanizado-${reloj}.webp`} />
+            </div>
+            <div className={hovering !== '' && hovering !== 'aluminio' ? styles['DisAssembly__piece-notHovered'] : ''}>
+                <img src='/relojes/tapa.webp' />
+            </div>
+        </div>
+    )
+}
+
+const WatchSpecs:React.FC = () => {
+    return (
+        <section className={styles.WatchSpecs}>
+
+        </section>
+    )
+}
+
+type TRecommended = {
+    title: string,
+    image: string,
+    href: string,
+    price: string,
+}
+
+const Recommended:React.FC<{recommended: TRecommended[]}> = ({recommended}) => {
+    return (
+        <section></section>
+    )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

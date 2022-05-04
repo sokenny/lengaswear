@@ -15,7 +15,7 @@ export const useScrollPosition = ():number => {
     return scrollPosition;
 }
 
-export const useOnScreen = (ref:React.MutableRefObject<undefined>):boolean => {
+export const useOnScreen = (ref:React.RefObject<HTMLDivElement>):boolean => {
     const [isIntersecting, setIntersecting] = useState<boolean>(false)
     let observer:any;
     useEffect(()=>{

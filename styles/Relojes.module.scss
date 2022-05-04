@@ -60,13 +60,13 @@
         }
     }
 
-    
     >div:last-child{
         z-index: 1;
         height: fit-content;
 
         h3{
             font-size: $fs2;
+            font-weight: 400;
         }
     }
 }
