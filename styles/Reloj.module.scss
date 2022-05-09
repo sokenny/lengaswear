@@ -3,109 +3,6 @@
 .Reloj{
     min-height: 120vh;
 
-    .Reloj__header{
-        display: flex;
-        width: 100%;
-
-        .Reloj__topGallery{
-            display: flex;
-            flex-direction: column;
-            width: 50%;
-
-            >div{
-                width: 100%;
-                margin-bottom: 10px;
-                background-color: color(w2);
-                position: relative;
-            }
-
-            >div:nth-child(1){
-                height: 90vh;
-            }
-            >div:nth-child(2){
-                height: 320px;
-            }
-            >div:nth-child(3){
-                height: 320px;
-            }
-            >div:nth-child(4){
-                height: 600px;
-                position: relative;
-
-                >div:first-child{
-                    width: 100%;
-                    height: 100%;
-                }
-                >div:last-child{
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    transform: translateX(100%);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-            }
-
-        }
-
-        .Reloj__headerInfo{
-            height: 100vh;
-            width: 50%;
-            display: flex;
-            align-items: center;
-            padding: 100px;
-            position: fixed;
-            right: 0;
-
-            >div{
-                width: 350px;
-                color: color(g1);
-
-                h1{
-                    font-family: Silk Serif;
-                    text-transform: uppercase;
-                    font-size: $fs3;
-                    color: color(b1);
-                }
-
-                .Reloj__description{
-                    font-family: Manrope;
-                    color: color(g1);
-                    margin-bottom: $pxs2;
-
-                    >div{
-                        margin-bottom: 11px;
-                    }
-                    >div:last-child{
-                        margin-bottom: 0;
-                    }
-                }
-
-                .Reloj__price{
-                    font-size: $fs2;
-                    color: color(gold);
-                    font-weight: 600;
-                    font-family: Manrope;
-                    margin-bottom: 20px;
-                }
-
-                >button{
-                    margin-bottom: 42px;
-                }
-                
-                .Reloj__verMas{
-                    margin-bottom: 42px;
-
-                    >div{
-                        margin-bottom: 10px;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-    }
     .Reloj__slightGray{
         background-color: color(w2);
 
@@ -162,6 +59,141 @@
             }
             >section:last-child{
                 margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.TopProductSection{
+    display: flex;
+    width: 100%;
+
+    .TopProductSection__gallery{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+        @include mobile{
+            width: 100%;
+        }
+
+        .TopProductSection__mobileInfo{
+            position: absolute;
+            bottom: $pxs3;
+            left: $pxs2;
+            z-index: 1;
+            color: white;
+            width: 60%;
+
+            .TopProductSection__description{
+                font-size: 14px;
+            }
+
+        }
+
+        >div{
+            width: 100%;
+            margin-bottom: 10px;
+            background-color: color(w2);
+            position: relative;
+        }
+
+        >div:nth-child(1){
+            height: 90vh;
+        }
+        >div:nth-child(2){
+            height: 320px;
+        }
+        >div:nth-child(3){
+            height: 320px;
+        }
+        >div:nth-child(4){
+            height: 600px;
+            position: relative;
+
+            >div:first-child{
+                width: 100%;
+                height: 100%;
+            }
+            >div:last-child{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                transform: translateX(100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @include mobile{
+                    color: white;
+                    transform: translate(0);
+                    align-items: flex-end;
+                    padding-bottom: $pxs3;
+                    h2{
+                        font-size: $fs2;
+                    }
+                    div{
+                        color: white;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .TopProductSection__headerInfo{
+        height: 100vh;
+        width: 50%;
+        display: flex;
+        align-items: center;
+        padding: 100px;
+        position: fixed;
+        right: 0;
+
+        >div{
+            width: 350px;
+            color: color(g1);
+
+            h1{
+                font-family: Silk Serif;
+                text-transform: uppercase;
+                font-size: $fs3;
+                color: color(b1);
+            }
+
+            .TopProductSection__description{
+                font-family: Manrope;
+                color: color(g1);
+                margin-bottom: $pxs2;
+
+                >div{
+                    margin-bottom: 11px;
+                }
+                >div:last-child{
+                    margin-bottom: 0;
+                }
+            }
+
+            .TopProductSection__price{
+                font-size: $fs2;
+                color: color(gold);
+                font-weight: 600;
+                font-family: Manrope;
+                margin-bottom: 20px;
+            }
+
+            >button{
+                margin-bottom: 42px;
+            }
+            
+            .TopProductSection__verMas{
+                margin-bottom: 42px;
+
+                >div{
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                }
             }
         }
     }

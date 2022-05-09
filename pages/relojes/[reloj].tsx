@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, useMemo, ReactNode } from 'react'
 import { NextPageAugmented } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useScrollPosition, useOnScreen, capitalize } from '@/utils/index'
+import { useScrollPosition, useOnScreen, capitalize, useIsMobile } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ParsedUrlQuery } from 'querystring'
 import Nav from '@/components/modules/Nav/Nav'
@@ -86,10 +86,19 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => 
     }
 
     return (
-            <section className={styles.Reloj__header}>
-                <div className={styles.Reloj__topGallery}>
-                    {imgs.slice(0, 3).map((img)=>
-                    <div>
+            <section className={styles.TopProductSection}>
+                <div className={styles.TopProductSection__gallery}>
+                    {imgs.slice(0, 3).map((img, i)=>
+                    <div key={img}>
+                        {i === 0 &&
+                        <div className={`mobile ${styles.TopProductSection__mobileInfo}`}>
+                            <div className={styles.TopProductSection__description}>
+                                <div>{product.description}</div>
+                                <div>Madera: <strong>Lenga</strong></div>
+                                <div>Peso: <strong>22g</strong></div>
+                            </div>
+                        </div>
+                        }
                         <Image src={img} layout="fill" objectFit='cover' key={img} />
                     </div>
                     )}
@@ -102,17 +111,17 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => 
                         </div>
                     </div>
                 </div>
-                <div className={styles.Reloj__headerInfo} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
+                <div className={`${styles.TopProductSection__headerInfo} desktop`} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
                     <div>
                         <h1>{product.name}</h1>
-                        <div className={styles.Reloj__description}>
-                            <div>Texto corto de descripción del modelo, cual es el diferencial.</div>
+                        <div className={styles.TopProductSection__description}>
+                            <div>{product.description}</div>
                             <div>Madera: <strong>Lenga</strong></div>
                             <div>Peso: <strong>22g</strong></div>
                         </div>
-                        <div className={styles.Reloj__price}>$ {product.price}</div>
+                        <div className={styles.TopProductSection__price}>$ {product.price}</div>
                         <Button onClick={()=>{}}>Agregar al carrito</Button>
-                        <div className={styles.Reloj__verMas}>
+                        <div className={styles.TopProductSection__verMas}>
                             <div>Ver más características</div>
                             <div>Ver más detalles</div>
                         </div>

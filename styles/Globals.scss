@@ -69,6 +69,19 @@ p{
   }
 }
 
+.desktop {
+  @include mobile{
+    display: none!important;
+  }
+}
+
+.mobile{
+  display: none;
+  @include mobile{
+    display: block;
+  }
+}
+
 // Polyfills for third party dependencies
 div.swiper{
   padding-bottom: $pxs3;

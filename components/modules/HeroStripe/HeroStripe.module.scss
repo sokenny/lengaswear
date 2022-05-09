@@ -17,6 +17,10 @@
             font-size: $fs3;
             margin-bottom: $pxs2;
             font-weight: 300;
+
+            @include mobile{
+                font-size: $fs2;
+            }
         }
         p{
             max-width: 400px;

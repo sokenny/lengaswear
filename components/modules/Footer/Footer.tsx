@@ -9,7 +9,6 @@ type FooterProps = {
 const Footer:React.FC<FooterProps> = ({theme}) => {
     return (
         <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''}`}>
-            
             <div className={styles.logo}>
                 <Link href="/">
                     <Image src="/lengas.png" width={120} height={120} />
