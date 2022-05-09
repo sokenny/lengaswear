@@ -12,7 +12,7 @@ const FeaturedCategories:React.FC = () => {
             </div>
             <div className={styles.wallets} style={{backgroundImage: `url('/categoria-billeteras.webp')`}}>
                 <div>
-                    <h3>Inspirados en la Patagonia</h3>
+                    <h3>Descubrí lo nuevo</h3>
                     <ArrowCta cta="VER BILLETERAS" />
                 </div>
             </div>

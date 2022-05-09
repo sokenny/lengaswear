@@ -43,3 +43,14 @@ export const useOnScreen = (ref:React.RefObject<HTMLDivElement>):boolean => {
 export function capitalize (string:string): string {
     return string.charAt(0).toUpperCase() + string.slice(1, string.length)
 }
+
+export const useIsMobile = ():{} => {
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+    useEffect(() => {
+      const handleResize = ():void => { setIsMobile(window.innerWidth <= 800) }
+      window.addEventListener("resize", handleResize);
+      handleResize();
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    return isMobile;
+}

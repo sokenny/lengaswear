@@ -10,6 +10,10 @@
   --sp2: 64px 10vw;
   --sp3: 64px 15vw;
 
+  @include mobile{
+    --sp1: 64px 10px;
+  }
+
   @include bigDesktop{
     --sp1: 64px 15vw;
   }
@@ -63,4 +67,12 @@ p{
   >section:last-child{
       margin-bottom: 0;
   }
+}
+
+// Polyfills for third party dependencies
+div.swiper{
+  padding-bottom: $pxs3;
+}
+.swiper-pagination-bullet-active{
+  background-color: color(gold)!important;
 }

@@ -14,8 +14,8 @@ export type TestimonialsType = {stars: number, quote: string, name: string, loca
 
 const testimonials:TestimonialsType = [
     {stars: 4, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
-    {stars: 5, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
-    {stars: 3, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
+    {stars: 5, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Jose Gutierrez", location: "Buenos Aires, Argentina"},
+    {stars: 3, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Lucas Martinez", location: "Buenos Aires, Argentina"},
 ]
 
 const Home: NextPage = () => {

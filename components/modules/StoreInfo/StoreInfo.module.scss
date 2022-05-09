@@ -14,12 +14,27 @@
         justify-content: center;
         padding: $pxs4;
         border: 1px solid rgba(0,0,0,0.1);
+
+        >div{ 
+            @include mobile{
+                width: 100%;
+            }
+        }
+
+        @include mobile{
+            width: 70%;
+            padding: 20px 40px;
+        }
     }
     .image{
         width: 60%;
         background-image: url('/quemanta-madera-lenga.webp');
         background-size: cover;
         background-position: center;
+
+        @include mobile{
+            width: 30%;
+        }
     }
 
     .item{
@@ -27,6 +42,11 @@
         align-items: center;
         font-family: Manrope;
         margin-bottom: 40px;
+
+        @include mobile{
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
         .icon{
             align-self: flex-start;
@@ -39,10 +59,18 @@
                 font-weight: 400;
                 font-size: 16px;
                 color: color(b1);
+
+                @include mobile{
+                    font-size: 14px;
+                }
             }
             >div:last-child{
                 font-size: 14px;
                 color: color(g1);
+
+                @include mobile{
+                    font-size: 14px;
+                }
             }
         }
     }

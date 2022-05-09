@@ -8,6 +8,10 @@
 
     >div{
         padding: 0 100px;
+
+        @include mobile{
+            padding: 0 64px;
+        }
         
         h3{
             margin-bottom: $pxs3;
