@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             <div className="container">
                 <FeaturedCategories />
                 <StoreInfo />
-                <AssetAndText title="Sustentable y artesanal" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas"} color="gray" />} />
+                <AssetAndText title="Sustentable y artesanal" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas"} color="gray" />} />
             </div>
             <HeroStripe title="Plantas un árbol" description="Con tu compra, en conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia." cta="Leer más" image="/bosque-de-lengas.webp" />
             <div className="container">

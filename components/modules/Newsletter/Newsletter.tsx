@@ -18,7 +18,7 @@ const Newsletter:React.FC = () => {
 
     return (
         <section className={styles.Newsletter}>
-            <AssetAndText assetLeft={false} title="Suscribite a nuestro Newsletter!" description="Mantenete informado acerca de nuevos lanzamientos y novedades sobre el impacto que nuestro proyecto está generando. (agregaria algo sobre dtos para incentivar)" image="/reloj-patagonia-madera-argentina.webp" ctaSection={<EmailInput email={email} onChange={setEmail} />} />
+            <AssetAndText assetLeft={false} title="Suscribite a nuestro Newsletter!" description="Mantenete informado acerca de nuevos lanzamientos y novedades sobre el impacto que nuestro proyecto está generando. (agregaria algo sobre dtos para incentivar)" asset="/reloj-patagonia-madera-argentina.webp" ctaSection={<EmailInput email={email} onChange={setEmail} />} />
         </section>
     )
 }

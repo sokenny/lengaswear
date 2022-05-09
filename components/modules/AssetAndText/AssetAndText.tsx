@@ -4,16 +4,16 @@ import styles from './AssetAndText.module.scss';
 type AssetAndTextProps = {
     title: string,
     description: string,
-    image: string,
+    asset: string | ReactNode,
     ctaSection?:ReactNode,
     assetLeft?: boolean,
 }
 
-const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, image, ctaSection=false, assetLeft=true}) => {
+const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ctaSection=false, assetLeft=true}) => {
     return (
         <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`}>
             <div className={styles.asset}>
-                <img src={image}/>
+                {typeof asset === 'string' ? <img src={asset}/> : asset}
             </div>
             <div className={styles.text}>
                 <h3>{title}</h3>

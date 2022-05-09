@@ -7,10 +7,10 @@ import styles from '../../styles/Relojes.module.scss';
 export type RelojType = {name: string, price: number, href: string, image: string}
 
 const relojes:RelojType[] = [
-    {name: 'Quemanta', price: 10900, href: "/relojes/quemanta", image: "/categoria-relojes.webp"},
-    {name: 'Jauke', price: 10900, href: "/relojes/jauke", image: "/categoria-relojes.webp"},
-    {name: 'Tesh', price: 10900, href: "/relojes/tesh", image: "/categoria-relojes.webp"},
-    {name: 'Mahai', price: 10900, href: "/relojes/mahai", image: "/categoria-relojes.webp"},
+    {name: 'Quemanta', price: 10900, href: "/relojes/quemanta", image: "/relojes/quemanta/main.webp"},
+    {name: 'Jauke', price: 10900, href: "/relojes/jauke", image: "/relojes/jauke/main.webp"},
+    {name: 'Tesh', price: 10900, href: "/relojes/tesh", image: "/relojes/tesh/main.webp"},
+    {name: 'Mahai', price: 10900, href: "/relojes/mahai", image: "/relojes/mahai/main.webp"},
 ]
 
 const Relojes:NextPageAugmented = () => {
@@ -25,7 +25,9 @@ const Relojes:NextPageAugmented = () => {
                     <section className={styles.Relojes__relojes}>
                         {relojes.map((reloj)=>
                             <Link href={reloj.href} passHref>
-                                <RelojItem reloj={reloj} />
+                                <div>
+                                    <RelojItem reloj={reloj} />
+                                </div>
                             </Link>
                         )}
                     </section>
@@ -41,17 +43,15 @@ type RelojItemProps = {
 
 const RelojItem:React.FC<RelojItemProps> = ({reloj}) => {
     return (
-        <Link href={`/relojes/${reloj.name}`}>
-            <div className={styles.RelojItem}>
-                <div className={styles.RelojItem__image}>
-                    <img src={reloj.image} alt="" />
-                </div>
-                <div>
-                    <h3>{reloj.name}</h3>
-                    <div>{reloj.price}</div>
-                </div>
+        <div className={styles.RelojItem}>
+            <div className={styles.RelojItem__image}>
+                <img src={reloj.image} alt="" />
             </div>
-        </Link>
+            <div>
+                <h3>{reloj.name}</h3>
+                <div>{reloj.price}</div>
+            </div>
+        </div>
     )
 }
 

@@ -151,7 +151,7 @@
 
         .Reloj__overlapSections{
             >section{
-                margin: -100px 0;
+                margin: -70px 0;
 
                 @include smallDesktop{
                     margin: 0;
@@ -279,4 +279,120 @@ $delta: 10px;
     background-color: color(b1);
     padding: var(--sp1);
     width: 100%;
+    color: white;
+    display: flex;
+
+    >div{
+        width: 50%;
+    }
+
+    .WatchSpecs__specs{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    
+        h2{
+            font-family: Silk Serif;
+            font-weight: 400;
+            margin-bottom: $pxs3;
+        }
+        >div{
+            width: 100%;
+            
+            .WatchSpecs__specRow{
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin-bottom: 28px;
+
+                .WatchSpecs__spec{
+                    text-align: left;
+                    width: 50%;
+
+                    >div:first-child{
+                        text-transform: uppercase;
+                        color: color(gold);
+                        font-size: 12px;
+                    }
+                    >div:last-child{
+                        font-size: $fs1;
+                    }
+                }
+            }
+            .WatchSpecs__specRow:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.Recommended{
+
+    >div:first-child{
+        padding-left: 120px;
+        margin-bottom: $pxs3;
+        
+        h2{
+            font-family: Silk Serif;
+            font-size: $fs3;
+            font-weight: 400;
+        }
+    }
+
+    >div:last-child{
+        display: flex;
+        justify-content: space-between;
+
+        .Recommended__item{
+            cursor: pointer;
+
+            .Recommended__image{
+                height: 450px;
+            }
+        }
+
+        .Recommended__item:nth-child(1){
+            width: 36%;
+        }
+        .Recommended__item:nth-child(2){
+            width: 36%;
+        }
+        .Recommended__item:nth-child(3){
+            width: 25%;
+        }
+    }
+
+    .Recommended__image{
+        position: relative;
+        margin-bottom: 12px;
+    }
+
+    .Recommended__info{
+
+        >h3{
+            font-family: Silk Serif;   
+            font-size: $fs2;
+            font-weight: 400;
+        }
+        >div{
+            color: color(g1); 
+            font-size: 14px;
+        }
+
+    }
+}
+
+.WatchPartAsset{
+    height: 100%;
+    width: 85%;
+    background-color: color(w3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 450px;
+    overflow: hidden;
+
+    >img{
+        padding-left: 20px;
+    }
 }

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, useMemo, ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, useMemo, ReactNode } from 'react'
 import { NextPageAugmented } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useScrollPosition, useOnScreen } from '@/utils/index'
+import { useScrollPosition, useOnScreen, capitalize } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ParsedUrlQuery } from 'querystring'
 import Nav from '@/components/modules/Nav/Nav'
@@ -10,17 +10,75 @@ import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import Image from 'next/image';
 import Head from 'next/head';
+import Link from 'next/link';
 import styles from '../../styles/Reloj.module.scss'
 
+const recommendedProducts:TRecommended[] = [
+    {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: '$10,000'},
+    {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: '$10,000'},
+    {name: 'billetera', image: '/billeteras/recommended.webp', href: '/billeteras', price: '$10,000'},
+]
+
 const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
+
+    const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-${item}.webp`)
+    const product:TProduct = {
+        name: reloj,
+        price: 10900,
+        description: 'Texto corto de descripción del modelo, cual es el diferencial.'
+    }
+
+    return (
+        <>
+        <Head>
+            <title>{capitalize(reloj)} | Relojes | Lengas</title>
+        </Head>
+        <div className={styles.Reloj}>
+            <TopProductSection imgs={imgs} product={product} />
+            <div className='container'>
+                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
+            </div>
+            <div className={styles.Reloj__slightGray}>
+                <div className='container'>
+                    <SuiGeneris reloj={reloj} />
+                    <div className={styles.Reloj__overlapSections}>
+                        <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj}/cuadrante.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />}  assetLeft={false} />
+                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
+                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj}/ligero.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />}  assetLeft={false} />
+                        <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj}/correas.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
+                    </div>
+                </div>
+            </div>
+            <WatchSpecs />
+            <div className="container">
+                <Recommended products={recommendedProducts} />
+            </div>
+        </div>
+        </>
+    )
+}
+
+type TProduct = {
+    name: string,
+    price: number,
+    description: string
+}
+
+type TopProductSectionProps = {
+    product: TProduct,
+    imgs: string[],
+}
+
+const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => {
 
     const scrollPosition = useScrollPosition()
     const lastPicRef = useRef()
     const picOnScreen = useOnScreen(lastPicRef)
     const [lockAt, setLockAt] = useState<number>(0)
 
-    useEffect(()=>{
-        if(lockAt === 0 && picOnScreen) setLockAt(scrollPosition);
+    useLayoutEffect(()=>{
+        const lockPosition:number = window.pageYOffset + lastPicRef.current.getBoundingClientRect().top - window.innerHeight
+        if((lockAt === 0 && picOnScreen) || window.pageYOffset >= lockPosition) setLockAt(lockPosition);
     }, [scrollPosition, picOnScreen, lockAt])
 
     function shouldLockHeader():boolean{
@@ -28,25 +86,16 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
     }
 
     return (
-        <>
-        <Head>
-            <title>{reloj} | Relojes | Lengas</title>
-        </Head>
-        <div className={styles.Reloj}>
             <section className={styles.Reloj__header}>
                 <div className={styles.Reloj__topGallery}>
+                    {imgs.slice(0, 3).map((img)=>
                     <div>
-                        <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-1.webp`} layout="fill" objectFit='cover' />
+                        <Image src={img} layout="fill" objectFit='cover' key={img} />
                     </div>
-                    <div>
-                        <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-2.webp`} layout="fill" objectFit='cover' />
-                    </div>
-                    <div>
-                        <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-3.webp`} layout="fill" objectFit='cover' />
-                    </div>
+                    )}
                     <div ref={lastPicRef}>
                         <div>
-                            <Image src={`/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-4.webp`} layout="fill" objectFit='cover' />
+                            <Image src={imgs[3]} layout="fill" objectFit='cover' />
                         </div>
                         <div>
                             <TitleWDescription title="El tuyo es único" description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." />
@@ -55,13 +104,13 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
                 </div>
                 <div className={styles.Reloj__headerInfo} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
                     <div>
-                        <h1>{reloj}</h1>
+                        <h1>{product.name}</h1>
                         <div className={styles.Reloj__description}>
                             <div>Texto corto de descripción del modelo, cual es el diferencial.</div>
                             <div>Madera: <strong>Lenga</strong></div>
                             <div>Peso: <strong>22g</strong></div>
                         </div>
-                        <div className={styles.Reloj__price}>$ 10.670</div>
+                        <div className={styles.Reloj__price}>$ {product.price}</div>
                         <Button onClick={()=>{}}>Agregar al carrito</Button>
                         <div className={styles.Reloj__verMas}>
                             <div>Ver más características</div>
@@ -71,23 +120,14 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
                     </div>
                 </div>
             </section>
-            <div className='container'>
-                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
-            </div>
-            <div className={styles.Reloj__slightGray}>
-                <div className='container'>
-                    <SuiGeneris reloj={reloj} />
-                    <div className={styles.Reloj__overlapSections}>
-                        <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
-                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
-                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
-                        <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." image="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
-                    </div>
-                </div>
-            </div>
-            <WatchSpecs />
+    )
+}
+
+const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
+    return (
+        <div className={styles.WatchPartAsset}>
+            <img src={img} alt="Watch part" />
         </div>
-        </>
     )
 }
 
@@ -181,7 +221,7 @@ const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hoverin
                 <img src='/relojes/cristal.webp' />
             </div>
             <div className={hovering !== '' && hovering !== 'madera' ? styles['DisAssembly__piece-notHovered'] : ''}>
-                <img src={`/relojes/mecanizado-${reloj}.webp`} />
+                <img src={`/relojes//${reloj}/mecanizado.webp`} />
             </div>
             <div className={hovering !== '' && hovering !== 'aluminio' ? styles['DisAssembly__piece-notHovered'] : ''}>
                 <img src='/relojes/tapa.webp' />
@@ -191,23 +231,73 @@ const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hoverin
 }
 
 const WatchSpecs:React.FC = () => {
+
+    const specs = [
+        [{label: 'Correas', value: 'Cuero genuino marron'},
+        {label: 'Vidro', value: 'Cristal mineral'}],
+        [{label: 'Dorso', value: 'Aluminio anodizado'},
+        {label: 'Espesor', value: '9.8mm'}],
+        [{label: 'Madera', value: 'Guayubira'},
+        {label: 'Peso', value: '22grs'}],
+        [{label: 'Rango muñeca', value: '16.3 - 21.1cm'},
+        {label: 'Movimiento', value: 'Epson Y121E'}],
+    ]
+
     return (
         <section className={styles.WatchSpecs}>
-
+            <div className={styles.WatchSpecs__asset}>
+                <img src="/relojes/specs.webp" alt="Watch specs" />
+            </div>
+            <div className={styles.WatchSpecs__specs}>
+                <h2>Especificaciones</h2>
+                <div>
+                    {specs.map((specRow, i)=>
+                        <div className={styles.WatchSpecs__specRow} key={i}>
+                            {specRow.map((spec)=>
+                                <div className={styles.WatchSpecs__spec} key={spec.label}>
+                                    <div>{spec.label}</div>
+                                    <div>{spec.value}</div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
         </section>
     )
 }
 
+
+
 type TRecommended = {
-    title: string,
+    name: string,
     image: string,
     href: string,
     price: string,
 }
 
-const Recommended:React.FC<{recommended: TRecommended[]}> = ({recommended}) => {
+const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
     return (
-        <section></section>
+        <section className={styles.Recommended}>
+            <div>
+                <h2>También te puede interesar</h2>
+            </div>
+            <div>
+                {products.map((product)=>
+                <Link href={product.href} >
+                    <div className={styles.Recommended__item}>
+                        <div className={styles.Recommended__image}>
+                            <Image layout="fill" objectFit='cover' src={product.image} />
+                        </div>
+                        <div className={styles.Recommended__info}>
+                            <h3>{capitalize(product.name)}</h3>
+                            <div>{product.price}</div>
+                        </div>
+                    </div>
+                </Link>
+                )}
+            </div>
+        </section>
     )
 }
 
