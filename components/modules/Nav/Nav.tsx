@@ -16,9 +16,11 @@ const Nav:React.FC<NavProps> = ({theme}) => {
         <nav className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''}`}>
             <div>
                 <div>
-                    {/* <div className={styles.Nav__logo}>
-                        <Image src="/lengas.png" width={80} height={80} />
-                    </div> */}
+                    <div className={styles.Nav__logo}>
+                        <Link href="/">
+                            <img src="/lengas.png" alt="Lengas logo" height={30} />
+                        </Link>
+                    </div>
                     <ul>
                         <li>Nosotros</li>
                         <Link href="/relojes">
@@ -30,7 +32,9 @@ const Nav:React.FC<NavProps> = ({theme}) => {
                 <div>
                     <ul>
                         <li>Soporte</li>
-                        <li>arg</li>
+                        <li>
+                            <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
+                        </li>
                         <li>
                             <div>{cart(undefined, (hasScrolled || theme === "scrolled") ? "black" : "white")}</div>
                         </li>

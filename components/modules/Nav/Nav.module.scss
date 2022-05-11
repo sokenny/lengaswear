@@ -44,7 +44,14 @@
     }
 
     .Nav__logo{
+        display: flex;
+        align-items: center;
         margin-right: $pxs4;
+        cursor: pointer;
+
+        img{
+            filter: brightness(1) invert(1);
+        }
     }
 }
 
@@ -55,4 +62,11 @@
         background-color: rgba(255,255,255,0.95);
         border-color: rgba(0,0,0,0.1);
     }
+
+    .Nav__logo{
+        img{
+            filter: invert(0);
+        }
+    }
+
 }

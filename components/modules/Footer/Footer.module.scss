@@ -10,16 +10,46 @@
     font-family: Manrope;
     font-weight: 300;
 
+    @include mobile{
+        flex-direction: column;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .logo{
+        filter: brightness(0) invert(1);
+
+        @include mobile{
+            img{
+                height: 60px;
+                margin-bottom: $pxs3;
+            }
+        }
+    }
+
     .links{
         display: flex;
+
+        @include mobile{
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
 
         >ul{
             margin: 0;
             margin-right: 100px;
 
+            @include mobile{
+                margin-bottom: $pxs2;
+            }
+
             >li:first-child{
                 font-weight: 600;
                 margin-bottom: $pxs2;
+
+                @include mobile{
+                    margin-bottom: $pxs1;
+                }
             }
 
             >li{
@@ -31,6 +61,11 @@
                 cursor: pointer;
             }
         }
+        >ul:nth-child(2){
+            @include mobile{
+                order: 3;
+            }
+        }
         >ul:last-child{
             margin-right: 0;
         }
@@ -40,6 +75,10 @@
         >div:first-child{
             font-weight: 600;
             margin-bottom: $pxs2;
+
+            @include mobile{
+                margin-bottom: $pxs1;
+            }
         }
         >div:nth-child(2){
             margin-bottom: $pxs2;
@@ -58,6 +97,10 @@
 .Footer-white{
     background-color: color(w2);
     border-top: 1px solid rgba(0,0,0,0.1);
+
+    .logo{
+        filter: invert(1);
+    }
 
     .links{
 

@@ -13,6 +13,7 @@
     @include mobile{
         justify-content: flex-end;
         padding: var(--sp2);
+        height: 75vh;
     }
 
     .title{
