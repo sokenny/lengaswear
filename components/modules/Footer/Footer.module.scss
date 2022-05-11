@@ -17,11 +17,11 @@
     }
 
     .logo{
-        filter: brightness(0) invert(1);
+        filter: brightness(0) invert(.8);
 
         @include mobile{
             img{
-                height: 60px;
+                height: 50px;
                 margin-bottom: $pxs3;
             }
         }
@@ -99,7 +99,7 @@
     border-top: 1px solid rgba(0,0,0,0.1);
 
     .logo{
-        filter: invert(1);
+        filter: invert(.85);
     }
 
     .links{

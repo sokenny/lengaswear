@@ -181,16 +181,16 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     const materials = ['cristal', 'madera', 'aluminio']
 
     return (
-        <section className={styles.Reloj__azar}>
+        <section className={styles.SuiGeneris}>
             <div>
                 <DisAssembly reloj={reloj} hovering={hovering} />
             </div>
             <div>
                 <TitleWDescription title="No dejamos nada al azar" description="Representando todos los valores que Lengas simboliza. Como la transparencia, la sustentabilidad y la simplicidad." />
-                <div className={styles.Reloj__materiales}>
+                <div className={styles.SuiGeneris__materiales}>
                     <div>
                         {materials.map((material)=>
-                            <div className={styles.Reloj__material} onMouseEnter={()=>setHovering(material)} onMouseLeave={()=>setHovering("")} key={material}></div>
+                            <div className={styles.SuiGeneris__material} onMouseEnter={()=>setHovering(material)} onMouseLeave={()=>setHovering("")} key={material}></div>
                         )}
                     </div>
                     <div>Materiales que te van a encantar</div>

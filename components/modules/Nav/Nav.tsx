@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useScrollPosition } from "@/utils/index";
+import { useScrollPosition, useIsMobile } from "@/utils/index";
 import { cart } from "@/utils/icons";
 import styles from './Nav.module.scss';
 
@@ -9,14 +9,41 @@ interface NavProps {
 
 const Nav:React.FC<NavProps> = ({theme}) => {
 
+    const isMobile = useIsMobile();
     const scrollPosition = useScrollPosition();
     const hasScrolled = scrollPosition > 0;
 
     return (
-        <nav className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''}`}>
+        <div className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''}`}>
+            {isMobile ? <MobileNav /> : <DesktopNav />}
+        </div>
+    )
+}
+
+const MobileNav:React.FC = () => {
+    return (
+        <nav className={`${styles.MobileNav}`}>
+            <div>
+                <div>HAM</div>
+                <div className={styles.MobileNav__logo}>
+                    <img src="/lengas.png" alt="Lengas logo" />
+                </div>
+                <div className={styles.MobileNav__cart}>
+                    <div>
+                        0
+                    </div>
+                </div>
+            </div>
+        </nav>
+    )
+}
+
+const DesktopNav:React.FC = () => {
+    return (
+        <nav className={`${styles.DesktopNav}`}>
             <div>
                 <div>
-                    <div className={styles.Nav__logo}>
+                    <div className={styles.DesktopNav__logo}>
                         <Link href="/">
                             <img src="/lengas.png" alt="Lengas logo" height={30} />
                         </Link>
@@ -36,7 +63,7 @@ const Nav:React.FC<NavProps> = ({theme}) => {
                             <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
                         </li>
                         <li>
-                            <div>{cart(undefined, (hasScrolled || theme === "scrolled") ? "black" : "white")}</div>
+                            <div className={styles.DesktopNav__cart}>{cart(undefined, "white")}</div>
                         </li>
                     </ul>
                 </div>

@@ -11,7 +11,7 @@ type AssetAndTextProps = {
 
 const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ctaSection=false, assetLeft=true}) => {
     return (
-        <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`}>
+        <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`} data-component="AssetAndText">
             <div className={styles.asset}>
                 {typeof asset === 'string' ? <img src={asset}/> : asset}
             </div>

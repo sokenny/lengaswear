@@ -1,7 +1,10 @@
 @import '../../../styles/variables';
 
-
 .Nav{
+    // z-index: 5
+}
+
+.DesktopNav{
     color: white;
     position: fixed;
     width: 100%;
@@ -43,7 +46,7 @@
         }
     }
 
-    .Nav__logo{
+    .DesktopNav__logo{
         display: flex;
         align-items: center;
         margin-right: $pxs4;
@@ -55,18 +58,76 @@
     }
 }
 
-.Nav-scrolled{
+.Nav-scrolled .DesktopNav{
+    >div{
+        color: color(b1);
+        background-color: rgba(255,255,255,0.95);
+        border-color: rgba(0,0,0,0.1);
+    }
+    .DesktopNav__logo{
+        img{
+            filter: invert(.2);
+        }
+    }
 
+    .DesktopNav__cart{
+        filter: brightness(0.2);
+    }
+}
+
+.MobileNav{
+    position: fixed;
+    width: 100%;
+    color: white;
+    
+    >div{
+        display: flex;
+        justify-content: space-between;
+        padding: var(--sp1);
+        padding: 15px;
+        position: relative;
+        margin: 10px;
+        border: 1px solid transparent;
+        transition: .2s;
+        
+        .MobileNav__logo{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: brightness(1) invert(1);
+            
+            img{
+                height: 30px;
+            }
+        }
+
+        .MobileNav__cart{
+            >div{
+                height: 25px;
+                width: 25px;
+                border-radius: 50%;
+                background-color: color(gold);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                font-weight: 600;
+                color: white;
+            }
+        }
+    }
+}
+
+.Nav-scrolled .MobileNav{
     >div{
         color: color(b1);
         background-color: rgba(255,255,255,0.95);
         border-color: rgba(0,0,0,0.1);
     }
 
-    .Nav__logo{
+    .MobileNav__logo{
         img{
-            filter: invert(0);
+            filter: invert(.8);
         }
     }
-
 }
