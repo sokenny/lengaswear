@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState, useMemo, ReactNode } from 'react'
 import { NextPageAugmented } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useScrollPosition, useOnScreen, capitalize, useIsMobile } from '@/utils/index'
+import { useScrollPosition, useOnScreen, capitalize } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ParsedUrlQuery } from 'querystring'
+import { ProcessVideoAsset } from 'pages';
 import Nav from '@/components/modules/Nav/Nav'
 import Button from '@/components/elements/Button/Button'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
@@ -34,18 +35,19 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
             <title>{capitalize(reloj)} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
+            <FixedProductCta product={product} />
             <TopProductSection imgs={imgs} product={product} />
             <div className='container'>
-                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
+                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
             </div>
             <div className={styles.Reloj__slightGray}>
                 <div className='container'>
                     <SuiGeneris reloj={reloj} />
                     <div className={styles.Reloj__overlapSections}>
-                        <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj}/cuadrante.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />}  assetLeft={false} />
-                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
-                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj}/ligero.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />}  assetLeft={false} />
-                        <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj}/correas.webp`} />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} />
+                        <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj}/cuadrante.webp`} />}  assetLeft={false} />
+                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} />
+                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj}/ligero.webp`} />}  assetLeft={false} />
+                        <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj}/correas.webp`} />} />
                     </div>
                 </div>
             </div>
@@ -72,7 +74,7 @@ type TopProductSectionProps = {
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => {
 
     const scrollPosition = useScrollPosition()
-    const lastPicRef = useRef()
+    const lastPicRef = useRef(null)
     const picOnScreen = useOnScreen(lastPicRef)
     const [lockAt, setLockAt] = useState<number>(0)
 
@@ -310,6 +312,23 @@ const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
     )
 }
 
+const FixedProductCta:React.FC<{product:TProduct}> = ({product}) => {
+    return  (
+        <div className={styles.FixedProductCta}>
+            <div>
+                <div className={styles.productInfo}>
+                    <h1>{product.name}</h1><div>${product.price}</div>
+                </div>
+                <div className={styles.ctas}>
+                    <Button onClick={()=>{}} theme="light">Elegir color</Button>
+                    <Button onClick={()=>{}}>Agregar al carrito</Button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [
@@ -318,7 +337,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
           { params: { reloj: 'jauke' } },
           { params: { reloj: 'mahai' } },
         ],
-        fallback: true // false or 'blocking'
+        fallback: true
       };
 }
 

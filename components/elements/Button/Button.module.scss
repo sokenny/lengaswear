@@ -10,8 +10,8 @@
     cursor: pointer;
 }
 
-.Button:hover{
+.Button:hover, .Button.Button-light{
     background-color: transparent;
-    border-color: color(b1);
-    color: color(b1);
+    border-color: color(g1);
+    color: color(g1);
 }

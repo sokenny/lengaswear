@@ -1,5 +1,25 @@
 @import '../styles/variables';
 
 .Home{
-    
+
+    [data-component="ProcessVideoAsset"]{
+        justify-content: flex-start;
+    }   
+}
+
+.ProcessVideoAsset{
+    height: 700px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    video{
+        object-fit: cover;
+        height: 100%;
+        max-width: 70%;
+
+        @include mobile{
+            max-width: 100%;
+        }
+    }
 }

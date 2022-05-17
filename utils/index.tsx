@@ -25,8 +25,7 @@ export const useOnScreen = (ref:React.RefObject<HTMLDivElement>):boolean => {
                 )
         }catch(e){
             console.log('Intersection observer is not available. Browser does not support it.')
-            // We return "not available" so that truth checkers for "isInterseting" pass the check and elements are not kept hidden from the DOM. Also could be used to handle a specific scenario for a not available Observer. 
-            setIntersecting("not available")
+            setIntersecting(false)
         }
     }, [])
     useEffect(() => {
@@ -53,4 +52,14 @@ export const useIsMobile = ():{} => {
       return () => window.removeEventListener("resize", handleResize);
     }, []);
     return isMobile;
+}
+
+export const scrollTo = (ref:React.RefObject<HTMLDivElement>, yOffset=0, side="top") => {
+    const element:any = ref.current;
+    const y = element.getBoundingClientRect()[side] + window.pageYOffset + yOffset - (side === "bottom" ? window.innerHeight : 0);
+    try{
+        window.scrollTo({top: y, behavior: 'smooth'});
+    }catch(e){
+        console.log('An error occured inside scrollTo function. Probably the window object can not be accessed: ', e.message)
+    }
 }

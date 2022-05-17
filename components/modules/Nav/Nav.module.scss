@@ -1,7 +1,7 @@
 @import '../../../styles/variables';
 
 .Nav{
-    // z-index: 5
+    width: 100%;
 }
 
 .DesktopNav{
@@ -9,6 +9,10 @@
     position: fixed;
     width: 100%;
     z-index: 4;
+
+    @include mobile{
+        display: none;
+    }
 
     >div{
         transition: .2s;
@@ -18,7 +22,7 @@
         padding: var(--sp1);
         padding-bottom: 5px;
         padding-top: 5px;
-        margin: 10px;
+        margin: 5px;
         border: 1px solid transparent;
     }
 
@@ -30,13 +34,13 @@
         display: flex;
         align-items: center;
 
-        li{
+        a{
             margin-right: $pxs3;
             font-family: Manrope;
             font-weight: 400;
         }
 
-        li:last-child{
+        a:last-child{
             margin-right: 0;
         }
 
@@ -63,6 +67,7 @@
         color: color(b1);
         background-color: rgba(255,255,255,0.95);
         border-color: rgba(0,0,0,0.1);
+        backdrop-filter: blur(5px);
     }
     .DesktopNav__logo{
         img{
@@ -79,6 +84,12 @@
     position: fixed;
     width: 100%;
     color: white;
+    z-index: 1;
+    display: none;
+
+    @include mobile{
+        display: block;
+    }
     
     >div{
         display: flex;
@@ -86,7 +97,7 @@
         padding: var(--sp1);
         padding: 15px;
         position: relative;
-        margin: 10px;
+        margin: 3px;
         border: 1px solid transparent;
         transition: .2s;
         
@@ -116,6 +127,35 @@
             }
         }
     }
+
+    .MobileNav__dropDown{
+        padding: 52px;
+        background-color: white;
+        backdrop-filter: blur(5px);
+
+        >div{
+            color: color(g1);
+            ul{
+                margin-bottom: $pxs2;
+                li{
+                    border-bottom: 1px solid color(g1);
+                    padding: 12px 0;
+                    transition: .2s;
+                }
+                li:last-child{
+                    border-bottom: none;
+                }
+                li:hover{
+                    color: black;
+                }
+            }
+            >div{
+                width: 100%;
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+    }
 }
 
 .Nav-scrolled .MobileNav{
@@ -123,11 +163,14 @@
         color: color(b1);
         background-color: rgba(255,255,255,0.95);
         border-color: rgba(0,0,0,0.1);
+        backdrop-filter: blur(5px);
     }
 
-    .MobileNav__logo{
-        img{
-            filter: invert(.8);
-        }
+    .MobileNav__logo img, .MobileNav__hamburger{
+        filter: invert(.8);
     }
+}
+
+.MobileNav-isOpen{
+    height: 100vh;
 }

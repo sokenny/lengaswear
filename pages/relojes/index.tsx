@@ -1,57 +1,22 @@
-import { NextPageAugmented } from "types";
-import Link from "next/link";
+import { NextPageAugmented, ProductType } from "types";
+import ProductCategory from '@/components/layouts/ProductCategory/ProductCategory';
 import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
-import styles from '../../styles/Relojes.module.scss';
 
-export type RelojType = {name: string, price: number, href: string, image: string}
-
-const relojes:RelojType[] = [
-    {name: 'Quemanta', price: 10900, href: "/relojes/quemanta", image: "/relojes/quemanta/main.webp"},
-    {name: 'Jauke', price: 10900, href: "/relojes/jauke", image: "/relojes/jauke/main.webp"},
-    {name: 'Tesh', price: 10900, href: "/relojes/tesh", image: "/relojes/tesh/main.webp"},
-    {name: 'Mahai', price: 10900, href: "/relojes/mahai", image: "/relojes/mahai/main.webp"},
+const relojes:ProductType[] = [
+    {name: 'Quemanta', price: 10900, href: "/relojes/quemanta", image: "/relojes/quemanta/thumbnail.webp"},
+    {name: 'Jauke', price: 10900, href: "/relojes/jauke", image: "/relojes/jauke/thumbnail.webp"},
+    {name: 'Tesh', price: 10900, href: "/relojes/tesh", image: "/relojes/tesh/thumbnail.webp"},
+    {name: 'Mahai', price: 10900, href: "/relojes/mahai", image: "/relojes/mahai/thumbnail.webp"},
 ]
 
 const Relojes:NextPageAugmented = () => {
     return (
-        <div className={styles.Relojes}>
-            <div className={styles.Relojes__container}>
-                <main>
-                    <div className={styles.Relojes__header}>
-                        <h1>Nuestros relojes</h1>
-                        <h2>Podría ir, o no, un texto más aca diciendo tipo todos de maderas de distintas partes de la Patagonia, pero hechos en nuestro taller.</h2>
-                    </div>
-                    <section className={styles.Relojes__relojes}>
-                        {relojes.map((reloj)=>
-                            <Link href={reloj.href} passHref>
-                                <div>
-                                    <RelojItem reloj={reloj} />
-                                </div>
-                            </Link>
-                        )}
-                    </section>
-                </main>
-            </div>
-        </div>
-    )
-}
-
-type RelojItemProps = {
-    reloj: RelojType
-}
-
-const RelojItem:React.FC<RelojItemProps> = ({reloj}) => {
-    return (
-        <div className={styles.RelojItem}>
-            <div className={styles.RelojItem__image}>
-                <img src={reloj.image} alt="" />
-            </div>
-            <div>
-                <h3>{reloj.name}</h3>
-                <div>{reloj.price}</div>
-            </div>
-        </div>
+        <ProductCategory 
+        title="Nuestros Relojes" 
+        description="Podría ir, o no, un texto más aca diciendo tipo todos de maderas de distintas partes de la Patagonia, pero hechos en nuestro taller" 
+        products={relojes}
+        />
     )
 }
 

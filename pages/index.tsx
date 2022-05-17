@@ -1,4 +1,6 @@
 import { NextPage } from "next"
+import { useState, useRef, useEffect } from "react";
+import { useOnScreen, scrollTo } from "@/utils/index";
 import ArrowCta from "@/components/elements/ArrowCta/ArrowCta";
 import HeroBanner from "@/components/modules/HeroBanner/HeroBanner";
 import FeaturedCategories from "@/components/modules/FeaturedCategories/FeaturedCategories";
@@ -19,13 +21,16 @@ const testimonials:TestimonialsType = [
 ]
 
 const Home: NextPage = () => {
+
+    const productsRef = useRef(null)
+
     return (
         <div className={styles.Home}>
-            <HeroBanner title="artesanales" subtitle="Piezas de tiempo" cta="Ver productos" image="/home-banner.webp" />
-            <div className="container">
+            <HeroBanner title="artesanales" subtitle="Piezas de tiempo" cta="Ver productos" image="/home-banner.webp" onClick={()=>scrollTo(productsRef)} />
+            <div className="container" ref={productsRef}>
                 <FeaturedCategories />
                 <StoreInfo />
-                <AssetAndText title="Sustentable y artesanal" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset="/asset-placeholder.webp" ctaSection={<ArrowCta cta={"Leer mas"} color="gray" />} />
+                <AssetAndText title="Sustentable y artesanal" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas"} color="gray" />} />
             </div>
             <HeroStripe title="Plantas un árbol" description="Con tu compra, en conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia." cta="Leer más" image="/bosque-de-lengas.webp" />
             <div className="container">
@@ -35,6 +40,20 @@ const Home: NextPage = () => {
             <div className="container">
                 <Newsletter />
             </div>
+        </div>
+    )
+}
+
+export const ProcessVideoAsset:React.FC = () => {
+    const videoRef = useRef<HTMLDivElement>(null);
+    const isOnScreen = useOnScreen(videoRef);
+    const [src, setSrc] = useState<string>("");
+    useEffect(()=>{
+        if(isOnScreen && src === "") setSrc("/relojes/process.mp4")
+    }, [isOnScreen])
+    return (
+        <div className={styles.ProcessVideoAsset} data-component="ProcessVideoAsset" ref={videoRef}>
+            <video src={src} placeholder="/relojes/process-placeholder.webp" autoPlay muted loop></video>
         </div>
     )
 }

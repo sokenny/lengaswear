@@ -26,7 +26,8 @@
     }
 
     .watches{
-        width: 60%;
+        width: 60%;         
+        cursor: pointer;
 
         @include mobile{
             width: 100%;
@@ -36,6 +37,7 @@
     }
     .wallets{
         width: 38%;
+        cursor: pointer;
 
         @include mobile{
             width: 100%;

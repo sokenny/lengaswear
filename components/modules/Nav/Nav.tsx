@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Link from "next/link";
-import { useScrollPosition, useIsMobile } from "@/utils/index";
-import { cart } from "@/utils/icons";
+import { AnimatePresence, motion } from 'framer-motion';
+import { useScrollPosition } from "@/utils/index";
+import { cart, hamburger } from "@/utils/icons";
 import styles from './Nav.module.scss';
 
 interface NavProps {
@@ -9,24 +11,31 @@ interface NavProps {
 
 const Nav:React.FC<NavProps> = ({theme}) => {
 
-    const isMobile = useIsMobile();
     const scrollPosition = useScrollPosition();
     const hasScrolled = scrollPosition > 0;
 
     return (
         <div className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''}`}>
-            {isMobile ? <MobileNav /> : <DesktopNav />}
+            <MobileNav />
+            <DesktopNav />
         </div>
     )
 }
 
+const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/relojes'}, {label: 'Billeteras', path: '/billeteras'}, {label: 'Contacto', path: '/relojes'}, {label: 'Carrito', path: '/relojes'}]; 
+
 const MobileNav:React.FC = () => {
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
     return (
-        <nav className={`${styles.MobileNav}`}>
+        <nav className={`${styles.MobileNav} ${isOpen ? styles['MobileNav-isOpen'] : ''}`} onClick={()=>setIsOpen(false)}>
             <div>
-                <div>HAM</div>
+                <div className={styles.MobileNav__hamburger} onClick={(e)=>{e.stopPropagation(), setIsOpen(!isOpen)}}>{hamburger()}</div>
                 <div className={styles.MobileNav__logo}>
-                    <img src="/lengas.png" alt="Lengas logo" />
+                    <Link href="/">
+                        <img src="/lengas.png" alt="Lengas logo" />
+                    </Link>
                 </div>
                 <div className={styles.MobileNav__cart}>
                     <div>
@@ -34,6 +43,24 @@ const MobileNav:React.FC = () => {
                     </div>
                 </div>
             </div>
+            <AnimatePresence>
+            {isOpen &&
+            <motion.div className={styles.MobileNav__dropDown} onClick={(e)=>e.stopPropagation()} initial={{y: -20, opacity: 0}} animate={{y: 0, opacity: 1}} exit={{y: -20, opacity: 0}} transition={{ease: "easeOut", stiffness: 0, duration: .15}} >
+                <div>
+                    <ul>
+                        {mobileTabs.map((tab, i)=>
+                            <Link href="/relojes">
+                            <motion.li key={tab.label} initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: i*.05}}>
+                                {tab.label}
+                            </motion.li>
+                            </Link>
+                        )}
+                    </ul>
+                    <div>Necesitas ayuda? Chateá con nosotros!</div>
+                </div>
+            </motion.div>
+            }
+            </AnimatePresence>
         </nav>
     )
 }
@@ -49,22 +76,33 @@ const DesktopNav:React.FC = () => {
                         </Link>
                     </div>
                     <ul>
-                        <li>Nosotros</li>
                         <Link href="/relojes">
-                            <li>Relojes</li>
+                            <a><li>Relojes</li></a>
                         </Link>
-                        <li>Billeteras</li>
+                        <Link href="/billeteras">
+                            <a><li>Billeteras</li></a>
+                        </Link>
                     </ul>
                 </div>
                 <div>
                     <ul>
-                        <li>Soporte</li>
-                        <li>
-                            <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
-                        </li>
-                        <li>
-                            <div className={styles.DesktopNav__cart}>{cart(undefined, "white")}</div>
-                        </li>
+                        <Link href="/soporte">
+                            <a><li>Soporte</li></a>
+                        </Link>
+                            <a>
+                                <li>
+                                    <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
+                                </li>
+                            </a>
+                        <Link href="/carrito">
+                            <a>
+                                <li>
+                                    <div className={styles.DesktopNav__cart}>
+                                        {cart(undefined, "white")}
+                                    </div>
+                                </li>
+                            </a>
+                        </Link>
                     </ul>
                 </div>
             </div>
