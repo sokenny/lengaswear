@@ -18,9 +18,11 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
             <div className={styles.text}>
                 <h3>{title}</h3>
                 <p>{description}</p>
+                {ctaSection &&
                 <div className={styles.ctaSection}>
                     {ctaSection}
                 </div>
+                }
             </div>
         </section>
     )

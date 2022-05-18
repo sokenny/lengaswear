@@ -59,7 +59,7 @@ export const scrollTo = (ref:React.RefObject<HTMLDivElement>, yOffset=0, side="t
     const y = element.getBoundingClientRect()[side] + window.pageYOffset + yOffset - (side === "bottom" ? window.innerHeight : 0);
     try{
         window.scrollTo({top: y, behavior: 'smooth'});
-    }catch(e){
+    }catch(e:any){
         console.log('An error occured inside scrollTo function. Probably the window object can not be accessed: ', e.message)
     }
 }

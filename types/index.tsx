@@ -5,4 +5,4 @@ export type NextPageAugmented<P = {}, IP = P> = NextPage<P, IP> & {
     footer?: React.ReactNode
 };
   
-export type ProductType = {name: string, price: number, href: string, image: string}
+export type ProductType = {name: string, price: number, href?: string, image?: string, description?:string}

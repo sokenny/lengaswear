@@ -1,29 +1,28 @@
-import { useEffect, useLayoutEffect, useRef, useState, useMemo, ReactNode } from 'react'
-import { NextPageAugmented } from 'types'
+import { useEffect, useRef, useState } from 'react'
+import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useScrollPosition, useOnScreen, capitalize } from '@/utils/index'
-import { returns, shipping, safePurchase, safe } from "@/utils/icons";
+import { useOnScreen, capitalize } from '@/utils/index'
 import { ParsedUrlQuery } from 'querystring'
 import { ProcessVideoAsset } from 'pages';
+import Head from 'next/head';
 import Nav from '@/components/modules/Nav/Nav'
-import Button from '@/components/elements/Button/Button'
+import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCta'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
-import Image from 'next/image';
-import Head from 'next/head';
-import Link from 'next/link';
+import TopProductSection from '@/components/modules/TopProductSection/TopProductSection'
+import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
 import styles from '../../styles/Reloj.module.scss'
 
 const recommendedProducts:TRecommended[] = [
     {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: '$10,000'},
     {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: '$10,000'},
-    {name: 'billetera', image: '/billeteras/recommended.webp', href: '/billeteras', price: '$10,000'},
+    {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: '$10,000'},
 ]
 
 const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
-
+    
     const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-${item}.webp`)
-    const product:TProduct = {
+    const product:ProductType = {
         name: reloj,
         price: 10900,
         description: 'Texto corto de descripción del modelo, cual es el diferencial.'
@@ -60,80 +59,6 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
     )
 }
 
-type TProduct = {
-    name: string,
-    price: number,
-    description: string
-}
-
-type TopProductSectionProps = {
-    product: TProduct,
-    imgs: string[],
-}
-
-const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => {
-
-    const scrollPosition = useScrollPosition()
-    const lastPicRef = useRef(null)
-    const picOnScreen = useOnScreen(lastPicRef)
-    const [lockAt, setLockAt] = useState<number>(0)
-
-    useLayoutEffect(()=>{
-        const lockPosition:number = window.pageYOffset + lastPicRef.current.getBoundingClientRect().top - window.innerHeight
-        if((lockAt === 0 && picOnScreen) || window.pageYOffset >= lockPosition) setLockAt(lockPosition);
-    }, [scrollPosition, picOnScreen, lockAt])
-
-    function shouldLockHeader():boolean{
-        return (picOnScreen || scrollPosition > lockAt) && lockAt !== 0
-    }
-
-    return (
-            <section className={styles.TopProductSection}>
-                <div className={styles.TopProductSection__gallery}>
-                    {imgs.slice(0, 3).map((img, i)=>
-                    <div key={img}>
-                        {i === 0 &&
-                        <div className={`mobile ${styles.TopProductSection__mobileInfo}`}>
-                            <div className={styles.TopProductSection__description}>
-                                <div>{product.description}</div>
-                                <div>Madera: <strong>Lenga</strong></div>
-                                <div>Peso: <strong>22g</strong></div>
-                            </div>
-                        </div>
-                        }
-                        <Image src={img} layout="fill" objectFit='cover' key={img} />
-                    </div>
-                    )}
-                    <div ref={lastPicRef}>
-                        <div>
-                            <Image src={imgs[3]} layout="fill" objectFit='cover' />
-                        </div>
-                        <div>
-                            <TitleWDescription title="El tuyo es único" description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." />
-                        </div>
-                    </div>
-                </div>
-                <div className={`${styles.TopProductSection__headerInfo} desktop`} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
-                    <div>
-                        <h1>{product.name}</h1>
-                        <div className={styles.TopProductSection__description}>
-                            <div>{product.description}</div>
-                            <div>Madera: <strong>Lenga</strong></div>
-                            <div>Peso: <strong>22g</strong></div>
-                        </div>
-                        <div className={styles.TopProductSection__price}>$ {product.price}</div>
-                        <Button onClick={()=>{}}>Agregar al carrito</Button>
-                        <div className={styles.TopProductSection__verMas}>
-                            <div>Ver más características</div>
-                            <div>Ver más detalles</div>
-                        </div>
-                        <PurchaseInfo />
-                    </div>
-                </div>
-            </section>
-    )
-}
-
 const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
     return (
         <div className={styles.WatchPartAsset}>
@@ -142,29 +67,7 @@ const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
     )
 }
 
-const PurchaseInfo:React.FC = () => {
-    
-    const items:{icon:ReactNode, text: string}[] = useMemo(()=>[
-        {icon: returns(20, "gray"), text: 'hasta 7 dias despues de tu compra.'},
-        {icon: shipping(20, "gray"), text: 'a todo el país.'},
-        {icon: safePurchase(20, "gray"), text: 'mediante Mercadopago, Paypal o GooglePay.'},
-        {icon: safe(20, "gray"), text: 'por 12 meses en caso de cualquier falla.'},
-    ], [])
-
-    return (
-        <div className={styles.PurchaseInfo}>
-            {items.map((item)=>
-                <div className={styles.PurchaseInfo__item}>
-                    <div>{item.icon}</div>
-                    <div>{item.text}</div>
-                </div>
-            )}
-        </div>
-    )
-} 
-
-const TitleWDescription:React.FC<{title:string, description:string}> = ({title, description}) => {
-    
+export const TitleWDescription:React.FC<{title:string, description:string}> = ({title, description}) => {
     return (
         <div className={styles.TitleWDescription}>
             <h2>{title}</h2>
@@ -277,57 +180,6 @@ const WatchSpecs:React.FC = () => {
         </section>
     )
 }
-
-
-
-type TRecommended = {
-    name: string,
-    image: string,
-    href: string,
-    price: string,
-}
-
-const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
-    return (
-        <section className={styles.Recommended}>
-            <div>
-                <h2>También te puede interesar</h2>
-            </div>
-            <div>
-                {products.map((product)=>
-                <Link href={product.href} >
-                    <div className={styles.Recommended__item}>
-                        <div className={styles.Recommended__image}>
-                            <Image layout="fill" objectFit='cover' src={product.image} />
-                        </div>
-                        <div className={styles.Recommended__info}>
-                            <h3>{capitalize(product.name)}</h3>
-                            <div>{product.price}</div>
-                        </div>
-                    </div>
-                </Link>
-                )}
-            </div>
-        </section>
-    )
-}
-
-const FixedProductCta:React.FC<{product:TProduct}> = ({product}) => {
-    return  (
-        <div className={styles.FixedProductCta}>
-            <div>
-                <div className={styles.productInfo}>
-                    <h1>{product.name}</h1><div>${product.price}</div>
-                </div>
-                <div className={styles.ctas}>
-                    <Button onClick={()=>{}} theme="light">Elegir color</Button>
-                    <Button onClick={()=>{}}>Agregar al carrito</Button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {

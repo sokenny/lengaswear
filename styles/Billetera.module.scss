@@ -1,0 +1,22 @@
+@import './variables';
+
+.Billetera{
+
+    @include mobile{
+
+        [data-component=AssetAndText]:nth-of-type(1){
+            flex-direction: column-reverse;
+        }
+    }
+
+    .WalletSpecs{
+        background-color: color(b1);
+        padding: var(--sp1);
+        >div{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

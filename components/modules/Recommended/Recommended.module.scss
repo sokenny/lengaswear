@@ -1,0 +1,75 @@
+@import '../../../styles/variables';
+
+.Recommended{
+
+    >div:first-child{
+        padding: 0 $pxs3;
+        margin-bottom: $pxs3;
+        
+        h2{
+            font-family: Silk Serif;
+            font-size: $fs2;
+            font-weight: 400;
+        }
+    }
+
+    >div:last-child{
+        display: flex;
+        justify-content: space-between;
+
+        .item{
+            cursor: pointer;
+
+            .image{
+                height: 450px;
+
+                @include mobile{
+                    height: 280px;
+                }
+            }
+        }
+
+        .item:nth-child(1){
+            width: 36%;
+
+            @include mobile{
+                width: 60%;
+            }
+        }
+        .item:nth-child(2){
+            width: 36%;
+
+            @include mobile{
+                width: 38%;
+            }
+        }
+        .item:nth-child(3){
+            width: 25%;
+
+            @include mobile{
+                display: none;
+            }
+        }
+    }
+
+    .image{
+        position: relative;
+        margin-bottom: 12px;
+        background-color: color(w2);
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .info{
+
+        >h3{
+            font-family: Silk Serif;   
+            font-size: $fs2;
+            font-weight: 400;
+        }
+        >div{
+            color: color(g1); 
+            font-size: 14px;
+        }
+
+    }
+}
