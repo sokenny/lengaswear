@@ -2,12 +2,13 @@ import Link from "next/link";
 import styles from './Footer.module.scss';
 
 type FooterProps = {
-    theme?: string
+    theme?: string,
+    hasFixedCta?: boolean,
 }
 
-const Footer:React.FC<FooterProps> = ({theme}) => {
+const Footer:React.FC<FooterProps> = ({theme, hasFixedCta}) => {
     return (
-        <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''}`}>
+        <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''} ${hasFixedCta ? styles[`Footer-hasFixedCta`] : ''}`}>
             <div className={styles.logo}>
                 <Link href="/">
                     <img src="/lengas2.png" height={40} />

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, useMemo, ReactNode } from 'react'
+import { useLayoutEffect, useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { useScrollPosition, useOnScreen } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import Image from 'next/image';
@@ -11,14 +11,21 @@ import styles from './TopProductSection.module.scss';
 type TopProductSectionProps = {
     product: ProductType,
     imgs: string[],
+    onCtaIntersect: (isIntersecting: boolean) => void,
 }
 
-const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => {
+const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect}) => {
 
     const scrollPosition = useScrollPosition()
     const lastPicRef = useRef<HTMLDivElement>(null)
     const picOnScreen = useOnScreen(lastPicRef)
+    const ctaRef = useRef<HTMLDivElement>(null)
+    const ctaOnScreen = useOnScreen(ctaRef)
     const [lockAt, setLockAt] = useState<number>(0)
+
+    useEffect(()=>{
+        onCtaIntersect(ctaOnScreen)
+    }, [ctaOnScreen])
 
     useLayoutEffect(()=>{
         if(lastPicRef.current !== null){
@@ -37,11 +44,18 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product}) => 
                     {imgs.slice(0, 3).map((img, i)=>
                     <div key={img}>
                         {i === 0 &&
-                        <div className={`mobile ${styles.TopProductSection__mobileInfo}`}>
+                        <div className={`mobile ${styles.TopProductSection__mobileInfo}`} ref={ctaRef}>
+                            <div className={styles.TopProductSection__namePrice}>   
+                                <div>
+                                    <h1>{product.name}</h1>
+                                    <div>${product.price}</div>
+                                </div>
+                            </div>
                             <div className={styles.TopProductSection__description}>
                                 <div>{product.description}</div>
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
+                                <Button onClick={()=>{}}>Agregar al carrito</Button>
                             </div>
                         </div>
                         }

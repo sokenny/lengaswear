@@ -3,7 +3,6 @@
 .Billetera{
 
     @include mobile{
-
         [data-component=AssetAndText]:nth-of-type(1){
             flex-direction: column-reverse;
         }
@@ -18,5 +17,95 @@
             justify-content: center;
             align-items: center;
         }
+    }
+}
+
+.CarrouselSection{
+    background-color: color(w2);
+    display: flex;
+    padding: var(--sp1);
+
+    @include mobile{
+        flex-direction: column;
+    }
+
+    >div{
+        width: 50%;
+
+        @include mobile{ 
+            width: 100%;
+        }
+    }
+    >div:first-child{
+        display: flex;
+        align-items: center;
+
+        @include mobile{
+            padding: $pxs3;
+        }
+
+        >div{
+            max-width: 400px;
+
+            h3{
+                font-size: $fs3;
+                font-weight: 400;
+                margin-bottom: $pxs1;
+
+                @include mobile{
+                    font-size: $fs2;
+                }
+            }
+    
+            .toggler{
+                margin-top: $pxs3;
+
+                .colors{
+                    display: flex;
+                    margin-bottom: $pxs2;
+
+                    .color{
+                        width: 31px;
+                        height: 31px;
+                        border-radius: 50%;
+                        margin-right: 20px;
+                        position: relative;
+                        cursor: pointer;
+                        background-color: blue;
+
+                        >div{
+                            @extend .color;
+                            position: absolute;
+                            background-color: transparent;
+                            border: 1px solid transparent;
+                            transition: .2s;
+                        }
+
+                        >div:hover{
+                            transform: scale(1.2);
+                            border-color: black;
+                        }
+                    }
+                }
+                .activeColor{
+                    font-size: 14px;
+                    display: flex;
+
+                    span{
+                        color: color(g1);
+                        margin-right: 10px;
+                    }
+
+                    >div{
+                        position: relative;
+                        >div{
+                            position: absolute;
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

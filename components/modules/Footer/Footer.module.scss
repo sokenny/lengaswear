@@ -126,3 +126,9 @@
         color: color(g1);
     }
 }
+
+.Footer-hasFixedCta{
+    @include mobile{
+        padding-bottom: 180px;
+    }
+}

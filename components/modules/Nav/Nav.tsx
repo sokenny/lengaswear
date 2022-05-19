@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useScrollPosition } from "@/utils/index";
 import { cart, hamburger } from "@/utils/icons";
 import styles from './Nav.module.scss';
+import { useRouter } from "next/router";
 
 interface NavProps {
     theme?: string
@@ -26,7 +27,16 @@ const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/re
 
 const MobileNav:React.FC = () => {
 
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    useEffect(()=>{
+        const handleRouteComplete = () => { setIsOpen(false) }
+        router.events.on('routeChangeComplete', handleRouteComplete)
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteComplete)
+        }
+    }, [])
 
     return (
         <nav className={`${styles.MobileNav} ${isOpen ? styles['MobileNav-isOpen'] : ''}`} onClick={()=>setIsOpen(false)}>

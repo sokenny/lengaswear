@@ -89,3 +89,22 @@ div.swiper{
 .swiper-pagination-bullet-active{
   background-color: color(gold)!important;
 }
+
+.CarrouselSection .swiper-slide{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.CarrouselSection .swiper-wrapper::after{
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1) 90%);
+  width: 100%;
+}
+
+.CarrouselSection .swiper-slide{
+  opacity: .4;
+  transition: .5s;
+}
+
+.CarrouselSection .swiper-slide.swiper-slide-active{
+  opacity: 1;
+}

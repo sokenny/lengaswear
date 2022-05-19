@@ -6,6 +6,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { ProcessVideoAsset } from 'pages';
 import Head from 'next/head';
 import Nav from '@/components/modules/Nav/Nav'
+import Footer from '@/components/modules/Footer/Footer'
 import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCta'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
@@ -21,6 +22,7 @@ const recommendedProducts:TRecommended[] = [
 
 const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
     
+    const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-${item}.webp`)
     const product:ProductType = {
         name: reloj,
@@ -34,8 +36,8 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
             <title>{capitalize(reloj)} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
-            <FixedProductCta product={product} />
-            <TopProductSection imgs={imgs} product={product} />
+            <FixedProductCta product={product} show={showFixedCta} />
+            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} />
             <div className='container'>
                 <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
             </div>
@@ -201,5 +203,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 Reloj.nav = <Nav theme="scrolled" />
+Reloj.footer = <Footer hasFixedCta={true} />
 
 export default Reloj;

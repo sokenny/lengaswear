@@ -22,8 +22,32 @@
             color: white;
             width: 60%;
 
+            .TopProductSection__namePrice{
+                >div:first-child{
+                    font-size: 18px;
+                    display: flex;
+                    align-items: center;
+                    
+                    h1{
+                        font-family: Silk Serif;
+                        font-size: 18px;
+                        margin-right: $pxs1;
+                        text-transform: uppercase;
+                    }
+                    >div{
+                        opacity: .85;
+                        margin-top: -7px;
+                    }
+                }
+            }
+
             .TopProductSection__description{
                 font-size: 14px;
+
+                button{
+                    margin-top: $pxs1;
+                    font-size: 10px;
+                }
             }
 
         }
