@@ -1,17 +1,19 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { capitalize } from '@/utils/index'
+import { capitalize, colors as utilityColors, scrollTo, useIsMobile } from '@/utils/index'
+import { WalletHTML }  from '@/utils/wallet'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import Head from 'next/head';
 import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
 import Nav from '@/components/modules/Nav/Nav'
 import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCta'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import TopProductSection from '@/components/modules/TopProductSection/TopProductSection'
-import Image from 'next/image';
-import Head from 'next/head';
+import Footer from '@/components/modules/Footer/Footer'
 import styles from '../../styles/Billetera.module.scss';
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -79,12 +81,34 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const WalletSpecs:React.FC = () => {
+
+    const isMobile = useIsMobile();
+    const sectionRef = useRef<HTMLDivElement>(null)
+    const [rotate, setRotate] = useState<boolean>(false)
+    const centerSection = useCallback(()=>{
+        scrollTo(sectionRef, !rotate ? 0 : -250)
+    }, [sectionRef, rotate])
+    
+
     return (
-        <section className={styles.WalletSpecs}>
-            <div>
-                <Image src="/billeteras/specs.webp" width={1200} height={571} />
-            </div>
-        </section>
+        <motion.section 
+        className={`${styles.WalletSpecs} ${rotate ? styles[`WalletSpecs-rotated`] : ''}`}
+        onClick={isMobile ? ()=>{setRotate(!rotate), centerSection()} : undefined}
+        animate={rotate ? {height: "800px"} : {}}
+        transition={{duration: .5}}
+        ref={sectionRef}
+        >
+            <motion.div
+            animate={rotate ? {rotate: -90, width: "600px"} : {rotate: 0}}
+            transition={{duration: .5}}
+            >
+                <motion.div 
+                style={{width: "100%"}}
+                animate={rotate ? {width: "600px"} : {}}
+                dangerouslySetInnerHTML={{__html: WalletHTML}}
+                />
+            </motion.div>
+        </motion.section>
     )
 }
 
@@ -99,6 +123,10 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
         return hoveringOn.toLocaleLowerCase() !== "" && hoveringOn.toLocaleLowerCase() !== billetera
     }, [hoveringOn, billetera])
 
+    function getHexColor(color:string){
+        return utilityColors[color.toLocaleLowerCase() as keyof {}]
+    }
+
     return (
         <section className={styles.CarrouselSection}>
             <div className={styles.text}>
@@ -110,14 +138,15 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                             {colors.map((color)=>
                                 <div 
                                 className={`${styles.color} ${styles[`color-${color.toLocaleLowerCase()}`]}`} 
-                                key={color}
                                 onMouseEnter={()=>setHoveringOn(color)}
                                 onMouseLeave={()=>setHoveringOn("")}
                                 onClick={()=>router.push({
                                     pathname: `/billeteras/${color.toLocaleLowerCase()}`,
-                                  }, undefined, { scroll: false })}
+                                }, undefined, { scroll: false })}
+                                style={{backgroundColor: getHexColor(color)}}
+                                key={color}
                                 >
-                                    <div></div>
+                                    <div style={{borderColor: getHexColor(color)}}></div>
                                 </div>
                             )}
                         </div>
@@ -171,5 +200,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 Billetera.nav = <Nav theme="scrolled" />
+Billetera.footer = <Footer hasFixedCta={true} />
 
 export default Billetera;

@@ -1,12 +1,5 @@
 import React, { ReactNode } from "react";
-
-const colors:{} = {
-    gold: '#BC8C3E',
-    white: '#ffffff',
-    gray: '#757575',
-    lightgray: '#E5E5E5',
-    black: '#000000',
-}
+import { colors } from '../index';
 
 export const cart = (size:number=20, color:string="white"):ReactNode => <svg width={size} height={size / 1.25} viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4 1H19L17.5 10H5.5L4 1Z" stroke={colors[color as keyof {}]} strokeLinecap="square"/>

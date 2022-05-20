@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
 
+export const colors:{} = {
+    gold: '#BC8C3E',
+    white: '#ffffff',
+    gray: '#757575',
+    lightgray: '#E5E5E5',
+    black: '#000000',
+    chocolate: '#433A31',
+    suela: '#94572B',
+    boom: '#7A2625',
+}
+
 export const useScrollPosition = ():number => {
     const[scrollPosition, setScrollPosition] = useState<number>(0)
     function updateScroll(){

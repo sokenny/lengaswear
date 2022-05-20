@@ -3,19 +3,53 @@
 .Billetera{
 
     @include mobile{
-        [data-component=AssetAndText]:nth-of-type(1){
+        [data-component=AssetAndText]{
             flex-direction: column-reverse;
+            >div:first-child{
+                height: 400px;
+
+                img{
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
         }
     }
 
     .WalletSpecs{
         background-color: color(b1);
         padding: var(--sp1);
+
         >div{
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            
+            svg{
+                text{
+                    @include mobile{
+                        transition: .2s;
+                        transition-delay: .25s;
+                        font-size: 50px;
+                    }
+                }
+            }
+        }
+    }
+
+    .WalletSpecs.WalletSpecs-rotated{
+        @include mobile{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            svg{
+                text{
+                    transition-delay: 0;
+                    fill: color(gold);
+                }
+            }
         }
     }
 }
