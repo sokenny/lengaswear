@@ -137,7 +137,7 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                         <div className={styles.colors}>
                             {colors.map((color)=>
                                 <div 
-                                className={`${styles.color} ${styles[`color-${color.toLocaleLowerCase()}`]}`} 
+                                className={`${styles.color} ${styles[`color-${color.toLocaleLowerCase()}`]} ${billetera.toLocaleLowerCase() === color.toLocaleLowerCase() ? styles[`color-selected`] : ''}`} 
                                 onMouseEnter={()=>setHoveringOn(color)}
                                 onMouseLeave={()=>setHoveringOn("")}
                                 onClick={()=>router.push({

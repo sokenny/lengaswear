@@ -87,6 +87,10 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     const [hovering, setHovering] = useState<string>("")
     const materials = ['cristal', 'madera', 'aluminio']
 
+    function getMaterialImg(material:string) {
+        return material === 'madera' ? `/relojes/${reloj}/${material}.png` : `/relojes/${material}.png`
+    }
+
     return (
         <section className={styles.SuiGeneris}>
             <div>
@@ -97,7 +101,13 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                 <div className={styles.SuiGeneris__materiales}>
                     <div>
                         {materials.map((material)=>
-                            <div className={styles.SuiGeneris__material} onMouseEnter={()=>setHovering(material)} onMouseLeave={()=>setHovering("")} key={material}></div>
+                            <div 
+                            className={`${styles.SuiGeneris__material} ${styles[`SuiGeneris__material-${material}`]}`}  
+                            onMouseEnter={()=>setHovering(material)} 
+                            onMouseLeave={()=>setHovering("")} 
+                            style={{backgroundImage: `url('${getMaterialImg(material)}')`}}
+                            key={material} 
+                            />
                         )}
                     </div>
                     <div>Materiales que te van a encantar</div>
