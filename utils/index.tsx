@@ -74,3 +74,16 @@ export const scrollTo = (ref:React.RefObject<HTMLDivElement>, yOffset=0, side="t
         console.log('An error occured inside scrollTo function. Probably the window object can not be accessed: ', e.message)
     }
 }
+
+export const variants = {
+    slideUp: {
+        hidden: {
+            opacity: 0,
+            y: 30,
+        },
+        visible: {
+            opacity: 1,
+            y: 0
+        }
+    }
+}

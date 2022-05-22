@@ -18,8 +18,9 @@
     >div{
         width: 100%;
         display: flex;
-        justify-content: space-between;
-        
+        align-items: center;
+        flex-direction: column;
+
         .productInfo{
             display: flex;
             font-family: Silk Serif;
@@ -27,6 +28,7 @@
             align-items: center;
             font-size: 20px;
             justify-content: center;
+            margin-bottom: 10px;
             
             h1{
                 font-size: 20px;

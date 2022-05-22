@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useOnScreen, variants } from '@/utils/index';
 import styles from './AssetAndText.module.scss';
 
 type AssetAndTextProps = {
@@ -10,18 +12,42 @@ type AssetAndTextProps = {
 }
 
 const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ctaSection=false, assetLeft=true}) => {
+    const titleRef = useRef<HTMLDivElement>(null);
+    const isIntersecting = useOnScreen(titleRef);
+    const BASE_DELAY = .5;
     return (
         <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`} data-component="AssetAndText">
             <div className={styles.asset}>
                 {typeof asset === 'string' ? <img src={asset}/> : asset}
             </div>
             <div className={styles.text}>
-                <h3>{title}</h3>
-                <p>{description}</p>
+                <motion.h3
+                variants={variants.slideUp}
+                initial={"hidden"}
+                animate={isIntersecting && "visible"}
+                transition={{delay: BASE_DELAY, duration: .5}}
+                ref={titleRef}
+                >
+                    {title}
+                </motion.h3>
+                <motion.p
+                variants={variants.slideUp}
+                initial={"hidden"}
+                animate={isIntersecting && "visible"}
+                transition={{delay: BASE_DELAY + .2, duration: .7}}
+                >
+                    {description}
+                </motion.p>
                 {ctaSection &&
-                <div className={styles.ctaSection}>
+                <motion.div 
+                className={styles.ctaSection}
+                variants={variants.slideUp}
+                initial={"hidden"}
+                animate={isIntersecting && "visible"}
+                transition={{delay: BASE_DELAY + .4, duration: .9}}
+                >
                     {ctaSection}
-                </div>
+                </motion.div>
                 }
             </div>
         </section>

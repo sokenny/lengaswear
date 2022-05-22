@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useOnScreen, capitalize } from '@/utils/index'
+import { motion } from 'framer-motion'
 import { ParsedUrlQuery } from 'querystring'
 import { ProcessVideoAsset } from 'pages';
+import Image from 'next/image';
 import Head from 'next/head';
 import Nav from '@/components/modules/Nav/Nav'
 import Footer from '@/components/modules/Footer/Footer'
@@ -62,9 +64,18 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
 }
 
 const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
+    const divRef = useRef(null)
+    const isOnScreen = useOnScreen(divRef);
     return (
         <div className={styles.WatchPartAsset}>
-            <img src={img} alt="Watch part" />
+            <motion.div
+            ref={divRef}
+            initial={{scale: 1.3}}
+            animate={isOnScreen && {scale: 1.1}}
+            transition={{delay: .5, duration: 1}}
+            >
+                <Image src={img} layout="fill" objectFit="contain" alt="Watch part" />
+            </motion.div>
         </div>
     )
 }
@@ -97,7 +108,10 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                 <DisAssembly reloj={reloj} hovering={hovering} />
             </div>
             <div>
-                <TitleWDescription title="No dejamos nada al azar" description="Representando todos los valores que Lengas simboliza. Como la transparencia, la sustentabilidad y la simplicidad." />
+                <TitleWDescription 
+                title="No dejamos nada al azar" 
+                description="Representando todos los valores que Lengas simboliza. Como la transparencia, la sustentabilidad y la simplicidad." 
+                />
                 <div className={styles.SuiGeneris__materiales}>
                     <div>
                         {materials.map((material)=>
