@@ -35,7 +35,7 @@ const Testimonials:React.FC<TestimonialsProps> = ({testimonials}) => {
                                     <div className={styles.testimonial}>
                                         <div className={styles.stars}>{
                                             [...Array(5)].map((_, i)=>
-                                                <div>{star(20, testimonial.stars>=i+1 ? "gold" : "lightgray")}</div>
+                                                <div key={i}>{star(20, testimonial.stars>=i+1 ? "gold" : "lightgray")}</div>
                                             )}
                                         </div>
                                         <div className={styles.quote}>{testimonial.quote}</div>

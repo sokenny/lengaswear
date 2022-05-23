@@ -59,8 +59,8 @@ const MobileNav:React.FC = () => {
                 <div>
                     <ul>
                         {mobileTabs.map((tab, i)=>
-                            <Link href="/relojes">
-                            <motion.li key={tab.label} initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: i*.05}}>
+                            <Link href={tab.path} key={tab.label}>
+                            <motion.li initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: i*.05}}>
                                 {tab.label}
                             </motion.li>
                             </Link>
@@ -82,7 +82,9 @@ const DesktopNav:React.FC = () => {
                 <div>
                     <div className={styles.DesktopNav__logo}>
                         <Link href="/">
-                            <img src="/lengas.png" alt="Lengas logo" height={30} />
+                            <a>
+                                <img src="/lengas.png" alt="Lengas logo" height={30} />
+                            </a>
                         </Link>
                     </div>
                     <ul>

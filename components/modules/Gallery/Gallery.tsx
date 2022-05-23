@@ -1,14 +1,15 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useOnScreen, variants } from '@/utils/index';
+import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import Image from 'next/image';
 import styles from './Gallery.module.scss';
 
 const Gallery:React.FC = () => {
     
     const titleRef = useRef<HTMLDivElement>(null);
-    const titleIntersecting = useOnScreen(titleRef);
-    const BASE_DELAY = .2;
+    const titleIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
+    const BASE_DELAY = 0;
 
     const motionProps = {
         variants: variants.slideUp,

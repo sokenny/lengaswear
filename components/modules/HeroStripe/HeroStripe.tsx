@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useOnScreen, variants } from '@/utils/index';
+import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import styles from './HeroStripe.module.scss';
 
@@ -14,8 +15,8 @@ type HeroStripeProps= {
 const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) => {
 
     const titleRef = useRef<HTMLDivElement>(null);
-    const isIntersecting = useOnScreen(titleRef);
-    const BASE_DELAY = .25;
+    const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
+    const BASE_DELAY = 0;
 
     const motionProps = {
         variants: variants.slideUp,

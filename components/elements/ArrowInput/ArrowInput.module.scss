@@ -1,0 +1,35 @@
+@import '../../../styles/variables';
+
+.ArrowInput{
+    position: relative;
+    display: flex;
+    width: fit-content;
+    width: 185px;
+
+    input{
+        border: none;
+        border-bottom: 1px solid color(g1);
+        outline: none;
+        font-size: 16px;
+        font-family: Manrope;
+        padding-bottom: 5px;
+        padding-right: 50px;
+        width: 100%;
+        color: color(g1);
+    }
+    input::placeholder{
+        color: color(g1);
+    }
+
+    >div{
+        transition: .2s ease-in-out;
+        position: absolute;
+        right: 0;
+        padding: 0 10px 0 20px;
+        cursor: pointer;
+    }
+}
+
+.ArrowInput:hover div{
+    transform: translateX(10px);
+}

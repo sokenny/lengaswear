@@ -17,11 +17,12 @@ const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show}) => {
             initial={{y: "100%", opacity: 1}}
             animate={{y: 0, opacity: 1}}
             exit={{y: "100%", opacity: 1, 
-                transition:{duration: 0.3}
+                transition:{duration: 0.5}
             }}
             transition={{
                 stiffness: 0,
-                ease: "easeOut"
+                ease: "easeOut",
+                duration: .7
             }}
             >
                 <div>

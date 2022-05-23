@@ -1,0 +1,224 @@
+@import './variables';
+
+.Carrito{
+    min-height: 100vh;
+    padding-top: var(--pt1);
+
+    main{
+        display: flex;
+        justify-content: space-between;
+
+        @include mobile{
+            flex-direction: column;
+        }
+
+        .col1{
+            width: 60%;
+
+            @include mobile{
+                width: 100%;
+            }
+
+            .header{
+                margin-bottom: $pxs3;
+
+                @include mobile{
+                    padding: $pxs3;
+                    margin-bottom: 0;
+                }
+                
+                h1{
+                    font-weight: 500;
+                    font-size: $fs3;
+                    font-family: Silk Serif;
+                }
+                h2{
+                    color: color(g1);
+                    font-weight: 400;
+                    font-size: $fs1;
+                }
+            }
+
+            .products{
+                margin-bottom: $pxs2;
+            }
+
+            .storeInfo{
+                display: grid;
+                grid-template-columns: 48% 48%;
+                column-gap: 4%;
+
+                @include mobile{
+                    display: none;
+                    grid-template-columns: 100%;
+                }
+
+                .perk{
+                    display: flex;
+                    align-items: center;
+                    padding: 25px;
+                    font-size: 14px;
+                    color: color(g1);
+
+                    @include mobile{
+                        padding: $pxs1;
+                    }
+
+                    >div:first-child{
+                        margin-right: $pxs1;
+
+                        @include mobile{
+                            transform: scale(.9);
+                        }
+                    }
+                }
+            }
+        }
+
+        .col2{
+            width: 30%;
+            height: 100%;
+
+            @include mobile{
+                width: 100%;
+            }
+
+            .detalle{
+                padding: $pxs3;
+                background-color: color(w2);
+                border: 1px solid rgba(0, 0, 0, 0.1);
+
+                @include mobile{
+                    padding: $pxs2;
+                }
+
+                h2{
+                    font-weight: 400;
+                    font-family: Silk Serif;
+                    margin-bottom: $pxs3;
+                }
+
+                .envio{
+                    margin-bottom: $pxs2;
+
+                    >div{
+                        color: color(g1);
+                    }
+                }
+
+                .total{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    >div{
+                        color: color(gold);
+                        font-size: 20px;
+                    }
+                }
+
+                .detalleLabel{
+                    font-family: Manrope;
+                    font-size: $fs1;
+                    color: black;
+                    font-weight: 400;
+                }
+
+                .cta{
+                    margin-top: $pxs1;
+
+                    button{
+                        width: 100%;
+                    }
+                }
+            }
+
+            .ayuda{
+                display: flex;
+                color: color(g1);
+                padding: 35px 45px;
+                display: flex;
+                justify-content: center;
+                text-align: left;
+                font-size: 14px;
+                
+                >div:first-child{
+                    margin-right: $pxs1;
+                }
+
+                >div:last-child:hover{
+                    border-bottom: 1px solid color(g1);
+                    cursor: pointer;
+                }
+            }
+        }
+
+    }
+
+}
+
+.ProductRow{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px 10px;
+
+    >div{
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .image{
+        width: 80px;
+        height: 80px;
+        background-color: red;
+        position: relative;
+    }
+
+    .name{
+        width: 30%;
+        
+        h3{
+            font-weight: 400;
+            font-family: Manrope;
+        }
+    }
+    .price, .qty, .subTotal, .delete{
+        min-width: 10%;
+    }
+
+    .delete{
+        transition: .2s;
+        opacity: 0;
+        color: color(g1);
+        font-size: 14px;
+
+        span{
+            cursor: pointer;
+        }
+    }
+}
+
+.ProductRow:nth-child(odd){
+    background-color: color(w2);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.ProductRow:hover .delete{
+    opacity: 1;
+}
+
+.CodigoDescuento{
+    margin-bottom: 120px;
+
+    @include mobile{
+        margin-bottom: $pxs3;
+    }
+
+    >div:first-child{
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: color(g1);
+    }
+
+}

@@ -1,6 +1,7 @@
 import { useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useOnScreen } from '@/utils/index';
+import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import Link from 'next/link'
 import Image from 'next/image'
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
@@ -33,8 +34,8 @@ type CategoryPosterProps = {
 const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href}) => {
     
     const textRef = useRef(null);
-    const isOnScreen = useOnScreen(textRef);
-    const BASE_DELAY = .2
+    const isOnScreen = useOnScreen(textRef, ANIMATE_BREAKPOINT * .8);
+    const BASE_DELAY = 0;
 
     return (
         <div className={styles.CategoryPoster}>

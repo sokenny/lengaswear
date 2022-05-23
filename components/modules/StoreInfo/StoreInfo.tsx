@@ -1,25 +1,27 @@
 import { ReactNode, useRef } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import { useOnScreen } from "@/utils/index";
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import styles from './StoreInfo.module.scss';
 
+export const perkItems:{icon:ReactNode, title: string, text:string}[] = [
+    {icon: returns(25, "gold"), title: 'Devolución gratuita', text: 'hasta 7 dias despues de tu compra.'},
+    {icon: shipping(25, "gold"), title: 'Envío gratis', text: 'a todo el país.'},
+    {icon: safePurchase(25, "gold"), title: 'Compra segura', text: 'mediante Mercadopago, Paypal o GooglePay.'},
+    {icon: safe(25, "gold"), title: 'Garantía', text: 'por 12 meses en caso de cualquier falla.'},
+]
+
 const StoreInfo:React.FC = () => {
 
     const divRef = useRef(null)
-    const isOnScreen = useOnScreen(divRef);
-    const items:{icon:ReactNode, title: string, text:string}[] = [
-        {icon: returns(25, "gold"), title: 'Devolución gratuita', text: 'hasta 7 dias despues de tu compra.'},
-        {icon: shipping(25, "gold"), title: 'Envío gratis', text: 'a todo el país.'},
-        {icon: safePurchase(25, "gold"), title: 'Compra segura', text: 'mediante Mercadopago, Paypal o GooglePay.'},
-        {icon: safe(25, "gold"), title: 'Garantía', text: 'por 12 meses en caso de cualquier falla.'},
-    ]
-    const BASE_DELAY = .4;
+    const isOnScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT);
+    const BASE_DELAY = 0;
 
     return (
         <section className={styles.StoreInfo}>
             <div className={styles.info} ref={divRef}>
-                {items.map((item, i)=>
+                {perkItems.map((item, i)=>
                     <motion.div 
                     className={styles.item} key={item.title}
                     initial={{opacity: 0, y: 30}}

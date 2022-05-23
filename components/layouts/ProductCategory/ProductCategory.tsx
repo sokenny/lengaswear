@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { ProductType } from 'types';
+import Link from 'next/link';
 import styles from './ProductCategory.module.scss';
 
 type ProductCategoryProps = {
@@ -19,11 +19,9 @@ const ProductCategory:React.FC<ProductCategoryProps> = ({title, description, pro
                     </div>
                     <section className={styles.products}>
                         {products.map((product)=>
-                            <Link href={product.href} passHref>
-                                <div>
-                                    <ProductItem product={product} />
-                                </div>
-                            </Link>
+                            <div>
+                                <ProductItem product={product} />
+                            </div>
                         )}
                     </section>
                 </main>
@@ -38,15 +36,19 @@ type ProductItemProps = {
 
 const ProductItem:React.FC<ProductItemProps> = ({product}) => {
     return (
-        <div className={styles.ProductItem}>
-            <div className={styles.ProductItem__image}>
-                <img src={product.image} alt={product.name} />
-            </div>
-            <div>
-                <h3>{product.name}</h3>
-                <div>{product.price}</div>
-            </div>
-        </div>
+        <Link href={product.href}>
+            <a>
+                <div className={styles.ProductItem}>
+                    <div className={styles.ProductItem__image}>
+                        <img src={product.image} alt={product.name} />
+                    </div>
+                    <div>
+                        <h3>{product.name}</h3>
+                        <div>{product.price}</div>
+                    </div>
+                </div>
+            </a>
+        </Link>
     )
 }
 

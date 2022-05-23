@@ -10,8 +10,11 @@
   --sp2: 64px 10vw;
   --sp3: 64px 15vw;
 
+  --pt1: 150px;
+
   @include mobile{
     --sp1: 64px 10px;
+    --pt1: 90px;
   }
 
   @include bigDesktop{
@@ -56,6 +59,10 @@ p{
   font-family: Manrope;
   color: color(g1);
   font-weight: 300;
+}
+
+input{
+  background-color: transparent;
 }
 
 .container{

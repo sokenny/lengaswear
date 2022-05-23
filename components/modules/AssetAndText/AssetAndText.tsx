@@ -1,6 +1,7 @@
 import { ReactNode, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useOnScreen, variants } from '@/utils/index';
+import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import styles from './AssetAndText.module.scss';
 
 type AssetAndTextProps = {
@@ -13,8 +14,8 @@ type AssetAndTextProps = {
 
 const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ctaSection=false, assetLeft=true}) => {
     const titleRef = useRef<HTMLDivElement>(null);
-    const isIntersecting = useOnScreen(titleRef);
-    const BASE_DELAY = .25;
+    const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
+    const BASE_DELAY = 0;
 
     const motionProps = {
         variants: variants.slideUp,

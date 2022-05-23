@@ -26,20 +26,21 @@ export const useScrollPosition = ():number => {
     return scrollPosition;
 }
 
-export const useOnScreen = (ref:React.RefObject<HTMLDivElement>):boolean => {
+export const useOnScreen = (ref:React.RefObject<HTMLDivElement>, percentage:number=0):boolean => {
     const [isIntersecting, setIntersecting] = useState<boolean>(false)
     let observer:any;
+    const ioConfiguration = {
+        rootMargin: `-${percentage}% 0% -${percentage}% 0%`,
+        threshold: 0
+    };
     useEffect(()=>{
         try{
-            observer = new IntersectionObserver(
-                ([entry]) => setIntersecting(entry.isIntersecting)
-                )
+            observer = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting), ioConfiguration)
         }catch(e){
             console.log('Intersection observer is not available. Browser does not support it.')
             setIntersecting(false)
         }
-    }, [])
-    useEffect(() => {
+
         try{
             observer.observe(ref.current)
         }catch(e){

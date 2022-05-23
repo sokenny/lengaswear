@@ -1,0 +1,1 @@
+export const ANIMATE_BREAKPOINT:number = 25;

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useOnScreen, capitalize } from '@/utils/index'
+import { ANIMATE_BREAKPOINT } from '@/utils/constants'
 import { motion } from 'framer-motion'
 import { ParsedUrlQuery } from 'querystring'
 import { ProcessVideoAsset } from 'pages';
@@ -29,7 +30,8 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
     const product:ProductType = {
         name: reloj,
         price: 10900,
-        description: 'Texto corto de descripción del modelo, cual es el diferencial.'
+        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
+        href: ""
     }
 
     return (
@@ -65,14 +67,14 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
 
 const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
     const divRef = useRef(null)
-    const isOnScreen = useOnScreen(divRef);
+    const isOnScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
     return (
         <div className={styles.WatchPartAsset}>
             <motion.div
             ref={divRef}
-            initial={{scale: 1.3}}
+            initial={{scale: 1.4}}
             animate={isOnScreen && {scale: 1.1}}
-            transition={{delay: .5, duration: 1}}
+            transition={{duration: 1.5}}
             >
                 <Image src={img} layout="fill" objectFit="contain" alt="Watch part" />
             </motion.div>
@@ -134,7 +136,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
 const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hovering}) => {
 
     const divRef = useRef<HTMLDivElement>(null)
-    const onScreen = useOnScreen(divRef)
+    const onScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT)
     const [float, setFloat] = useState<boolean>(false)
     const [translate, setTranslate] = useState<boolean>(false)
 
