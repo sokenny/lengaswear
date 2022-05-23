@@ -14,7 +14,7 @@ const StoreInfo:React.FC = () => {
         {icon: safePurchase(25, "gold"), title: 'Compra segura', text: 'mediante Mercadopago, Paypal o GooglePay.'},
         {icon: safe(25, "gold"), title: 'Garantía', text: 'por 12 meses en caso de cualquier falla.'},
     ]
-    const BASE_DELAY = .7;
+    const BASE_DELAY = .4;
 
     return (
         <section className={styles.StoreInfo}>

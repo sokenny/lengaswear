@@ -24,8 +24,9 @@
         .image{
             margin: 7.5px;
             width: 100%;
-            background-color: gray;
+            background-color: color(gold);
             overflow: hidden;
+            position: relative;
 
             >img{
                 object-fit: cover;

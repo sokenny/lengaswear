@@ -85,5 +85,15 @@ export const variants = {
             opacity: 1,
             y: 0
         }
+    },
+    scaleUp: {
+        hidden: {
+            scale: .8,
+            opacity: 0,
+        },
+        visible: {
+            scale: 1,
+            opacity: 1
+        }
     }
 }
