@@ -19,7 +19,7 @@ const ProductCategory:React.FC<ProductCategoryProps> = ({title, description, pro
                     </div>
                     <section className={styles.products}>
                         {products.map((product)=>
-                            <div>
+                            <div key={product.name}>
                                 <ProductItem product={product} />
                             </div>
                         )}

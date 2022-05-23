@@ -104,7 +104,7 @@ const PurchaseInfo:React.FC = () => {
     return (
         <div className={styles.PurchaseInfo}>
             {items.map((item)=>
-                <div className={styles.PurchaseInfo__item}>
+                <div className={styles.PurchaseInfo__item} key={item.text}>
                     <div>{item.icon}</div>
                     <div>{item.text}</div>
                 </div>

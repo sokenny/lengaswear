@@ -35,7 +35,8 @@ const Billetera:NextPageAugmented<{billetera: string}> = ({billetera}) => {
     const product:ProductType = {
         name: billetera,
         price: 3950,
-        description: 'Texto corto de descripción del modelo, cual es el diferencial.'
+        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
+        href: ""
     }
 
     return (
@@ -120,11 +121,11 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
     const [hoveringOn, setHoveringOn] = useState<string>("")
 
     const transitioning = useCallback(()=>{
-        return hoveringOn.toLocaleLowerCase() !== "" && hoveringOn.toLocaleLowerCase() !== billetera
+        return hoveringOn?.toLocaleLowerCase() !== "" && hoveringOn?.toLocaleLowerCase() !== billetera
     }, [hoveringOn, billetera])
 
     function getHexColor(color:string){
-        return utilityColors[color.toLocaleLowerCase() as keyof {}]
+        return utilityColors[color?.toLocaleLowerCase() as keyof {}]
     }
 
     return (
@@ -137,11 +138,11 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                         <div className={styles.colors}>
                             {colors.map((color)=>
                                 <div 
-                                className={`${styles.color} ${styles[`color-${color.toLocaleLowerCase()}`]} ${billetera.toLocaleLowerCase() === color.toLocaleLowerCase() ? styles[`color-selected`] : ''}`} 
+                                className={`${styles.color} ${styles[`color-${color?.toLocaleLowerCase()}`]} ${billetera?.toLocaleLowerCase() === color?.toLocaleLowerCase() ? styles[`color-selected`] : ''}`} 
                                 onMouseEnter={()=>setHoveringOn(color)}
                                 onMouseLeave={()=>setHoveringOn("")}
                                 onClick={()=>router.push({
-                                    pathname: `/billeteras/${color.toLocaleLowerCase()}`,
+                                    pathname: `/billeteras/${color?.toLocaleLowerCase()}`,
                                 }, undefined, { scroll: false })}
                                 style={{backgroundColor: getHexColor(color)}}
                                 key={color}

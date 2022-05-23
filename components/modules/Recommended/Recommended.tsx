@@ -18,7 +18,7 @@ const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
             </div>
             <div>
                 {products.map((product)=>
-                <Link href={product.href} >
+                <Link href={product.href} key={product.name} >
                     <div className={styles.item}>
                         <div className={styles.image}>
                             <Image layout="fill" objectFit='cover' src={product.image} />

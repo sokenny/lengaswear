@@ -52,7 +52,7 @@ export const useOnScreen = (ref:React.RefObject<HTMLDivElement>, percentage:numb
 }
 
 export function capitalize (string:string): string {
-    return string.charAt(0).toUpperCase() + string.slice(1, string.length)
+    return string?.charAt(0)?.toUpperCase() + string?.slice(1, string.length)
 }
 
 export const useIsMobile = ():{} => {
