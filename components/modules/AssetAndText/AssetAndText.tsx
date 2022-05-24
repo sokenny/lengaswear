@@ -1,5 +1,6 @@
 import { ReactNode, useRef } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useOnScreen, variants } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import styles from './AssetAndText.module.scss';
@@ -27,7 +28,18 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
     return (
         <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`} data-component="AssetAndText">
             <div className={styles.asset}>
-                {typeof asset === 'string' ? <img src={asset}/> : asset}
+                {/* {typeof asset === 'string' ? <img src={asset}/> : asset} */}
+                {typeof asset === 'string' ? 
+                <motion.div 
+                initial={{scale: 1.2}}
+                animate={isIntersecting && {scale: 1}}
+                transition={{duration: 1.2}}
+                className={styles.imgContainer}
+                >
+                    <Image src={asset} layout="fill" objectFit='cover' /> 
+                </motion.div>
+                : 
+                asset}
             </div>
             <div className={styles.text}>
                 <motion.h3
