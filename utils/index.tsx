@@ -111,3 +111,27 @@ export const variants = {
         }
     }
 }
+
+export const tryLocalStorage = {
+    ERROR_MESSAGE: 'Error occured. Possibly localStorage is either blocked or not supported.',
+    get: (key:string) => {
+        try{
+            const contents = localStorage.getItem(key);
+            if(typeof contents === 'string'){
+                return JSON.parse(contents)
+            }
+            return false
+        }catch(e){
+            console.log(tryLocalStorage.ERROR_MESSAGE, e)
+            return false
+        }
+    },
+    set: (key:string, value:string | number | {}) => {
+        try{
+            return localStorage.setItem(key, JSON.stringify(value))
+        }catch(e){
+            console.log(tryLocalStorage.ERROR_MESSAGE, e)
+            return false
+        }
+    }   
+}

@@ -7,9 +7,10 @@ import styles from './FixedProductCta.module.scss';
 type FixedProductCtaProps = {
     product:ProductType, 
     show:boolean,
+    addToCart: () => void,
 }
 
-const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show}) => {
+const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show, addToCart}) => {
 
     const {scrolledBottom} = useAppContext();
 
@@ -34,7 +35,7 @@ const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show}) => {
                         <h1>{product.name}</h1><div>${product.price}</div>
                     </div>
                     <div className={styles.ctas}>
-                            <Button onClick={()=>{}}>Agregar al carrito</Button>
+                            <Button onClick={addToCart}>Agregar al carrito</Button>
                     </div>
                 </div>
             </motion.div>

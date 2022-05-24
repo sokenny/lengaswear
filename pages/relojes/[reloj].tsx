@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useAppContext } from "contexts/AppContext";
 import { useOnScreen, capitalize } from '@/utils/index'
 import { ANIMATE_BREAKPOINT } from '@/utils/constants'
 import { motion } from 'framer-motion'
@@ -25,14 +26,18 @@ const recommendedProducts:TRecommended[] = [
 
 const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
     
+    const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-${item}.webp`)
     const product:ProductType = {
+        id: 1,
         name: reloj,
         price: 10900,
+        sellingPrice: 10900,
         description: 'Texto corto de descripción del modelo, cual es el diferencial.',
         href: ""
     }
+    const addThisToCart = () => addToCart(product.name)
 
     return (
         <>
@@ -40,8 +45,8 @@ const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
             <title>{capitalize(reloj)} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
-            <FixedProductCta product={product} show={showFixedCta} />
-            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} />
+            <FixedProductCta product={product} show={showFixedCta} addToCart={addThisToCart} />
+            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
             <div className='container'>
                 <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
             </div>

@@ -12,9 +12,10 @@ type TopProductSectionProps = {
     product: ProductType,
     imgs: string[],
     onCtaIntersect: (isIntersecting: boolean) => void,
+    addToCart: () => void,
 }
 
-const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect}) => {
+const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {
 
     const scrollPosition = useScrollPosition()
     const lastPicRef = useRef<HTMLDivElement>(null)
@@ -22,6 +23,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
     const ctaRef = useRef<HTMLDivElement>(null)
     const ctaOnScreen = useOnScreen(ctaRef)
     const [lockAt, setLockAt] = useState<number>(0)
+
 
     useEffect(()=>{
         onCtaIntersect(ctaOnScreen)
@@ -55,7 +57,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div>{product.description}</div>
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
-                                <Button onClick={()=>{}}>Agregar al carrito</Button>
+                                <Button onClick={addToCart}>Agregar al carrito</Button>
                             </div>
                         </div>
                         }

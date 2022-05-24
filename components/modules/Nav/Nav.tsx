@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useAppContext } from "contexts/AppContext";
 import Link from "next/link";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useScrollPosition, useScrolledBottom } from "@/utils/index";
 import { cart, hamburger } from "@/utils/icons";
-import styles from './Nav.module.scss';
 import { useRouter } from "next/router";
+import styles from './Nav.module.scss';
 
 interface NavProps {
     theme?: string,
@@ -13,21 +14,22 @@ interface NavProps {
 
 const Nav:React.FC<NavProps> = ({theme, whiteFooter}) => {
 
+    const { checkout } = useAppContext();
     const scrollPosition = useScrollPosition();
     const hasScrolled = scrollPosition > 0;
     const scrolledBottom = useScrolledBottom();
   
     return (
         <div className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''} ${scrolledBottom ? styles['Nav-scrolledBottom'] : ''} ${whiteFooter ? styles['Nav-whiteFooter'] : ''}`}>
-            <MobileNav />
-            <DesktopNav />
+            <MobileNav carrito={checkout?.carrito || []} />
+            <DesktopNav carrito={checkout?.carrito || []} />
         </div>
     )
 }
 
 const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/relojes'}, {label: 'Billeteras', path: '/billeteras'}, {label: 'Contacto', path: '/relojes'}, {label: 'Carrito', path: '/relojes'}]; 
 
-const MobileNav:React.FC = () => {
+const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
 
     const router = useRouter();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -52,7 +54,7 @@ const MobileNav:React.FC = () => {
                 <div className={styles.MobileNav__cart}>
                     <Link href="/carrito">
                         <a>
-                            <div>0</div>
+                            <div>{carrito.length}</div>
                         </a>
                     </Link>
                 </div>
@@ -79,7 +81,7 @@ const MobileNav:React.FC = () => {
     )
 }
 
-const DesktopNav:React.FC = () => {
+const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
     return (
         <nav className={`${styles.DesktopNav}`}>
             <div>

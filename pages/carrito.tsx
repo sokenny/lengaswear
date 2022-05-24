@@ -1,5 +1,7 @@
+import { useEffect, useMemo } from "react";
 import { NextPageAugmented, ProductType } from "types";
-import { chat } from "@/utils/icons";
+import { cart, chat } from "@/utils/icons";
+import { useAppContext } from "contexts/AppContext";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
 import Head from 'next/head';
 import Image from 'next/image';
@@ -9,13 +11,22 @@ import Button from "@/components/elements/Button/Button";
 import ArrowInput from "@/components/elements/ArrowInput/ArrowInput";
 import styles from '../styles/Carrito.module.scss';
 
-const products:ProductType[] = [
-    {name: "Quemanta", price: 10670, href: "/relojes/quemanta", image: ""},
-    {name: "Mahai", price: 11500, href: "/relojes/mahai", image: ""},
-    {name: "Chocolate", price: 3950, href: "/billeteras/chocolate", image: ""},
-]
-
 const Carrito: NextPageAugmented = () => {
+
+    const { checkout } = useAppContext();
+    const cartDetail = checkout !== null ? getCartDetail(checkout.carrito) : {}
+
+    function getCartDetail(carrito:string[]){
+        const cartDetail:any = {};
+        carrito.forEach(element => {
+            cartDetail[element] = (cartDetail[element] || 0) + 1;
+        });
+        return cartDetail;
+    }
+
+    useEffect(()=>{
+        console.log('cart detail: ', cartDetail)
+    })
 
     return (
         <>
@@ -31,8 +42,8 @@ const Carrito: NextPageAugmented = () => {
                             <h2>Llevando 2 o más productos tenés un 10% off!</h2>
                         </div>
                         <section className={styles.products}>
-                            {products.map((product) =>
-                                <ProductRow product={product} key={product.name} />
+                            {Object.keys(cartDetail).map((prdName) =>
+                                <ProductRow prdName={prdName} qty={cartDetail[prdName]} key={prdName} />
                             )}
                         </section>
                         <div className={styles.storeInfo}>
@@ -50,7 +61,7 @@ const Carrito: NextPageAugmented = () => {
                             <CodigoDescuento />
                             <div className={styles.envio}>
                                 <h3 className={styles.detalleLabel}>Envío</h3>
-                                <div>GRATIS</div>
+                                <div>GRATIS!</div>
                             </div>
                             <div className={styles.total}>
                                 <h3 className={styles.detalleLabel}>Total</h3>
@@ -72,12 +83,18 @@ const Carrito: NextPageAugmented = () => {
     )
 }
 
-const ProductRow:React.FC<{product:ProductType}> = ({product}) => {
+const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
+
+    const { store, addToCart, removeFromCart } = useAppContext();
+    const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
+    const addThisToCart = () => addToCart(prdName);
+    const removeThisFromCart = () => removeFromCart(prdName);
+
     return (
         <div className={styles.ProductRow}>
             <div className={styles.desktop}>
                 <div className={styles.image}>
-                    {/* <Image src={""} alt={product.name} width={70} height={70} /> */}
+                    <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
                 </div>
                 <div className={styles.name}>
                     <h3>{product.name}</h3>
@@ -86,7 +103,7 @@ const ProductRow:React.FC<{product:ProductType}> = ({product}) => {
                     {product.price}
                 </div>
                 <div className={styles.qty}>
-                    2
+                    {qty}
                 </div>
                 <div className={styles.subTotal}>
                     $21.340
@@ -97,22 +114,22 @@ const ProductRow:React.FC<{product:ProductType}> = ({product}) => {
             </div>
             <div className={styles.mobile}>
                 <div className={styles.image}>
-                    {/* <Image src={""} alt={product.name} width={70} height={70} /> */}
+                    <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
                 </div>
                 <div className={styles.cols}>
                     <div>
                         <div>
                             <h3>{product.name}</h3>
-                            <div className={styles.qty}>Unidades: 2</div>
+                            <div className={styles.qty}>Unidades: {qty}</div>
                         </div>
                         <div className={styles.addSubstract}>
-                            <div>+</div>
-                            <div>-</div>
+                            <div onClick={addThisToCart}>+</div>
+                            <div onClick={removeThisFromCart}>-</div>
                         </div>
                     </div>
-                    <div>
-                        <div>10670</div>
-                        <div>21340</div>
+                    <div className={styles.price}>
+                        <div>{product.sellingPrice}</div>
+                        <div>{product.sellingPrice * qty}</div>
                     </div>
                 </div>
 

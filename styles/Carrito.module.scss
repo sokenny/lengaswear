@@ -96,10 +96,14 @@
                     font-weight: 400;
                     font-family: Silk Serif;
                     margin-bottom: $pxs3;
+
+                    @include mobile{
+                        margin-bottom: $pxs2;
+                    }
                 }
 
                 .envio{
-                    margin-bottom: $pxs2;
+                    margin-bottom: $pxs1;
 
                     >div{
                         color: color(g1);
@@ -168,7 +172,6 @@
     .image{
         width: 80px;
         height: 80px;
-        background-color: red;
         position: relative;
     }
     
@@ -233,10 +236,46 @@
                 flex-direction: column;
                 justify-content: space-between;
                 height: 100%;
+
+                h3{
+                    font-family: Manrope;
+                    font-weight: 400;
+                    margin-bottom: 8px;
+                }
+                
+                .addSubstract{
+                    display: flex;
+                    padding-bottom: 4px;
+
+                    >div{
+                        height: 14px;
+                        width: 14px;
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: rgba(0,0,0,0.3);
+                    }
+
+                    >div:first-child{
+                        margin-right: 14px;
+                    }
+                }
             }
 
-            .addSubstract{
+
+            .price{
                 display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                >div:first-child{
+                    color: color(g1);
+                    margin-bottom: 8px;
+                }
+                >div:last-child{
+                    font-size: 20px;
+                    // color: color(g1);
+                }
             }
         }
 
