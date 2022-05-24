@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from 'framer-motion';
-import { useScrollPosition } from "@/utils/index";
+import { useScrollPosition, useScrolledBottom } from "@/utils/index";
 import { cart, hamburger } from "@/utils/icons";
 import styles from './Nav.module.scss';
 import { useRouter } from "next/router";
 
 interface NavProps {
-    theme?: string
+    theme?: string,
+    whiteFooter?: boolean,
 }
 
-const Nav:React.FC<NavProps> = ({theme}) => {
+const Nav:React.FC<NavProps> = ({theme, whiteFooter}) => {
 
     const scrollPosition = useScrollPosition();
     const hasScrolled = scrollPosition > 0;
-
+    const scrolledBottom = useScrolledBottom();
+  
     return (
-        <div className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''}`}>
+        <div className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''} ${scrolledBottom ? styles['Nav-scrolledBottom'] : ''} ${whiteFooter ? styles['Nav-whiteFooter'] : ''}`}>
             <MobileNav />
             <DesktopNav />
         </div>
@@ -48,9 +50,11 @@ const MobileNav:React.FC = () => {
                     </Link>
                 </div>
                 <div className={styles.MobileNav__cart}>
-                    <div>
-                        0
-                    </div>
+                    <Link href="/carrito">
+                        <a>
+                            <div>0</div>
+                        </a>
+                    </Link>
                 </div>
             </div>
             <AnimatePresence>

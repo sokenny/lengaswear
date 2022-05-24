@@ -14,6 +14,7 @@
         flex-direction: column;
         padding-left: 40px;
         padding-right: 40px;
+        min-height: 100vh;
     }
 
     .logo{
@@ -21,8 +22,7 @@
 
         @include mobile{
             img{
-                height: 50px;
-                margin-bottom: $pxs3;
+                display: none;
             }
         }
     }
@@ -52,11 +52,15 @@
                 }
             }
 
-            >li{
+            >li:first-child:hover{
+                color: white;
+            }
+
+            li{
                 margin-bottom: 8px;
             }
 
-            >li:hover{
+            li:hover{
                 color: color(gold);
                 cursor: pointer;
             }
@@ -124,11 +128,5 @@
             color: color(b1);
         }
         color: color(g1);
-    }
-}
-
-.Footer-hasFixedCta{
-    @include mobile{
-        padding-bottom: 180px;
     }
 }

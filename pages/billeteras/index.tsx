@@ -19,7 +19,7 @@ const Billeteras:NextPageAugmented = () => {
     )
 }
 
-Billeteras.nav = <Nav theme="scrolled" />
+Billeteras.nav = <Nav theme="scrolled" whiteFooter={true} />
 Billeteras.footer = <Footer theme="white" />
 
 export default Billeteras;

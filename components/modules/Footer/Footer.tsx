@@ -3,12 +3,11 @@ import styles from './Footer.module.scss';
 
 type FooterProps = {
     theme?: string,
-    hasFixedCta?: boolean,
 }
 
-const Footer:React.FC<FooterProps> = ({theme, hasFixedCta}) => {
+const Footer:React.FC<FooterProps> = ({theme}) => {
     return (
-        <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''} ${hasFixedCta ? styles[`Footer-hasFixedCta`] : ''}`}>
+        <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''}`}>
             <div className={styles.logo}>
                 <Link href="/">
                     <img src="/lengas2.png" height={40} />
@@ -23,9 +22,20 @@ const Footer:React.FC<FooterProps> = ({theme, hasFixedCta}) => {
                 </ul>
                 <ul>
                     <li>Productos</li>
-                    <li>Billeteras</li>
+                    <Link href="/billeteras">
+                        <a>
+                            <li>Billeteras</li>
+                        </a>
+                    </Link>
                     <Link href="/relojes">
-                        <li>Relojes</li>
+                        <a>
+                            <li>Relojes</li>
+                        </a>
+                    </Link>
+                    <Link href="/carrito">
+                        <a>
+                            <li>Carrito</li>
+                        </a>
                     </Link>
                 </ul>
                 <ul>

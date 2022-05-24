@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAppContext } from 'contexts/AppContext';
 import { ProductType } from 'types';
 import Button from '@/components/elements/Button/Button';
 import styles from './FixedProductCta.module.scss';
@@ -9,9 +10,12 @@ type FixedProductCtaProps = {
 }
 
 const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show}) => {
+
+    const {scrolledBottom} = useAppContext();
+
     return  (
         <AnimatePresence>
-        {show &&
+        {(show && !scrolledBottom) &&
             <motion.div 
             className={styles.FixedProductCta}
             initial={{y: "100%", opacity: 1}}

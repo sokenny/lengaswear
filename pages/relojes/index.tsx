@@ -20,7 +20,7 @@ const Relojes:NextPageAugmented = () => {
     )
 }
 
-Relojes.nav = <Nav theme="scrolled" />
+Relojes.nav = <Nav theme="scrolled" whiteFooter={true} />
 Relojes.footer = <Footer theme="white" />
 
 export default Relojes;

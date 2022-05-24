@@ -1,7 +1,7 @@
 import { NextPageAugmented, ProductType } from "types";
-import { useIsMobile } from "@/utils/index";
 import { chat } from "@/utils/icons";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
+import Head from 'next/head';
 import Image from 'next/image';
 import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
@@ -17,9 +17,11 @@ const products:ProductType[] = [
 
 const Carrito: NextPageAugmented = () => {
 
-    const isMobile = useIsMobile();
-
     return (
+        <>
+        <Head>
+            <title>Carrito | {process.env.NEXT_PUBLIC_APP_NAME}</title>
+        </Head>
         <div className={styles.Carrito}>
             <div className="container" style={{paddingTop: 0}}>
                 <main>
@@ -66,29 +68,54 @@ const Carrito: NextPageAugmented = () => {
                 </main>
             </div>
         </div>
+        </>
     )
 }
 
 const ProductRow:React.FC<{product:ProductType}> = ({product}) => {
     return (
         <div className={styles.ProductRow}>
-            <div className={styles.image}>
-                {/* <Image src={""} alt={product.name} width={70} height={70} /> */}
+            <div className={styles.desktop}>
+                <div className={styles.image}>
+                    {/* <Image src={""} alt={product.name} width={70} height={70} /> */}
+                </div>
+                <div className={styles.name}>
+                    <h3>{product.name}</h3>
+                </div>
+                <div className={styles.price}>
+                    {product.price}
+                </div>
+                <div className={styles.qty}>
+                    2
+                </div>
+                <div className={styles.subTotal}>
+                    $21.340
+                </div>
+                <div className={styles.delete}>
+                    <span>Eliminar</span>
+                </div>
             </div>
-            <div className={styles.name}>
-                <h3>{product.name}</h3>
-            </div>
-            <div className={styles.price}>
-                {product.price}
-            </div>
-            <div className={styles.qty}>
-                2
-            </div>
-            <div className={styles.subTotal}>
-                $21.340
-            </div>
-            <div className={styles.delete}>
-                <span>Eliminar</span>
+            <div className={styles.mobile}>
+                <div className={styles.image}>
+                    {/* <Image src={""} alt={product.name} width={70} height={70} /> */}
+                </div>
+                <div className={styles.cols}>
+                    <div>
+                        <div>
+                            <h3>{product.name}</h3>
+                            <div className={styles.qty}>Unidades: 2</div>
+                        </div>
+                        <div className={styles.addSubstract}>
+                            <div>+</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>10670</div>
+                        <div>21340</div>
+                    </div>
+                </div>
+
             </div>
         </div>
     )
@@ -101,7 +128,7 @@ const CodigoDescuento = () => {
     </div>)
 }
 
-Carrito.nav = <Nav theme="scrolled" />
+Carrito.nav = <Nav theme="scrolled" whiteFooter={true} />
 Carrito.footer = <Footer theme="white" />
 
 export default Carrito;

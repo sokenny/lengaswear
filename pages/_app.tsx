@@ -1,5 +1,6 @@
-import MainLayout from '@/components/layouts/MainLayout'
-import type { AppProps } from 'next/app'
+import MainLayout from '@/components/layouts/MainLayout';
+import { AppProvider } from 'contexts/AppContext';
+import type { AppProps } from 'next/app';
 import '../styles/Globals.scss';
 
 interface CustomAppProps extends Omit<AppProps, "Component"> {
@@ -8,9 +9,11 @@ interface CustomAppProps extends Omit<AppProps, "Component"> {
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
   return (
-    <MainLayout nav={Component.nav} footer={Component.footer}>
-      <Component {...pageProps} />
-    </MainLayout>
+    <AppProvider>
+      <MainLayout nav={Component.nav} footer={Component.footer}>
+        <Component {...pageProps} />
+      </MainLayout>
+    </AppProvider>
   )
 }
 

@@ -113,7 +113,7 @@
         }
 
         .MobileNav__cart{
-            >div{
+            div{
                 height: 25px;
                 width: 25px;
                 border-radius: 50%;
@@ -173,4 +173,29 @@
 
 .MobileNav-isOpen{
     height: 100vh;
+}
+
+.Nav-scrolledBottom .MobileNav{
+    transition: .2s;
+
+    >div{
+        transition: .2s;
+        background-color: transparent;
+        border: transparent;
+    }
+
+    .MobileNav__hamburger, .MobileNav__cart{
+        transition: .2s;
+        opacity: 0;
+    }
+
+    .MobileNav__logo img{
+        filter: invert(0);
+    }
+}
+
+.Nav-scrolledBottom.Nav-whiteFooter .MobileNav{
+    .MobileNav__logo img{
+        filter: invert(0.8);
+    }
 }

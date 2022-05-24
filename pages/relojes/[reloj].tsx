@@ -229,6 +229,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 Reloj.nav = <Nav theme="scrolled" />
-Reloj.footer = <Footer hasFixedCta={true} />
+Reloj.footer = <Footer />
 
 export default Reloj;

@@ -201,6 +201,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 Billetera.nav = <Nav theme="scrolled" />
-Billetera.footer = <Footer hasFixedCta={true} />
+Billetera.footer = <Footer />
 
 export default Billetera;

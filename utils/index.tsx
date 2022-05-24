@@ -26,6 +26,19 @@ export const useScrollPosition = ():number => {
     return scrollPosition;
 }
 
+export const useScrolledBottom = ():boolean => {
+    const [scrolledBottom, setScrolledBottom] = useState<boolean>(false)
+    const scrollPosition = useScrollPosition();
+    useEffect(()=>{
+        const windowHeight = window.innerHeight;
+        const bodyHeight = document.body.offsetHeight;
+        const scrolledBottomPosition = bodyHeight - windowHeight;
+        const isScrolledBottom = (scrollPosition - scrolledBottomPosition) === 0;
+        setScrolledBottom(isScrolledBottom)
+    }, [scrollPosition])
+    return scrolledBottom;
+}
+
 export const useOnScreen = (ref:React.RefObject<HTMLDivElement>, percentage:number=0):boolean => {
     const [isIntersecting, setIntersecting] = useState<boolean>(false)
     let observer:any;
