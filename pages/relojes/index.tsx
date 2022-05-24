@@ -4,10 +4,10 @@ import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
 
 const relojes:ProductType[] = [
-    {name: 'Quemanta', price: 10900, href: "/relojes/quemanta", image: "/relojes/quemanta/thumbnail.webp"},
-    {name: 'Jauke', price: 10900, href: "/relojes/jauke", image: "/relojes/jauke/thumbnail.webp"},
-    {name: 'Tesh', price: 10900, href: "/relojes/tesh", image: "/relojes/tesh/thumbnail.webp"},
-    {name: 'Mahai', price: 10900, href: "/relojes/mahai", image: "/relojes/mahai/thumbnail.webp"},
+    {id: 1, name: 'Quemanta', price: 10900, sellingPrice: 10900, href: "/relojes/quemanta", image: "/relojes/quemanta/thumbnail.webp"},
+    {id: 2, name: 'Jauke', price: 10900, sellingPrice: 10900, href: "/relojes/jauke", image: "/relojes/jauke/thumbnail.webp"},
+    {id: 3, name: 'Tesh', price: 10900, sellingPrice: 10900, href: "/relojes/tesh", image: "/relojes/tesh/thumbnail.webp"},
+    {id: 4, name: 'Mahai', price: 10900, sellingPrice: 10900, href: "/relojes/mahai", image: "/relojes/mahai/thumbnail.webp"},
 ]
 
 const Relojes:NextPageAugmented = () => {

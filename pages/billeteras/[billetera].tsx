@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useAppContext } from "contexts/AppContext";
 import { capitalize, colors as utilityColors, scrollTo, useIsMobile } from '@/utils/index'
 import { WalletHTML }  from '@/utils/wallet'
 import { useRouter } from 'next/router'
@@ -23,21 +24,25 @@ import "swiper/css/pagination"
 SwiperCore.use([Pagination]);
 
 const recommendedProducts:TRecommended[] = [
-    {name: 'chocolate', image: '/billeteras/chocolate/recommended.webp', href: '/billeteras/chocolate', price: '$3.950'},
-    {name: 'suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: '$3.950'},
-    {name: 'quemanta', image: '/relojes/quemanta/recommended.webp', href: '/relojes/quemanta', price: '$10.950'},
+    {name: 'chocolate', image: '/billeteras/chocolate/recommended.webp', href: '/billeteras/chocolate', price: 3950},
+    {name: 'suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 3950},
+    {name: 'quemanta', image: '/relojes/quemanta/recommended.webp', href: '/relojes/quemanta', price: 3950},
 ]
 
 const Billetera:NextPageAugmented<{billetera: string}> = ({billetera}) => {
     
+    const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera}/billetera-cuero-genuino-${item}.webp`)
     const product:ProductType = {
+        id: 1,
         name: billetera,
         price: 3950,
+        sellingPrice: 3950,
         description: 'Texto corto de descripción del modelo, cual es el diferencial.',
         href: ""
     }
+    const addThisToCart = () => addToCart(product.name)
 
     return (
         <>
@@ -45,8 +50,8 @@ const Billetera:NextPageAugmented<{billetera: string}> = ({billetera}) => {
             <title>{capitalize(billetera)} | Billeteras | Lengas</title>
         </Head>
         <div className={styles.Billetera}>
-            <FixedProductCta product={product} show={showFixedCta} />
-            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} />
+            <FixedProductCta product={product} show={showFixedCta} addToCart={addThisToCart} />
+            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
             <div className='container'>
                 <AssetAndText 
                 title="Una nueva forma de llevarlo todo" 

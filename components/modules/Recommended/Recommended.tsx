@@ -7,7 +7,7 @@ export type TRecommended = {
     name: string,
     image: string,
     href: string,
-    price: string,
+    price: number,
 }
 
 const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {

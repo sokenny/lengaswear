@@ -19,9 +19,9 @@ import Recommended, {TRecommended} from '@/components/modules/Recommended/Recomm
 import styles from '../../styles/Reloj.module.scss'
 
 const recommendedProducts:TRecommended[] = [
-    {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: '$10,000'},
-    {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: '$10,000'},
-    {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: '$10,000'},
+    {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: 10000},
+    {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: 10000},
+    {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 10000},
 ]
 
 const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {

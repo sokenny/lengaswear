@@ -4,9 +4,9 @@ import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
 
 const billeteras:ProductType[] = [
-    {name: 'Chocolate', price: 3950, href: "/billeteras/chocolate", image: "/billeteras/chocolate/thumbnail.webp"},
-    {name: 'Suela', price: 3950, href: "/billeteras/suela", image: "/billeteras/suela/thumbnail.webp"},
-    {name: 'Boom', price: 3950, href: "/billeteras/boom", image: "/billeteras/boom/thumbnail.webp"},
+    {id: 5, name: 'Chocolate', price: 3950, sellingPrice: 3950, href: "/billeteras/chocolate", image: "/billeteras/chocolate/thumbnail.webp"},
+    {id: 6, name: 'Suela', price: 3950, sellingPrice: 3950, href: "/billeteras/suela", image: "/billeteras/suela/thumbnail.webp"},
+    {id: 7, name: 'Boom', price: 3950, sellingPrice: 3950, href: "/billeteras/boom", image: "/billeteras/boom/thumbnail.webp"},
 ]
 
 const Billeteras:NextPageAugmented = () => {
