@@ -1,5 +1,7 @@
 import { useEffect, useMemo } from "react";
+import { NUMBER_BOUNCE_DISTANCE } from "@/utils/constants";
 import { NextPageAugmented, ProductType } from "types";
+import { motion } from 'framer-motion';
 import { cart, chat } from "@/utils/icons";
 import { useAppContext } from "contexts/AppContext";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
@@ -13,7 +15,7 @@ import styles from '../styles/Carrito.module.scss';
 
 const Carrito: NextPageAugmented = () => {
 
-    const { checkout } = useAppContext();
+    const { store, checkout } = useAppContext();
     const cartDetail = checkout !== null ? getCartDetail(checkout.carrito) : {}
 
     function getCartDetail(carrito:string[]){
@@ -24,9 +26,15 @@ const Carrito: NextPageAugmented = () => {
         return cartDetail;
     }
 
-    useEffect(()=>{
-        console.log('cart detail: ', cartDetail)
-    })
+    function getCartTotal(){
+        let total = 0;
+        Object.keys(cartDetail).forEach(prdName => {
+            const qty = cartDetail[prdName];
+            const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
+            total += qty * product.price;
+        });
+        return total;
+    }
 
     return (
         <>
@@ -65,7 +73,13 @@ const Carrito: NextPageAugmented = () => {
                             </div>
                             <div className={styles.total}>
                                 <h3 className={styles.detalleLabel}>Total</h3>
-                                <div>$38.910</div>
+                                <motion.div
+                                initial={{y: -NUMBER_BOUNCE_DISTANCE}}
+                                animate={{y: 0}}
+                                key={getCartTotal()}
+                                >
+                                    {getCartTotal()}
+                                </motion.div>
                             </div>
                             <div className={styles.cta}>
                                 <Button onClick={()=>console.log('hola')}>Iniciar Compra</Button>
@@ -102,11 +116,19 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={styles.price}>
                     {product.price}
                 </div>
-                <div className={styles.qty}>
-                    {qty}
+                <div className={`${styles.qty} no-select`}>
+                    <div onClick={addThisToCart}>+</div>
+                        <span>{qty}</span>
+                    <div onClick={removeThisFromCart}>-</div>
                 </div>
                 <div className={styles.subTotal}>
-                    $21.340
+                    <motion.div
+                    key={qty}
+                    initial={{y: -NUMBER_BOUNCE_DISTANCE}}
+                    animate={{y: 0}}
+                    >
+                        {product.sellingPrice * qty}
+                    </motion.div>
                 </div>
                 <div className={styles.delete}>
                     <span>Eliminar</span>
@@ -120,7 +142,9 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     <div>
                         <div>
                             <h3>{product.name}</h3>
-                            <div className={styles.qty}>Unidades: {qty}</div>
+                            <div className={styles.qty}>
+                                Unidades: {qty}
+                            </div>
                         </div>
                         <div className={styles.addSubstract}>
                             <div onClick={addThisToCart}>+</div>
@@ -129,7 +153,13 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     </div>
                     <div className={styles.price}>
                         <div>{product.sellingPrice}</div>
-                        <div>{product.sellingPrice * qty}</div>
+                        <motion.div
+                        key={qty}
+                        initial={{y: -NUMBER_BOUNCE_DISTANCE}}
+                        animate={{y: 0}}
+                        >
+                            {product.sellingPrice * qty}
+                        </motion.div>
                     </div>
                 </div>
 

@@ -82,7 +82,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             <div>Peso: <strong>22g</strong></div>
                         </div>
                         <div className={styles.TopProductSection__price}>$ {product.price}</div>
-                        <Button onClick={()=>{}}>Agregar al carrito</Button>
+                        <Button onClick={addToCart}>Agregar al carrito</Button>
                         <div className={styles.TopProductSection__verMas}>
                             <div>Ver más características</div>
                             <div>Ver más detalles</div>

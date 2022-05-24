@@ -198,6 +198,37 @@
         .price, .qty, .subTotal, .delete{
             min-width: 10%;
         }
+
+        .subTotal{
+            min-width: 20%;
+            text-align: right;
+        }
+
+        .qty{
+            span{
+                text-align: center;
+                width: 20px;
+            }
+            >div{
+                color: color(g1);
+                height: 20px;
+                width: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            >div:hover{
+                background-color: rgba(0,0,0,0.025);
+            }
+            >div:first-child{
+                margin-right: 10px;
+            }
+            >div:last-child{
+                margin-left: 10px;
+            }
+        }
     
         .delete{
             transition: .2s;
