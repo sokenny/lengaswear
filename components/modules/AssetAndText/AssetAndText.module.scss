@@ -54,6 +54,7 @@
         @include mobile{
             height: 400px;
             min-width: auto;
+            width: -webkit-fill-available;
         }
 
         .imgContainer{
@@ -77,5 +78,15 @@
 
     @include mobile{
         flex-direction: column;
+    }
+}
+
+.AssetAndText.AssetAndText-complexAsset{
+
+    .asset{
+
+        @include mobile{
+            height: auto;
+        }
     }
 }

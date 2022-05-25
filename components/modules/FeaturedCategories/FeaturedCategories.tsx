@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion'
-import { useOnScreen } from '@/utils/index';
+import { useOnScreen, useIsMobile } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import Link from 'next/link'
 import Image from 'next/image'
@@ -8,6 +8,7 @@ import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import styles from './FeaturedCategories.module.scss';
 
 const FeaturedCategories:React.FC = () => {
+
     return (
         <section className={styles.FeaturedCategories}>
             <Link href="/relojes" passHref>
@@ -33,8 +34,9 @@ type CategoryPosterProps = {
 
 const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href}) => {
     
+    const isMobile = useIsMobile();
     const textRef = useRef(null);
-    const isOnScreen = useOnScreen(textRef, ANIMATE_BREAKPOINT * .8);
+    const isOnScreen = useOnScreen(textRef, ANIMATE_BREAKPOINT * (isMobile ? .8 : .5));
     const BASE_DELAY = 0;
 
     return (

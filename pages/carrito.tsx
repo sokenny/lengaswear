@@ -6,6 +6,7 @@ import { cart, chat } from "@/utils/icons";
 import { useAppContext } from "contexts/AppContext";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
 import Head from 'next/head';
+import Link from 'next/link';
 import Image from 'next/image';
 import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
@@ -15,8 +16,12 @@ import styles from '../styles/Carrito.module.scss';
 
 const Carrito: NextPageAugmented = () => {
 
-    const { store, checkout } = useAppContext();
+    const { store, checkout, setCheckout } = useAppContext();
     const cartDetail = checkout !== null ? getCartDetail(checkout.carrito) : {}
+
+    useEffect(()=>{
+        setCheckout({...checkout, step: 1})
+    }, [])
 
     function getCartDetail(carrito:string[]){
         const cartDetail:any = {};
@@ -45,15 +50,9 @@ const Carrito: NextPageAugmented = () => {
             <div className="container" style={{paddingTop: 0}}>
                 <main>
                     <div className={styles.col1}>
-                        <div className={styles.header}>
-                            <h1>Tu Carrito</h1>
-                            <h2>Llevando 2 o más productos tenés un 10% off!</h2>
-                        </div>
-                        <section className={styles.products}>
-                            {Object.keys(cartDetail).map((prdName) =>
-                                <ProductRow prdName={prdName} qty={cartDetail[prdName]} key={prdName} />
-                            )}
-                        </section>
+                        {checkout !== null && checkout.step === 1 &&
+                            <StepOne cartDetail={cartDetail} />
+                        }
                         <div className={styles.storeInfo}>
                             {perkItems.map((item)=>
                             <div className={styles.perk} key={item.title}>
@@ -82,7 +81,7 @@ const Carrito: NextPageAugmented = () => {
                                 </motion.div>
                             </div>
                             <div className={styles.cta}>
-                                <Button onClick={()=>console.log('hola')}>Iniciar Compra</Button>
+                                <Button onClick={()=>setCheckout({...checkout, step: 2})}>Iniciar Compra</Button>
                             </div>
                         </section>
                         <div className={styles.ayuda}>
@@ -97,6 +96,23 @@ const Carrito: NextPageAugmented = () => {
     )
 }
 
+const StepOne:React.FC<{cartDetail:any}> = ({cartDetail}) => {
+
+    return (
+        <section>
+            <div className={styles.header}>
+                <h1>Tu Carrito</h1>
+                <h2>Llevando 2 o más productos tenés un 10% off!</h2>
+            </div>
+            <section className={styles.products}>
+                {Object.keys(cartDetail).map((prdName) =>
+                    <ProductRow prdName={prdName} qty={cartDetail[prdName]} key={prdName} />
+                )}
+            </section>
+        </section>
+    )
+}
+
 const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
 
     const { store, addToCart, removeFromCart } = useAppContext();
@@ -108,7 +124,11 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
         <div className={styles.ProductRow}>
             <div className={styles.desktop}>
                 <div className={styles.image}>
-                    <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
+                    <Link href={product.href}>
+                        <a>
+                            <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
+                        </a>
+                    </Link>
                 </div>
                 <div className={styles.name}>
                     <h3>{product.name}</h3>
@@ -136,14 +156,18 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
             </div>
             <div className={styles.mobile}>
                 <div className={styles.image}>
-                    <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
+                    <Link href={product.href}>
+                        <a>
+                            <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
+                        </a>
+                    </Link>
                 </div>
                 <div className={styles.cols}>
                     <div>
                         <div>
                             <h3>{product.name}</h3>
                             <div className={styles.qty}>
-                                Unidades: {qty}
+                                <span>Unidades:</span> {qty}
                             </div>
                         </div>
                         <div className={styles.addSubstract}>

@@ -15,7 +15,7 @@ type HeroStripeProps= {
 const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) => {
 
     const titleRef = useRef<HTMLDivElement>(null);
-    const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
+    const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT * .8);
     const BASE_DELAY = 0;
 
     const motionProps = {

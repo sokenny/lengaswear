@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState, useRef } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAppContext } from "contexts/AppContext";
-import { capitalize, colors as utilityColors, scrollTo, useIsMobile } from '@/utils/index'
+import { ANIMATE_BREAKPOINT } from '@/utils/constants';
+import { capitalize, colors as utilityColors, scrollTo, useIsMobile, useOnScreen, variants } from '@/utils/index'
 import { WalletHTML }  from '@/utils/wallet'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
@@ -121,6 +122,8 @@ const WalletSpecs:React.FC = () => {
 const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 
     const router = useRouter()
+    const titleRef = useRef<HTMLDivElement>(null)
+    const isOnScreen = useOnScreen(titleRef, ANIMATE_BREAKPOINT) 
     const colors:string[] = ['Chocolate', 'Suela', 'Boom']
     const slides = [1,2,3].map((item)=> `/billeteras/${billetera}/billetera-artesanal-${item}.webp`)
     const [hoveringOn, setHoveringOn] = useState<string>("")
@@ -133,17 +136,38 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
         return utilityColors[color?.toLocaleLowerCase() as keyof {}]
     }
 
+    const motionProps = {
+        variants: variants.slideUp,
+        initial: 'hidden',
+        animate: isOnScreen && 'visible',
+        transition: {duration: .7}
+    }
+
     return (
         <section className={styles.CarrouselSection}>
             <div className={styles.text}>
                 <div>
-                    <h3>Lo que nos define son nuestras elecciones</h3>
-                    <p>Hicimos billeteras que se ajusten a distintas estilos de vida. Deslizá para descubrir cuál es la indicada para vos.</p>
+                    <motion.h3
+                    {...motionProps}
+                    transition={{...motionProps.transition, duration: .9}}
+                    ref={titleRef}
+                    >
+                        Lo que nos define son nuestras elecciones
+                    </motion.h3>
+                    <motion.p
+                    {...motionProps}
+                    transition={{...motionProps.transition, delay: .2}}
+                    >
+                        Hicimos billeteras que se ajusten a distintas estilos de vida. Deslizá para descubrir cuál es la indicada para vos.
+                    </motion.p>
                     <div className={styles.toggler}>
                         <div className={styles.colors}>
-                            {colors.map((color)=>
-                                <div 
+                            {colors.map((color, i)=>
+                                <motion.div 
                                 className={`${styles.color} ${styles[`color-${color?.toLocaleLowerCase()}`]} ${billetera?.toLocaleLowerCase() === color?.toLocaleLowerCase() ? styles[`color-selected`] : ''}`} 
+                                initial={{opacity: 0, y: 10}}
+                                animate={isOnScreen && {opacity: 1, y: 0}}
+                                transition={{...motionProps.transition, delay: .1 + (.2 * i), duration: .75}}
                                 onMouseEnter={()=>setHoveringOn(color)}
                                 onMouseLeave={()=>setHoveringOn("")}
                                 onClick={()=>router.push({
@@ -153,7 +177,7 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                                 key={color}
                                 >
                                     <div style={{borderColor: getHexColor(color)}}></div>
-                                </div>
+                                </motion.div>
                             )}
                         </div>
                         <div className={styles.activeColor}>

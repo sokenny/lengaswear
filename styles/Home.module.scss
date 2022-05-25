@@ -13,6 +13,10 @@
     display: flex;
     justify-content: flex-end;
 
+    @include mobile{
+        height: auto;
+    }
+
     video{
         object-fit: cover;
         height: 100%;

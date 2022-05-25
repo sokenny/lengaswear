@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { ProductType } from 'types';
 
 type checkoutType = {
+    step:number,
     carrito: string[];
 } | null
 
@@ -11,11 +12,13 @@ interface AppContextInterface {
     scrolledBottom: boolean;
     store: ProductType[];
     checkout: checkoutType;
+    setCheckout: (checkout:any)=> void;
     addToCart: (prdName: string) => void;
     removeFromCart: (prdName: string) => void;
 }
 
 const initialCheckoutValue:checkoutType = {
+    step: 1,
     carrito: []
 } 
 
@@ -26,20 +29,20 @@ export function AppProvider(props:any){
 
     // Hardcodeando temporalmente el store
     const store:ProductType[] = [
-        {id: 1, name: "Quemanta", price: 10670, sellingPrice: 10670, stock: 10, href: "", image: "", category: "relojes"},
-        {id: 2, name: "Tesh", price: 10670, sellingPrice: 10670, stock: 10, href: "", image: "", category: "relojes"},
-        {id: 3, name: "Jauke", price: 10670, sellingPrice: 10670, stock: 10, href: "", image: "", category: "relojes"},
-        {id: 4, name: "Mahai", price: 10670, sellingPrice: 10670, stock: 10, href: "", image: "", category: "relojes"},
-        {id: 5, name: "Chocolate", price: 3950, sellingPrice: 3950, stock: 10, href: "", image: "", category: "billeteras"},
-        {id: 5, name: "Suela", price: 3950, sellingPrice: 3950, stock: 10, href: "", image: "", category: "billeteras"},
-        {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "", image: "", category: "billeteras"},
+        {id: 1, name: "Quemanta", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
+        {id: 2, name: "Tesh", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
+        {id: 3, name: "Jauke", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
+        {id: 4, name: "Mahai", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
+        {id: 5, name: "Chocolate", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
+        {id: 5, name: "Suela", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
+        {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
     ]
 
     const [checkout, setCheckout] = useState<checkoutType>(null)
 
     useEffect(()=>{
         if(checkout !== null){
-            tryLocalStorage.set("checkout", checkout);
+            tryLocalStorage.set("checkout", {...checkout, step: 1});
         }
     }, [checkout])
 
@@ -63,15 +66,12 @@ export function AppProvider(props:any){
         }
     }
 
-    useEffect(()=>{
-        console.log('checkout: ', checkout)
-    })
-
     const value = useMemo(()=>{
         return {
             store,
             scrolledBottom,
             checkout,
+            setCheckout,
             addToCart,
             removeFromCart
         }

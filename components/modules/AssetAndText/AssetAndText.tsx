@@ -14,10 +14,13 @@ type AssetAndTextProps = {
 }
 
 const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ctaSection=false, assetLeft=true}) => {
+    
     const titleRef = useRef<HTMLDivElement>(null);
     const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
     const BASE_DELAY = 0;
+    const hasComplexAsset = typeof asset !== 'string';
 
+    
     const motionProps = {
         variants: variants.slideUp,
         initial: 'hidden',
@@ -26,7 +29,7 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
     }
 
     return (
-        <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]}`} data-component="AssetAndText">
+        <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]} ${hasComplexAsset ? styles[`AssetAndText-complexAsset`] : ''}`} data-component="AssetAndText">
             <div className={styles.asset}>
                 {/* {typeof asset === 'string' ? <img src={asset}/> : asset} */}
                 {typeof asset === 'string' ? 

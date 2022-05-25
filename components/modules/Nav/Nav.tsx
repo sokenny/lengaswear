@@ -54,7 +54,7 @@ const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                 <div className={styles.MobileNav__cart}>
                     <Link href="/carrito">
                         <a>
-                            <div>{carrito.length}</div>
+                            <CartLength carrito={carrito} />
                         </a>
                     </Link>
                 </div>
@@ -116,7 +116,12 @@ const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                             <a>
                                 <li>
                                     <div className={styles.DesktopNav__cart}>
-                                        {cart(undefined, "white")}
+                                        <div>
+                                            <CartLength carrito={carrito} />
+                                        </div>
+                                        <span>
+                                            {cart(undefined, "white")}
+                                        </span>
                                     </div>
                                 </li>
                             </a>
@@ -125,6 +130,20 @@ const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                 </div>
             </div>
         </nav>
+    )
+}
+
+const CartLength:React.FC<{carrito: string[]}> = ({carrito}) => {
+    return (
+        <div className={styles.CartLength}>
+            <motion.div
+            key={carrito.length}
+            initial={{rotateY: 0}}
+            animate={{rotateY: 360, scale: [1, 1.5, 1], transition:{duration: .35}}}
+            >
+                {carrito.length}
+            </motion.div>
+        </div>
     )
 }
 

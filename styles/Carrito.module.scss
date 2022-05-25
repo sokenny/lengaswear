@@ -114,6 +114,7 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    font-weight: 600;
 
                     >div{
                         color: color(gold);
@@ -255,6 +256,10 @@
             min-width: 100px;
             min-height: 90px;
             margin-right: $pxs2;
+
+            @include mobile{
+                margin-right: $pxs1;
+            }
         }
 
         .cols{
@@ -305,8 +310,13 @@
                 }
                 >div:last-child{
                     font-size: 20px;
-                    // color: color(g1);
                 }
+            }
+
+            .qty{
+                font-size: 14px;
+                color: color(g1);
+                text-transform: uppercase;
             }
         }
 
