@@ -1,10 +1,10 @@
 import { useLayoutEffect, useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { useScrollPosition, useOnScreen } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
-import Image from 'next/image';
-import Button from '@/components/elements/Button/Button';
-import { TitleWDescription } from 'pages/relojes/[reloj]';
 import { ProductType } from 'types';
+import Image from 'next/image';
+import { TitleWDescription } from 'pages/relojes/[reloj]';
+import AddToCart from '@/components/elements/AddToCart/AddToCart';
 import styles from './TopProductSection.module.scss';
 
 
@@ -57,7 +57,8 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div>{product.description}</div>
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
-                                <Button onClick={addToCart}>Agregar al carrito</Button>
+                                <AddToCart onClick={addToCart} />
+                                {/* <Button onClick={addToCart}>Agregar al carrito</Button> */}
                             </div>
                         </div>
                         }
@@ -82,7 +83,8 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             <div>Peso: <strong>22g</strong></div>
                         </div>
                         <div className={styles.TopProductSection__price}>$ {product.price}</div>
-                        <Button onClick={addToCart}>Agregar al carrito</Button>
+                        <AddToCart onClick={addToCart} />
+                        {/* <Button onClick={addToCart}>Agregar al carrito</Button> */}
                         <div className={styles.TopProductSection__verMas}>
                             <div>Ver más características</div>
                             <div>Ver más detalles</div>

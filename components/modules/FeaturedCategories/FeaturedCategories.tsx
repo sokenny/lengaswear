@@ -45,14 +45,14 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
                 <motion.h3
                 initial={{ opacity: 0, y: 30 }}
                 animate={isOnScreen && { opacity: 1, y: 0 }}
-                transition={{duration: .7, delay: BASE_DELAY+.1}}
+                transition={{duration: 1, delay: BASE_DELAY+.1}}
                 >
                     {title}
                 </motion.h3>
                 <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={isOnScreen && { opacity: 1, y: 0 }}
-                transition={{duration: .7, delay: BASE_DELAY+.2}}
+                transition={{duration: 1, delay: BASE_DELAY+.2}}
                 >
                     <ArrowCta cta={cta} />
                 </motion.div>
@@ -61,7 +61,7 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
             className={styles.CategoryPoster__image}
             initial={{scale: 1.2}}
             animate={isOnScreen && {scale: 1}}
-            transition={{duration: .7, delay: BASE_DELAY}}
+            transition={{duration: 1, delay: BASE_DELAY}}
             >
                 <div>
                     <Image src={image} layout="fill" objectFit="cover" />
