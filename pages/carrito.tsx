@@ -118,7 +118,7 @@ const Carrito: NextPageAugmented = () => {
                         </section>
                         <div className={styles.ayuda}>
                             <div>{chat()}</div>
-                            <a href={WHATSAPP_LINK} target="_blank" >
+                            <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
                                 <div>Necesitás ayuda? Chatea con nosotros!</div>
                             </a>
                         </div>

@@ -105,7 +105,7 @@ const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                 </div>
                 <div>
                     <ul>
-                        <a href={WHATSAPP_LINK} target="_blank" ><li>Contacto</li></a>
+                        <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer"><li>Contacto</li></a>
                         <a>
                             <li>
                                 <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
