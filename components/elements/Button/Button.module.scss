@@ -8,10 +8,20 @@
     outline: none;
     border: 1px solid transparent;
     cursor: pointer;
+    transition: .2s;
 }
 
 .Button:hover, .Button.Button-light{
     background-color: transparent;
     border-color: color(g1);
     color: color(g1);
+}
+
+.Button.Button-inActive{
+    opacity: .2;
+}
+.Button.Button-inActive:hover{
+    cursor: initial;
+    background-color: color(b1);
+    color: white;
 }

@@ -5,8 +5,19 @@ import { ProductType } from 'types';
 
 type checkoutType = {
     step:number,
-    carrito: string[];
-} | null
+    carrito: string[],
+    nombre: string,
+    apellido: string,
+    mail: string,
+    telefono: string,
+    fuente: string,
+    pais: string,
+    provincia: string,
+    localidad: string,
+    calle: string,
+    numero: string,
+    dpto: string,
+}
 
 interface AppContextInterface {
     scrolledBottom: boolean;
@@ -14,12 +25,23 @@ interface AppContextInterface {
     checkout: checkoutType;
     setCheckout: (checkout:any)=> void;
     addToCart: (prdName: string) => void;
-    removeFromCart: (prdName: string) => void;
+    removeFromCart: (prdName: string, all?:boolean) => void;
 }
 
 const initialCheckoutValue:checkoutType = {
     step: 1,
-    carrito: []
+    carrito: [],
+    nombre: "",
+    apellido: "",
+    mail: "",
+    telefono: "",
+    fuente: "",
+    pais: "Argentina",
+    provincia: "",
+    localidad: "",
+    calle: "",
+    numero: "",
+    dpto: "",
 } 
 
 const AppContext = React.createContext<AppContextInterface | null>(null);
@@ -38,12 +60,11 @@ export function AppProvider(props:any){
         {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
     ]
 
-    const [checkout, setCheckout] = useState<checkoutType>(null)
+    const [checkout, setCheckout] = useState<checkoutType>(initialCheckoutValue)
 
     useEffect(()=>{
-        if(checkout !== null){
-            tryLocalStorage.set("checkout", {...checkout, step: 1});
-        }
+        tryLocalStorage.set("checkout", {...checkout, step: 1});
+        console.log('checkout: ', checkout);
     }, [checkout])
 
     useEffect(()=>{
@@ -56,8 +77,10 @@ export function AppProvider(props:any){
         }
     }
 
-    function removeFromCart(prdName: string){
-        if(checkout !== null){
+    function removeFromCart(prdName: string, all: boolean = false){
+        if(all){
+            setCheckout({...checkout, carrito: checkout.carrito.filter((prd:string)=> prd !== prdName)});
+        }else{
             const index = checkout.carrito.indexOf(prdName);
             if (index !== -1) {
                 checkout.carrito.splice(index, 1)

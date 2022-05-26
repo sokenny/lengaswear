@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from "react";
-import { NUMBER_BOUNCE_DISTANCE } from "@/utils/constants";
+import { useEffect, useMemo, useRef } from "react";
 import { NextPageAugmented, ProductType } from "types";
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { capitalize, scrollTo } from "../utils";
+import { NUMBER_BOUNCE_DISTANCE } from "@/utils/constants";
 import { cart, chat } from "@/utils/icons";
 import { useAppContext } from "contexts/AppContext";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
@@ -12,12 +13,14 @@ import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
 import Button from "@/components/elements/Button/Button";
 import ArrowInput from "@/components/elements/ArrowInput/ArrowInput";
+import Input from "@/components/elements/Input/Input";
 import styles from '../styles/Carrito.module.scss';
 
 const Carrito: NextPageAugmented = () => {
 
     const { store, checkout, setCheckout } = useAppContext();
-    const cartDetail = checkout !== null ? getCartDetail(checkout.carrito) : {}
+    const carritoRef = useRef<HTMLDivElement>(null)
+    const cartDetail = getCartDetail(checkout.carrito);
 
     useEffect(()=>{
         setCheckout({...checkout, step: 1})
@@ -41,31 +44,47 @@ const Carrito: NextPageAugmented = () => {
         return total;
     }
 
+    function handleIniciarCompra(){
+        setCheckout({...checkout, step: 2})
+        scrollTo(carritoRef, -50)
+    }
+
+    const stepScreens:any = useMemo(()=>{
+        return {
+            1: <StepOne cartDetail={cartDetail} />,
+            2: <StepTwo />,
+            3: <StepThree />,
+        }
+    }, [cartDetail])
+
     return (
         <>
         <Head>
             <title>Carrito | {process.env.NEXT_PUBLIC_APP_NAME}</title>
         </Head>
-        <div className={styles.Carrito}>
+        <div className={styles.Carrito} ref={carritoRef}>
             <div className="container" style={{paddingTop: 0}}>
                 <main>
                     <div className={styles.col1}>
-                        {checkout !== null && checkout.step === 1 &&
-                            <StepOne cartDetail={cartDetail} />
-                        }
-                        <div className={styles.storeInfo}>
-                            {perkItems.map((item)=>
-                            <div className={styles.perk} key={item.title}>
-                                <div>{item.icon}</div>
-                                <div>{`${item.title} ${item.text}`}</div>
-                            </div>
-                            )}
-                        </div>
+
+                        {stepScreens[checkout.step]}
+                        {/* {stepScreens[2]} */}
+
                     </div>
                     <div className={styles.col2}>
                         <section className={styles.detalle}>
                             <h2>Detalle final</h2>
                             <CodigoDescuento />
+                            
+                            <div className={styles.listado}>
+                                <div>Productos:</div>
+                                <ul>
+                                    {Object.keys(cartDetail).map((prdName)=>
+                                        <li key={prdName}>x{cartDetail[prdName]} {capitalize(prdName)}</li>
+                                    )}
+                                </ul>
+                            </div>
+                            
                             <div className={styles.envio}>
                                 <h3 className={styles.detalleLabel}>Envío</h3>
                                 <div>GRATIS!</div>
@@ -80,9 +99,20 @@ const Carrito: NextPageAugmented = () => {
                                     {getCartTotal()}
                                 </motion.div>
                             </div>
-                            <div className={styles.cta}>
-                                <Button onClick={()=>setCheckout({...checkout, step: 2})}>Iniciar Compra</Button>
-                            </div>
+                            <AnimatePresence>
+                                {checkout.step === 1 &&
+                                <motion.div 
+                                style={{overflow: "hidden"}}
+                                initial={{height:"auto"}}
+                                animate={{height:"auto"}}
+                                exit={{height: 0}}
+                                >
+                                    <div className={styles.cta}>
+                                        <Button onClick={handleIniciarCompra}>Iniciar Compra</Button>
+                                    </div>
+                                </motion.div>
+                                }
+                            </AnimatePresence>
                         </section>
                         <div className={styles.ayuda}>
                             <div>{chat()}</div>
@@ -96,20 +126,119 @@ const Carrito: NextPageAugmented = () => {
     )
 }
 
+const slideDownProps = {
+    initial:{y: -10},
+    animate:{y: 0}
+}
+
 const StepOne:React.FC<{cartDetail:any}> = ({cartDetail}) => {
 
     return (
-        <section>
+        <section className={styles.StepOne}>
             <div className={styles.header}>
-                <h1>Tu Carrito</h1>
-                <h2>Llevando 2 o más productos tenés un 10% off!</h2>
+                <h1><motion.div {...slideDownProps}>01</motion.div>/03</h1>
+                <h2 {...slideDownProps}>Llevando 2 o más productos tenés un 10% off!</h2>
             </div>
             <section className={styles.products}>
                 {Object.keys(cartDetail).map((prdName) =>
                     <ProductRow prdName={prdName} qty={cartDetail[prdName]} key={prdName} />
                 )}
             </section>
+            <div className={styles.storeInfo}>
+                {perkItems.map((item)=>
+                <div className={styles.perk} key={item.title}>
+                    <div>{item.icon}</div>
+                    <div>{`${item.title} ${item.text}`}</div>
+                </div>
+                )}
+            </div>
         </section>
+    )
+}
+
+const StepTwo:React.FC = () => {
+
+    const { checkout, setCheckout } = useAppContext();
+    const stepIsValid = checkout.nombre !== "" && checkout.mail !== "" && checkout.telefono !== "" && checkout.fuente !== "";
+
+    return (
+        <section className={styles.StepThree}>
+            <div className={styles.header}>
+                <h1><motion.div {...slideDownProps}>02</motion.div>/03</h1>
+                <h2 {...slideDownProps}>
+                    <div>Datos de contacto - Información de envío - Método de pago</div>
+                </h2>
+            </div>
+            <motion.section 
+            className={styles.inputs}
+            initial={{y: -10, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            >
+                <div className={styles.inputRow}>
+                    <LabelAndInput label="Nombre" type="text" value={checkout.nombre} onChange={(nombre)=>setCheckout({...checkout, nombre})} placeholder="Chuck" />
+                    <LabelAndInput label="Apellido" type="text" value={checkout.apellido} onChange={(apellido)=>setCheckout({...checkout, apellido})} placeholder="Norris" />
+                </div>
+                <div className={styles.inputRow}>
+                    <LabelAndInput label="Mail" type="mail" value={checkout.mail} onChange={(mail)=>setCheckout({...checkout, mail})} placeholder="chucknorris@mail.com" />
+                    <LabelAndInput label="Whatsapp / Telefono" name="telefono" type="number" value={checkout.telefono} onChange={(telefono)=>setCheckout({...checkout, telefono})} placeholder="1123456789" />
+                </div>
+                <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
+                    <LabelAndInput label="Por donde nos conociste?" name="fuente" type="text" value={checkout.fuente} onChange={(fuente)=>setCheckout({...checkout, fuente})} placeholder="Av. del Libertador" />
+                </div>
+            </motion.section>
+            <div className={styles.cta}>
+                <Button onClick={()=>setCheckout({...checkout, step: 3})} active={stepIsValid}>Siguiente</Button>
+            </div>
+        </section>
+    )
+}
+
+const StepThree:React.FC = () => {
+
+    const { checkout, setCheckout } = useAppContext();
+    const stepIsValid = checkout.pais !== "" && checkout.provincia !== "" && checkout.localidad !== "" && checkout.calle !== "" && checkout.numero !== "";
+
+    return (
+        <section className={styles.StepThree}>
+            <div className={styles.header}>
+                <h1><motion.div {...slideDownProps}>03</motion.div>/03</h1>
+                <h2 {...slideDownProps}>
+                    <div>Datos de contacto - Información de envío - Método de pago</div>
+                </h2>
+            </div>
+            <motion.section 
+            className={styles.inputs}
+            initial={{y: -10, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            >
+                <div className={styles.inputRow}>
+                    <LabelAndInput label="País" type="text" value={checkout.pais} onChange={(pais)=>setCheckout({...checkout, pais})} placeholder="Argentina" disabled={true} />
+                </div>
+                <div className={styles.inputRow}>
+                    <LabelAndInput label="Provincia" type="text" value={checkout.provincia} onChange={(provincia)=>setCheckout({...checkout, provincia})} placeholder="CABA" />
+                    <LabelAndInput label="Localidad" type="text" value={checkout.localidad} onChange={(localidad)=>setCheckout({...checkout, localidad})} placeholder="Nuñez" />
+                </div>
+                <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
+                    <LabelAndInput label="Calle" type="text" value={checkout.calle} onChange={(calle)=>setCheckout({...checkout, calle})} placeholder="Av. del Libertador" />
+                </div>
+                <div className={styles.inputRow}>
+                    <LabelAndInput label="Número" type="text" value={checkout?.numero } onChange={(numero)=>setCheckout({...checkout, numero})} placeholder="1010" />
+                    <LabelAndInput label="Dpto (opcional)" type="text" value={checkout?.dpto} onChange={(dpto)=>setCheckout({...checkout, dpto})} placeholder="1C" />
+                </div>
+            </motion.section>
+            <div className={styles.cta}>
+                <Button onClick={()=>{}} active={stepIsValid}>Ir a pagar</Button>
+            </div>
+        </section>
+    )
+}
+
+const LabelAndInput:React.FC<{label:string, value:string | number, type:string, name?:string, onChange?:(value:string | number)=>void, disabled?:boolean, placeholder: string}> = ({label, value, type, name, disabled, onChange=()=>{}, placeholder}) => {
+    return (
+        <div className={styles.LabelAndInput}>
+            <label htmlFor="pais">{label}</label>
+            <Input value={value} type={type} name={name || label} disabled={disabled} onChange={onChange} placeholder={placeholder} />
+        </div>
     )
 }
 
@@ -118,7 +247,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
     const { store, addToCart, removeFromCart } = useAppContext();
     const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
     const addThisToCart = () => addToCart(prdName);
-    const removeThisFromCart = () => removeFromCart(prdName);
+    const removeThisFromCart = (all=false) => removeFromCart(prdName, all);
 
     return (
         <div className={styles.ProductRow}>
@@ -139,7 +268,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={`${styles.qty} no-select`}>
                     <div onClick={addThisToCart}>+</div>
                         <span>{qty}</span>
-                    <div onClick={removeThisFromCart}>-</div>
+                    <div onClick={()=>removeThisFromCart(false)}>-</div>
                 </div>
                 <div className={styles.subTotal}>
                     <motion.div
@@ -151,7 +280,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     </motion.div>
                 </div>
                 <div className={styles.delete}>
-                    <span>Eliminar</span>
+                    <span onClick={()=>removeThisFromCart(true)}>Eliminar</span>
                 </div>
             </div>
             <div className={styles.mobile}>
@@ -172,7 +301,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                         </div>
                         <div className={styles.addSubstract}>
                             <div onClick={addThisToCart}>+</div>
-                            <div onClick={removeThisFromCart}>-</div>
+                            <div onClick={()=>removeThisFromCart(false)}>-</div>
                         </div>
                     </div>
                     <div className={styles.price}>

@@ -12,6 +12,27 @@
             flex-direction: column;
         }
 
+        .header{
+            margin-bottom: $pxs3;
+
+            @include mobile{
+                padding: $pxs3 0;
+                margin-bottom: 0;
+            }
+            
+            h1{
+                font-weight: 500;
+                font-size: $fs3;
+                font-family: Silk Serif;
+                display: flex;
+            }
+            h2{
+                color: color(g1);
+                font-weight: 400;
+                font-size: $fs1;
+            }
+        }
+
         .col1{
             width: 60%;
 
@@ -19,34 +40,19 @@
                 width: 100%;
             }
 
-            .header{
-                margin-bottom: $pxs3;
-
-                @include mobile{
-                    padding: $pxs3;
-                    margin-bottom: 0;
-                }
-                
-                h1{
-                    font-weight: 500;
-                    font-size: $fs3;
-                    font-family: Silk Serif;
-                }
-                h2{
-                    color: color(g1);
-                    font-weight: 400;
-                    font-size: $fs1;
-                }
-            }
-
             .products{
                 margin-bottom: $pxs2;
+
+                @include mobile{
+                    margin-bottom: 0;
+                }
             }
 
             .storeInfo{
                 display: grid;
                 grid-template-columns: 48% 48%;
                 column-gap: 4%;
+                margin-top: $pxs2;
 
                 @include mobile{
                     display: none;
@@ -57,6 +63,7 @@
                     display: flex;
                     align-items: center;
                     padding: 25px;
+                    padding-left: 0;
                     font-size: 14px;
                     color: color(g1);
 
@@ -81,6 +88,7 @@
 
             @include mobile{
                 width: 100%;
+                padding: 20px;
             }
 
             .detalle{
@@ -102,7 +110,17 @@
                     }
                 }
 
+                .listado{
+                    margin-top: $pxs2;
+
+                    ul{
+                        margin: 0;
+                        color: color(g1);
+                    }
+                }
+
                 .envio{
+                    margin-top: 80px;
                     margin-bottom: $pxs1;
 
                     >div{
@@ -131,6 +149,7 @@
 
                 .cta{
                     margin-top: $pxs1;
+                    overflow: hidden;
 
                     button{
                         width: 100%;
@@ -146,15 +165,53 @@
                 justify-content: center;
                 text-align: left;
                 font-size: 14px;
+
+                @include mobile{
+                    padding-bottom: 0;
+                }
                 
                 >div:first-child{
                     margin-right: $pxs1;
                 }
 
                 >div:last-child:hover{
-                    border-bottom: 1px solid color(g1);
+                    text-decoration: underline;
                     cursor: pointer;
                 }
+            }
+        }
+
+        .inputRow{
+            display: flex;
+            width: 100%;
+            margin-bottom: $pxs2;
+            max-width: 500px;
+
+            >*{
+                width: 50%;
+            }
+
+            >*:first-child{
+                padding-right: $pxs2;
+
+                @include mobile{
+                    padding-right: $pxs1;
+                }
+            }
+        }
+
+        .inputRow:last-child{
+            margin-bottom: 0;
+
+            @include mobile{
+                margin-bottom: $pxs2;
+            }
+        }
+
+        .inputRow-full{
+            >*:first-child{
+                width: 100%;
+                padding-right: 0;
             }
         }
 
@@ -335,11 +392,6 @@
 }
 
 .CodigoDescuento{
-    margin-bottom: 120px;
-
-    @include mobile{
-        margin-bottom: $pxs3;
-    }
 
     >div:first-child{
         font-size: 14px;
@@ -347,4 +399,34 @@
         color: color(g1);
     }
 
+}
+
+.LabelAndInput{
+    display: flex;
+    flex-direction: column;
+
+    label{
+        font-size: 14px;
+    }
+
+    input{
+        width: 100%;
+    }
+}
+
+.StepOne, .StepThree{
+    @include mobile{
+        padding: 0 20px;
+    }
+}
+
+.StepThree{
+    .cta{
+        margin-top: $pxs2;
+        
+        button{
+            padding-right: $pxs3;
+            padding-left: $pxs3;
+        }
+    }
 }
