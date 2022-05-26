@@ -215,4 +215,8 @@
     font-size: 12px;
     font-weight: 600;
     color: white;
+
+    >div{
+        z-index: 1;
+    }
 }

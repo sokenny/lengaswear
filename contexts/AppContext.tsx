@@ -52,12 +52,12 @@ export function AppProvider(props:any){
     // Hardcodeando temporalmente el store
     const store:ProductType[] = [
         {id: 1, name: "Quemanta", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
-        {id: 2, name: "Tesh", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
-        {id: 3, name: "Jauke", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
-        {id: 4, name: "Mahai", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
-        {id: 5, name: "Chocolate", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
-        {id: 5, name: "Suela", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
-        {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/quemanta", image: "", category: "billeteras"},
+        {id: 2, name: "Tesh", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/tesh", image: "", category: "relojes"},
+        {id: 3, name: "Jauke", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/jauke", image: "", category: "relojes"},
+        {id: 4, name: "Mahai", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/mahai", image: "", category: "relojes"},
+        {id: 5, name: "Chocolate", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/chocolate", image: "", category: "billeteras"},
+        {id: 5, name: "Suela", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/suela", image: "", category: "billeteras"},
+        {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/boom", image: "", category: "billeteras"},
     ]
 
     const [checkout, setCheckout] = useState<checkoutType>(initialCheckoutValue)

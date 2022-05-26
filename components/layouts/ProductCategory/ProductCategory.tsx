@@ -1,5 +1,6 @@
 import { ProductType } from 'types';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './ProductCategory.module.scss';
 
 type ProductCategoryProps = {
@@ -40,7 +41,7 @@ const ProductItem:React.FC<ProductItemProps> = ({product}) => {
             <a>
                 <div className={styles.ProductItem}>
                     <div className={styles.ProductItem__image}>
-                        <img src={product.image} alt={product.name} />
+                        <Image src={product.image || ""} layout="fill" objectFit="cover" alt={product.name} />
                     </div>
                     <div>
                         <h3>{product.name}</h3>

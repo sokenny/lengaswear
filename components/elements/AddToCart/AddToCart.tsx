@@ -31,7 +31,7 @@ const AddToCart:React.FC<{onClick: ()=>void}> = ({onClick}) => {
                     setAnimate(false)
                     setCta(AGREGAR)
                 }, 3000);
-            }, 500)
+            }, 250)
             return () => clearTimeout(timeout);
         }
     }, [animate])
@@ -47,7 +47,7 @@ const AddToCart:React.FC<{onClick: ()=>void}> = ({onClick}) => {
             className={styles.bg}
             initial={{width: "100%"}}
             animate={animate ? {width: "0%"} : {width: "100%"}}
-            transition={{duration: animate ? .5 : 0, ease: "circIn"}}
+            transition={{duration: animate ? .25 : 0, ease: "circIn"}}
             ></motion.div>
             <motion.div 
             key={cta}

@@ -21,7 +21,7 @@ const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
                 <Link href={product.href} key={product.name} >
                     <div className={styles.item}>
                         <div className={styles.image}>
-                            <Image layout="fill" objectFit='cover' src={product.image} />
+                            <Image layout="fill" objectFit='contain' src={product.image} />
                         </div>
                         <div className={styles.info}>
                             <h3>{capitalize(product.name)}</h3>

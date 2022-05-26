@@ -25,9 +25,9 @@ import "swiper/css/pagination"
 SwiperCore.use([Pagination]);
 
 const recommendedProducts:TRecommended[] = [
-    {name: 'chocolate', image: '/billeteras/chocolate/recommended.webp', href: '/billeteras/chocolate', price: 3950},
-    {name: 'suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 3950},
-    {name: 'quemanta', image: '/relojes/quemanta/recommended.webp', href: '/relojes/quemanta', price: 3950},
+    {name: 'chocolate', image: '/billeteras/chocolate/thumbnail.webp', href: '/billeteras/chocolate', price: 3950},
+    {name: 'suela', image: '/billeteras/suela/thumbnail.webp', href: '/billeteras/suela', price: 3950},
+    {name: 'quemanta', image: '/relojes/quemanta/thumbnail.webp', href: '/relojes/quemanta', price: 3950},
 ]
 
 const Billetera:NextPageAugmented<{billetera: string}> = ({billetera}) => {

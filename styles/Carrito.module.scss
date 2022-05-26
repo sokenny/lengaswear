@@ -214,9 +214,11 @@
                 padding-right: 0;
             }
         }
-
     }
+}
 
+.Carrito.Carrito-empty{
+    min-height: auto;
 }
 
 .ProductRow{
@@ -428,5 +430,49 @@
             padding-right: $pxs3;
             padding-left: $pxs3;
         }
+    }
+}
+
+.EmptyCart{
+
+    @include mobile{
+        padding: 20px
+    }
+
+    h1{
+        font-size: 100px;
+        opacity: .2;
+        line-height: 120px;
+        margin-bottom: $pxs3;
+
+        @include mobile{
+            font-size: 60px;
+            line-height: 70px;
+            margin-bottom: $pxs1;
+        }
+    }
+
+    h2{
+        opacity: 1;
+        color: color(b1);
+        display: flex;
+        
+        div{
+            transition: .2s;
+            margin-left: 8px;
+        }
+    }
+
+
+    h2:hover{
+        cursor: pointer;
+    }
+    
+    h2:hover span{
+        text-decoration: underline;
+    }
+
+    h2:hover div{
+        transform: rotate(25deg);
     }
 }

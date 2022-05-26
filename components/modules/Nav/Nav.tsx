@@ -3,6 +3,7 @@ import { useAppContext } from "contexts/AppContext";
 import Link from "next/link";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useScrollPosition, useScrolledBottom } from "@/utils/index";
+import { WHATSAPP_LINK } from "@/utils/constants";
 import { cart, hamburger } from "@/utils/icons";
 import { useRouter } from "next/router";
 import styles from './Nav.module.scss';
@@ -104,14 +105,12 @@ const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                 </div>
                 <div>
                     <ul>
-                        <Link href="/soporte">
-                            <a><li>Soporte</li></a>
-                        </Link>
-                            <a>
-                                <li>
-                                    <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
-                                </li>
-                            </a>
+                        <a href={WHATSAPP_LINK} target="_blank" ><li>Contacto</li></a>
+                        <a>
+                            <li>
+                                <img src="/flags/arg.png" height="14px" alt="Bandera Argentina" />
+                            </li>
+                        </a>
                         <Link href="/carrito">
                             <a>
                                 <li>

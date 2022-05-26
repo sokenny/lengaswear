@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
 import { capitalize, scrollTo } from "../utils";
-import { NUMBER_BOUNCE_DISTANCE } from "@/utils/constants";
+import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
 import { cart, chat } from "@/utils/icons";
 import { useAppContext } from "contexts/AppContext";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
@@ -21,6 +21,7 @@ const Carrito: NextPageAugmented = () => {
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
     const cartDetail = getCartDetail(checkout.carrito);
+    const cartIsEmpty = checkout.carrito.length < 1;
 
     useEffect(()=>{
         setCheckout({...checkout, step: 1})
@@ -62,15 +63,16 @@ const Carrito: NextPageAugmented = () => {
         <Head>
             <title>Carrito | {process.env.NEXT_PUBLIC_APP_NAME}</title>
         </Head>
-        <div className={styles.Carrito} ref={carritoRef}>
+        <div className={`${styles.Carrito} ${cartIsEmpty ? styles['Carrito-empty'] : ''}`} ref={carritoRef}>
             <div className="container" style={{paddingTop: 0}}>
                 <main>
                     <div className={styles.col1}>
 
-                        {stepScreens[checkout.step]}
-                        {/* {stepScreens[2]} */}
+                        {cartIsEmpty ? <EmptyCart /> : stepScreens[checkout.step]}
 
                     </div>
+
+                    {!cartIsEmpty && 
                     <div className={styles.col2}>
                         <section className={styles.detalle}>
                             <h2>Detalle final</h2>
@@ -90,7 +92,7 @@ const Carrito: NextPageAugmented = () => {
                                 <div>GRATIS!</div>
                             </div>
                             <div className={styles.total}>
-                                <h3 className={styles.detalleLabel}>Total</h3>
+                                <h3 className={styles.detalleLabel}>Total (ARS)</h3>
                                 <motion.div
                                 initial={{y: -NUMBER_BOUNCE_DISTANCE}}
                                 animate={{y: 0}}
@@ -116,13 +118,29 @@ const Carrito: NextPageAugmented = () => {
                         </section>
                         <div className={styles.ayuda}>
                             <div>{chat()}</div>
-                            <div>Necesitás ayuda? Chatea con nosotros!</div>
+                            <a href={WHATSAPP_LINK} target="_blank" >
+                                <div>Necesitás ayuda? Chatea con nosotros!</div>
+                            </a>
                         </div>
                     </div>
+                    }
                 </main>
             </div>
         </div>
         </>
+    )
+}
+
+const EmptyCart = () => {
+    return (
+        <section className={styles.EmptyCart}>
+            <h1>Tu carrito se encuentra vacío!</h1>
+            <Link href="/">
+                <a>
+                    <h2><span>Ir a comprar</span> <div>🤪</div></h2>
+                </a>
+            </Link>
+        </section>
     )
 }
 
@@ -248,6 +266,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
     const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
     const addThisToCart = () => addToCart(prdName);
     const removeThisFromCart = (all=false) => removeFromCart(prdName, all);
+    const thumbnailSrc = `/${product.category}/${product.name.toLocaleLowerCase()}/main.webp`
 
     return (
         <div className={styles.ProductRow}>
@@ -255,7 +274,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={styles.image}>
                     <Link href={product.href}>
                         <a>
-                            <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
+                            <Image src={thumbnailSrc} alt={product.name} layout="fill" objectFit="cover" />
                         </a>
                     </Link>
                 </div>
@@ -287,7 +306,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={styles.image}>
                     <Link href={product.href}>
                         <a>
-                            <Image src={"/relojes/quemanta/main.webp"} alt={product.name} layout="fill" objectFit="cover" />
+                            <Image src={thumbnailSrc} alt={product.name} layout="fill" objectFit="cover" />
                         </a>
                     </Link>
                 </div>
@@ -296,7 +315,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                         <div>
                             <h3>{product.name}</h3>
                             <div className={styles.qty}>
-                                <span>Unidades:</span> {qty}
+                                <span>QTY:</span> {qty}
                             </div>
                         </div>
                         <div className={styles.addSubstract}>
