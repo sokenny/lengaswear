@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { tryLocalStorage, useScrolledBottom } from "@/utils/index";
 import { useMemo } from "react";
-import { ProductType } from 'types';
-
-type checkoutType = {
-    step:number,
-    carrito: string[],
-    nombre: string,
-    apellido: string,
-    mail: string,
-    telefono: string,
-    fuente: string,
-    pais: string,
-    provincia: string,
-    localidad: string,
-    calle: string,
-    numero: string,
-    dpto: string,
-}
+import { ProductType, CheckoutType } from 'types';
 
 interface AppContextInterface {
     scrolledBottom: boolean;
     store: ProductType[];
-    checkout: checkoutType;
+    checkout: CheckoutType;
     setCheckout: (checkout:any)=> void;
     addToCart: (prdName: string) => void;
     removeFromCart: (prdName: string, all?:boolean) => void;
 }
 
-const initialCheckoutValue:checkoutType = {
+const initialCheckoutValue:CheckoutType = {
     step: 1,
+    completed: false,
     carrito: [],
+    cartTotal: 0,
     nombre: "",
     apellido: "",
     mail: "",
@@ -60,7 +46,7 @@ export function AppProvider(props:any){
         {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/boom", image: "", category: "billeteras"},
     ]
 
-    const [checkout, setCheckout] = useState<checkoutType>(initialCheckoutValue)
+    const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
 
     useEffect(()=>{
         tryLocalStorage.set("checkout", {...checkout, step: 1});

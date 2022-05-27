@@ -16,3 +16,21 @@ export type ProductType = {
     stock?:number
     category?:string
 }
+
+export type CheckoutType = {
+    step:number,
+    completed: boolean,
+    carrito: string[],
+    cartTotal: number,
+    nombre: string,
+    apellido: string,
+    mail: string,
+    telefono: string,
+    fuente: string,
+    pais: string,
+    provincia: string,
+    localidad: string,
+    calle: string,
+    numero: string,
+    dpto: string,
+}

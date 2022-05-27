@@ -86,7 +86,6 @@
             filter: invert(.2);
         }
     }
-
     .DesktopNav__cart{
 
         >span{
@@ -163,6 +162,7 @@
 }
 
 .Nav-scrolled .MobileNav{
+    
     >div{
         color: color(b1);
         background-color: rgba(255,255,255,0.95);

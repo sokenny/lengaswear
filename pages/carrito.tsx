@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useCallback } from "react";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
 import { capitalize, scrollTo } from "../utils";
+import { registerCheckout } from "api";
 import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
-import { cart, chat } from "@/utils/icons";
+import { chat } from "@/utils/icons";
 import { useAppContext } from "contexts/AppContext";
 import { perkItems } from "@/components/modules/StoreInfo/StoreInfo";
 import Head from 'next/head';
@@ -20,12 +21,16 @@ const Carrito: NextPageAugmented = () => {
 
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
-    const cartDetail = getCartDetail(checkout.carrito);
+    const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito]);
     const cartIsEmpty = checkout.carrito.length < 1;
 
     useEffect(()=>{
         setCheckout({...checkout, step: 1})
     }, [])
+
+    useEffect(()=>{
+        setCheckout({...checkout, cartTotal: getCartTotal()})
+    }, [cartDetail])
 
     function getCartDetail(carrito:string[]){
         const cartDetail:any = {};
@@ -35,7 +40,7 @@ const Carrito: NextPageAugmented = () => {
         return cartDetail;
     }
 
-    function getCartTotal(){
+    const getCartTotal = useCallback(() => {
         let total = 0;
         Object.keys(cartDetail).forEach(prdName => {
             const qty = cartDetail[prdName];
@@ -43,7 +48,7 @@ const Carrito: NextPageAugmented = () => {
             total += qty * product.price;
         });
         return total;
-    }
+    }, [cartDetail, store]);
 
     function handleIniciarCompra(){
         setCheckout({...checkout, step: 2})
@@ -96,9 +101,9 @@ const Carrito: NextPageAugmented = () => {
                                 <motion.div
                                 initial={{y: -NUMBER_BOUNCE_DISTANCE}}
                                 animate={{y: 0}}
-                                key={getCartTotal()}
+                                key={checkout.cartTotal}
                                 >
-                                    {getCartTotal()}
+                                    {checkout.cartTotal}
                                 </motion.div>
                             </div>
                             <AnimatePresence>
@@ -137,7 +142,7 @@ const EmptyCart = () => {
             <h1>Tu carrito se encuentra vacío!</h1>
             <Link href="/">
                 <a>
-                    <h2><span>Ir a comprar</span> <div>🤪</div></h2>
+                    <h2><span>Ir a comprar</span> <div>✨</div></h2>
                 </a>
             </Link>
         </section>
@@ -180,7 +185,7 @@ const StepTwo:React.FC = () => {
     const stepIsValid = checkout.nombre !== "" && checkout.mail !== "" && checkout.telefono !== "" && checkout.fuente !== "";
 
     return (
-        <section className={styles.StepThree}>
+        <section className={styles.StepTwo}>
             <div className={styles.header}>
                 <h1><motion.div {...slideDownProps}>02</motion.div>/03</h1>
                 <h2 {...slideDownProps}>
@@ -201,7 +206,7 @@ const StepTwo:React.FC = () => {
                     <LabelAndInput label="Whatsapp / Telefono" name="telefono" type="number" value={checkout.telefono} onChange={(telefono)=>setCheckout({...checkout, telefono})} placeholder="1123456789" />
                 </div>
                 <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
-                    <LabelAndInput label="Por donde nos conociste?" name="fuente" type="text" value={checkout.fuente} onChange={(fuente)=>setCheckout({...checkout, fuente})} placeholder="Av. del Libertador" />
+                    <LabelAndInput label="Por donde nos conociste?" name="fuente" type="text" value={checkout.fuente} onChange={(fuente)=>setCheckout({...checkout, fuente})} placeholder="Instagram" />
                 </div>
             </motion.section>
             <div className={styles.cta}>
@@ -215,6 +220,14 @@ const StepThree:React.FC = () => {
 
     const { checkout, setCheckout } = useAppContext();
     const stepIsValid = checkout.pais !== "" && checkout.provincia !== "" && checkout.localidad !== "" && checkout.calle !== "" && checkout.numero !== "";
+    
+    async function handleIrAPagar () {
+        setCheckout({...checkout, completed: true});
+        const res = await registerCheckout(checkout);
+        if(res.data.status === "success") {
+            window.location.href = res.data.paymentLink
+        }
+    }
 
     return (
         <section className={styles.StepThree}>
@@ -245,7 +258,7 @@ const StepThree:React.FC = () => {
                 </div>
             </motion.section>
             <div className={styles.cta}>
-                <Button onClick={()=>{}} active={stepIsValid}>Ir a pagar</Button>
+                <Button onClick={handleIrAPagar} active={stepIsValid}>Ir a pagar</Button>
             </div>
         </section>
     )

@@ -9,7 +9,12 @@
     padding-bottom: 5px;
     color: color(g1);
     width: fit-content;
+    padding: 5px;
 }
 .Input::placeholder{
-    color: rgba(0,0,0,0.3);
+    color: rgba(0,0,0,0.1);
+}
+.Input:focus{
+    background-color: rgba(0,0,0,0.02);
+    border-radius: 4px 4px 0 0;
 }
