@@ -26,7 +26,7 @@ const StoreInfo:React.FC = () => {
                     className={styles.item} key={item.title}
                     initial={{opacity: 0, y: 30}}
                     animate={isOnScreen && {opacity: 1, y:0}}
-                    transition={{delay: BASE_DELAY + ((i+1)*.25), duration: .5}}
+                    transition={{delay: BASE_DELAY + ((i+1)*.15), duration: 1}}
                     >
                         <div className={styles.icon}>{item.icon}</div>
                         <div>

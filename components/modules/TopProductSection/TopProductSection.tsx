@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useState, useMemo, ReactNode, useEffect } from 'react'
+import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { useScrollPosition, useOnScreen } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ProductType } from 'types';
@@ -15,6 +16,12 @@ type TopProductSectionProps = {
     addToCart: () => void,
 }
 
+const motionProps = {
+    initial: {opacity: 0, y: 20},
+    animate: {opacity: 1, y: 0},
+    transition: {duration: 1, ease: 'easeOut'}
+}
+
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {
 
     const scrollPosition = useScrollPosition()
@@ -29,7 +36,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
         onCtaIntersect(ctaOnScreen)
     }, [ctaOnScreen])
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         if(lastPicRef.current !== null){
             const lockPosition:number = window.pageYOffset + lastPicRef.current.getBoundingClientRect().top - window.innerHeight
             if((lockAt === 0 && picOnScreen) || window.pageYOffset >= lockPosition) setLockAt(lockPosition);
@@ -46,7 +53,11 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                     {imgs.slice(0, 3).map((img, i)=>
                     <div key={img}>
                         {i === 0 &&
-                        <div className={`mobile ${styles.TopProductSection__mobileInfo}`} ref={ctaRef}>
+                        <motion.div 
+                        className={`mobile ${styles.TopProductSection__mobileInfo}`} 
+                        ref={ctaRef}
+                        {...motionProps}
+                        >
                             <div className={styles.TopProductSection__namePrice}>   
                                 <div>
                                     <h1>{product.name}</h1>
@@ -58,9 +69,8 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
                                 <AddToCart onClick={addToCart} />
-                                {/* <Button onClick={addToCart}>Agregar al carrito</Button> */}
                             </div>
-                        </div>
+                        </motion.div>
                         }
                         <Image src={img} layout="fill" objectFit='cover' key={img} />
                     </div>
@@ -76,19 +86,22 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                 </div>
                 <div className={`${styles.TopProductSection__headerInfo} desktop`} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
                     <div>
-                        <h1>{product.name}</h1>
-                        <div className={styles.TopProductSection__description}>
-                            <div>{product.description}</div>
-                            <div>Madera: <strong>Lenga</strong></div>
-                            <div>Peso: <strong>22g</strong></div>
-                        </div>
-                        <div className={styles.TopProductSection__price}>$ {product.price}</div>
-                        <AddToCart onClick={addToCart} />
-                        {/* <Button onClick={addToCart}>Agregar al carrito</Button> */}
-                        <div className={styles.TopProductSection__verMas}>
-                            <div>Ver más características</div>
-                            <div>Ver más detalles</div>
-                        </div>
+                        <motion.div
+                        {...motionProps}
+                        >
+                            <h1>{product.name}</h1>
+                            <div className={styles.TopProductSection__description}>
+                                <div>{product.description}</div>
+                                <div>Madera: <strong>Lenga</strong></div>
+                                <div>Peso: <strong>22g</strong></div>
+                            </div>
+                            <div className={styles.TopProductSection__price}>$ {product.price}</div>
+                            <AddToCart onClick={addToCart} />
+                            <div className={styles.TopProductSection__verMas}>
+                                <div>Ver más características</div>
+                                <div>Ver más detalles</div>
+                            </div>
+                        </motion.div>
                         <PurchaseInfo />
                     </div>
                 </div>
@@ -108,10 +121,15 @@ const PurchaseInfo:React.FC = () => {
     return (
         <div className={styles.PurchaseInfo}>
             {items.map((item)=>
-                <div className={styles.PurchaseInfo__item} key={item.text}>
+                <motion.div 
+                className={styles.PurchaseInfo__item} 
+                key={item.text}
+                {...motionProps}
+                transition={{...motionProps.transition, delay:0.1 * items.indexOf(item)}}
+                >
                     <div>{item.icon}</div>
                     <div>{item.text}</div>
-                </div>
+                </motion.div>
             )}
         </div>
     )

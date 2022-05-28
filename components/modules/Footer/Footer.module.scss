@@ -18,9 +18,12 @@
     }
 
     .logo{
+        display: none;
         filter: brightness(0) invert(.8);
 
         @include mobile{
+            display: block;
+            
             img{
                 display: none;
             }

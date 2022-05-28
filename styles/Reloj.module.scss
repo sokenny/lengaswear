@@ -142,7 +142,7 @@
     >div{
         position: absolute;
         top: -50px;
-        transition: .3s ease-in-out;
+        transition: .2s;
 
         @include mobile{
             top: 0px;
@@ -175,15 +175,6 @@
 
 $distance: 80px;
 $delta: 10px;
-
-.DisAssembly-translate{
-    >div:nth-child(1){
-        transform: translateY(-$distance);
-    }
-    >div:nth-child(3){
-        transform: translateY($distance);
-    }
-}
 
 .DisAssembly-float{
     >div:nth-child(1){

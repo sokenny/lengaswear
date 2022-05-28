@@ -104,6 +104,8 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
 
     const [hovering, setHovering] = useState<string>("")
     const materials = ['cristal', 'madera', 'aluminio']
+    const divRef = useRef<HTMLDivElement>(null)
+    const onScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT)
 
     function getMaterialImg(material:string) {
         return material === 'madera' ? `/relojes/${reloj}/${material}.png` : `/relojes/${material}.png`
@@ -114,20 +116,23 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
             <div>
                 <DisAssembly reloj={reloj} hovering={hovering} />
             </div>
-            <div>
+            <div ref={divRef}>
                 <TitleWDescription 
                 title="No dejamos nada al azar" 
                 description="Representando todos los valores que Lengas simboliza. Como la transparencia, la sustentabilidad y la simplicidad." 
                 />
                 <div className={styles.SuiGeneris__materiales}>
                     <div>
-                        {materials.map((material)=>
-                            <div 
+                        {materials.map((material, i)=>
+                            <motion.div 
                             className={`${styles.SuiGeneris__material} ${styles[`SuiGeneris__material-${material}`]}`}  
                             onMouseEnter={()=>setHovering(material)} 
                             onMouseLeave={()=>setHovering("")} 
                             style={{backgroundImage: `url('${getMaterialImg(material)}')`}}
                             key={material} 
+                            initial={{opacity: 0, y: 20}}
+                            animate={onScreen && {opacity: 1, y: 0}}
+                            transition={{delay: .5 + (.1 * i), duration: .75}}
                             />
                         )}
                     </div>
@@ -143,42 +148,47 @@ const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hoverin
     const divRef = useRef<HTMLDivElement>(null)
     const onScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT)
     const [float, setFloat] = useState<boolean>(false)
-    const [translate, setTranslate] = useState<boolean>(false)
 
     useEffect(()=>{
-       let timeoutId:ReturnType<typeof setTimeout>
-       if(onScreen && !translate){
-           timeoutId = setTimeout(() => {
-               setTranslate(true)
-           }, 300);
-       } 
-       return ()=>clearTimeout(timeoutId)
+        if(onScreen){
+            const timeoutId:ReturnType<typeof setTimeout>  = setTimeout(()=>{
+                setFloat(true)
+            }, 1700)
+            return ()=>clearTimeout(timeoutId)
+        }
     }, [onScreen])
 
-    useEffect(()=>{
-        const timeoutId:ReturnType<typeof setTimeout>  = setTimeout(()=>{
-            setFloat(translate)
-        }, 300)
-        return ()=>clearTimeout(timeoutId)
-    }, [translate])
-
     return (
-        <div className={`${styles.DisAssembly} ${translate ? styles['DisAssembly-translate'] : ''} ${float ? styles['DisAssembly-float'] : ''}`} ref={divRef}>
-            <div className={hovering !== '' && hovering !== 'cristal' ? styles['DisAssembly__piece-notHovered'] : ''}>
+        <div className={`${styles.DisAssembly} ${float ? styles['DisAssembly-float'] : ''}`} ref={divRef}>
+            <motion.div 
+            className={hovering !== '' && hovering !== 'cristal' ? styles['DisAssembly__piece-notHovered'] : ''}
+            initial={{y: 0}}
+            animate={onScreen && {y: -80}}
+            transition={{duration: 1.5, ease: "easeOut"}}
+            >
                 <img src='/relojes/cristal.webp' />
-            </div>
+            </motion.div>
             <div className={hovering !== '' && hovering !== 'madera' ? styles['DisAssembly__piece-notHovered'] : ''}>
                 <img src={`/relojes//${reloj}/mecanizado.webp`} />
             </div>
-            <div className={hovering !== '' && hovering !== 'aluminio' ? styles['DisAssembly__piece-notHovered'] : ''}>
+            <motion.div 
+            className={hovering !== '' && hovering !== 'aluminio' ? styles['DisAssembly__piece-notHovered'] : ''}
+            initial={{y: 0}}
+            animate={onScreen && {y: 80}}
+            transition={{duration: 1.5, ease: "easeOut"}}
+            >
                 <img src='/relojes/tapa.webp' />
-            </div>
+            </motion.div>
         </div>
     )
 }
 
 const WatchSpecs:React.FC = () => {
 
+    const divRef1 = useRef<HTMLDivElement>(null)
+    const onScreen1 = useOnScreen(divRef1, ANIMATE_BREAKPOINT)
+    const divRef2 = useRef<HTMLDivElement>(null)
+    const onScreen2 = useOnScreen(divRef2, ANIMATE_BREAKPOINT)
     const specs = [
         [{label: 'Correas', value: 'Cuero genuino marron'},
         {label: 'Vidro', value: 'Cristal mineral'}],
@@ -192,10 +202,22 @@ const WatchSpecs:React.FC = () => {
 
     return (
         <section className={styles.WatchSpecs}>
-            <div className={styles.WatchSpecs__asset}>
+            <motion.div 
+            className={styles.WatchSpecs__asset}
+            initial={{opacity: 0, y: 40}}
+            animate={onScreen1 && {opacity: 1, y: 0}}
+            transition={{duration: 1.5}}
+            ref={divRef1}
+            >
                 <img src="/relojes/specs.webp" alt="Watch specs" />
-            </div>
-            <div className={styles.WatchSpecs__specs}>
+            </motion.div>
+            <motion.div 
+            className={styles.WatchSpecs__specs}
+            initial={{opacity: 0, y: 40}}
+            animate={onScreen2 && {opacity: 1, y: 0}}
+            transition={{duration: 1.5}}
+            ref={divRef2}
+            >
                 <h2>Especificaciones</h2>
                 <div>
                     {specs.map((specRow, i)=>
@@ -209,7 +231,7 @@ const WatchSpecs:React.FC = () => {
                         </div>
                     )}
                 </div>
-            </div>
+            </motion.div>
         </section>
     )
 }

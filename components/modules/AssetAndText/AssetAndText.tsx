@@ -25,18 +25,17 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
         variants: variants.slideUp,
         initial: 'hidden',
         animate: isIntersecting && 'visible',
-        transition: {delay: BASE_DELAY, duration: .5}
+        transition: {delay: BASE_DELAY, duration: 1, ease: "easeOut"}
     }
 
     return (
         <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]} ${hasComplexAsset ? styles[`AssetAndText-complexAsset`] : ''}`} data-component="AssetAndText">
             <div className={styles.asset}>
-                {/* {typeof asset === 'string' ? <img src={asset}/> : asset} */}
                 {typeof asset === 'string' ? 
                 <motion.div 
                 initial={{scale: 1.2}}
                 animate={isIntersecting && {scale: 1}}
-                transition={{duration: 1.2}}
+                transition={{duration: 1.5}}
                 className={styles.imgContainer}
                 >
                     <Image src={asset} layout="fill" objectFit='cover' /> 
@@ -53,7 +52,7 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
                 </motion.h3>
                 <motion.p
                 {...motionProps}
-                transition={{delay: BASE_DELAY + .2, duration: .7}}
+                transition={{delay: BASE_DELAY + .2, duration: 1, ease: "easeOut"}}
                 >
                     {description}
                 </motion.p>
@@ -61,7 +60,8 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
                 <motion.div 
                 className={styles.ctaSection}
                 {...motionProps}
-                transition={{delay: BASE_DELAY + .4, duration: .9}}
+                initial={{opacity: 0, y: -15}}
+                transition={{delay: BASE_DELAY + .4, duration: 1, ease: "easeOut"}}
                 >
                     {ctaSection}
                 </motion.div>

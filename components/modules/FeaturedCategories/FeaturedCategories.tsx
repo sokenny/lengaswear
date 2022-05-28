@@ -36,7 +36,7 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
     
     const isMobile = useIsMobile();
     const textRef = useRef(null);
-    const isOnScreen = useOnScreen(textRef, ANIMATE_BREAKPOINT * (isMobile ? .8 : .5));
+    const isOnScreen = useOnScreen(textRef, ANIMATE_BREAKPOINT * (isMobile ? .6 : .3));
     const BASE_DELAY = 0;
 
     return (

@@ -22,7 +22,7 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) 
         variants: variants.slideUp,
         initial: 'hidden',
         animate: isIntersecting && 'visible',
-        transition: {delay: BASE_DELAY, duration: .5}
+        transition: {delay: BASE_DELAY, duration: 1}
     }
 
     return (
@@ -31,7 +31,6 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) 
                 <motion.h3 
                 className={styles.HeroStripe__title} 
                 {...motionProps}
-                transition={{...motionProps.transition, duration: .9}}
                 ref={titleRef}
                 >
                     {title}
@@ -39,13 +38,13 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) 
                 <motion.p 
                 className={styles.HeroStripe__description}
                 {...motionProps}
-                transition={{delay: BASE_DELAY + .2, duration: .7}}
+                transition={{...motionProps.transition, delay: BASE_DELAY + .2}}
                 >
                     {description}
                 </motion.p>
                 <motion.div
                 {...motionProps}
-                transition={{delay: BASE_DELAY + .4, duration: .5}}
+                transition={{...motionProps.transition, delay: BASE_DELAY + .4}}
                 >
                     <ArrowCta cta={cta} />
                 </motion.div>

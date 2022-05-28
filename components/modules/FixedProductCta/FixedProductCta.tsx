@@ -28,7 +28,7 @@ const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show, addToCar
             transition={{
                 stiffness: 0,
                 ease: "easeOut",
-                duration: .7
+                duration: 1.2
             }}
             >
                 <div>

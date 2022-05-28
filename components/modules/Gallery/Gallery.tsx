@@ -15,7 +15,7 @@ const Gallery:React.FC = () => {
         variants: variants.slideUp,
         initial: 'hidden',
         animate: titleIntersecting && 'visible',
-        transition: {delay: BASE_DELAY, duration: .5}
+        transition: {delay: BASE_DELAY, duration: 1}
     }
 
     return (
