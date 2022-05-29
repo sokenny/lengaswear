@@ -201,11 +201,7 @@
         }
 
         .inputRow:last-child{
-            margin-bottom: 0;
-
-            @include mobile{
-                margin-bottom: $pxs2;
-            }
+            margin-bottom: $pxs2;
         }
 
         .inputRow-full{

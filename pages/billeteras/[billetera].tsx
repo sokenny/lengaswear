@@ -90,32 +90,43 @@ interface IParams extends ParsedUrlQuery {
 const WalletSpecs:React.FC = () => {
 
     const isMobile = useIsMobile();
-    const sectionRef = useRef<HTMLDivElement>(null)
+    const rotatorRef = useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const isIntersecting = useOnScreen(containerRef, ANIMATE_BREAKPOINT)
     const [rotate, setRotate] = useState<boolean>(false)
     const centerSection = useCallback(()=>{
-        scrollTo(sectionRef, !rotate ? 0 : -250)
-    }, [sectionRef, rotate])
-    
+        scrollTo(rotatorRef, !rotate ? 0 : -250)
+    }, [rotatorRef, rotate])    
 
     return (
-        <motion.section 
-        className={`${styles.WalletSpecs} ${rotate ? styles[`WalletSpecs-rotated`] : ''}`}
-        onClick={isMobile ? ()=>{setRotate(!rotate), centerSection()} : undefined}
-        animate={rotate ? {height: "800px"} : {}}
-        transition={{duration: .5}}
-        ref={sectionRef}
-        >
+
+        <section className={`${styles.WalletSpecs} ${rotate ? styles[`WalletSpecs-rotated`] : ''}`}>
             <motion.div
-            animate={rotate ? {rotate: -90, width: "600px"} : {rotate: 0}}
-            transition={{duration: .5}}
+            initial={{opacity: 0, y: 50}}
+            animate={isIntersecting && {opacity: 1, y: 0}}
+            transition={{duration: 1}}
+            ref={containerRef}
             >
                 <motion.div 
-                style={{width: "100%"}}
-                animate={rotate ? {width: "600px"} : {}}
-                dangerouslySetInnerHTML={{__html: WalletHTML}}
-                />
+                className={styles.rotator}
+                onClick={isMobile ? ()=>{setRotate(!rotate), centerSection()} : undefined}
+                animate={rotate ? {height: "800px"} : {}}
+                transition={{duration: .5}}
+                ref={rotatorRef}
+                >
+                    <motion.div
+                    animate={rotate ? {rotate: -90, width: "600px"} : {rotate: 0}}
+                    transition={{duration: .5}}
+                    >
+                        <motion.div 
+                        style={{width: "100%"}}
+                        animate={rotate ? {width: "600px"} : {}}
+                        dangerouslySetInnerHTML={{__html: WalletHTML}}
+                        />
+                    </motion.div>
+                </motion.div>
             </motion.div>
-        </motion.section>
+        </section>
     )
 }
 
