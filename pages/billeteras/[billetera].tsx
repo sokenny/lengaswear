@@ -4,6 +4,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAppContext } from "contexts/AppContext";
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import { capitalize, colors as utilityColors, scrollTo, useIsMobile, useOnScreen, variants } from '@/utils/index'
+import { getProduct, getProducts } from 'api';
 import { WalletHTML }  from '@/utils/wallet'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
@@ -30,29 +31,21 @@ const recommendedProducts:TRecommended[] = [
     {name: 'quemanta', image: '/relojes/quemanta/thumbnail.webp', href: '/relojes/quemanta', price: 3950},
 ]
 
-const Billetera:NextPageAugmented<{billetera: string}> = ({billetera}) => {
+const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera}/billetera-cuero-genuino-${item}.webp`)
-    const product:ProductType = {
-        id: 1,
-        name: billetera,
-        price: 3950,
-        sellingPrice: 3950,
-        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
-        href: ""
-    }
-    const addThisToCart = () => addToCart(product.name)
+    const addThisToCart = () => addToCart(billetera.name)
 
     return (
         <>
         <Head>
-            <title>{capitalize(billetera)} | Billeteras | Lengas</title>
+            <title>{billetera.name} | Billeteras | Lengas</title>
         </Head>
         <div className={styles.Billetera}>
-            <FixedProductCta product={product} show={showFixedCta} addToCart={addThisToCart} />
-            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
+            <FixedProductCta product={billetera} show={showFixedCta} addToCart={addThisToCart} />
+            <TopProductSection imgs={imgs} product={billetera} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
             <div className='container'>
                 <AssetAndText 
                 title="Una nueva forma de llevarlo todo" 
@@ -60,7 +53,7 @@ const Billetera:NextPageAugmented<{billetera: string}> = ({billetera}) => {
                 asset={`/billeteras/${billetera}/billetera-en-uso.webp`} 
                 assetLeft={false} />
             </div>
-            <CarrouselSection billetera={billetera} />
+            <CarrouselSection billetera={billetera.name} />
             <div className="container">    
                 <AssetAndText 
                 title="La simpleza de Lengas en una billetera" 
@@ -223,21 +216,20 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    const res = await getProducts('billeteras')
+    const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
     return {
-        paths: [
-          { params: { billetera: 'chocolate' } },
-          { params: { billetera: 'suela' } },
-          { params: { billetera: 'boom' } },
-        ],
-        fallback: true
+        paths,
+        fallback: false
       };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { billetera } = context.params as IParams 
-    // const props = fetch(`/api/${billetera}`)
-    const props = {billetera}
-    return { props }
+    const res = await getProduct('billeteras', billetera)
+    const product = res.data.product
+    const props = { billetera:product }
+    return { props, revalidate: 1 }
 }
 
 Billetera.nav = <Nav theme="scrolled" />

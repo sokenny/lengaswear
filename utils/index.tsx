@@ -135,3 +135,5 @@ export const tryLocalStorage = {
         }
     }   
 }
+
+export const categories = ["relojes", "billeteras"]

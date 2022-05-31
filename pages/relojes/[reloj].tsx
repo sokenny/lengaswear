@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAppContext } from "contexts/AppContext";
+import { getProduct, getProducts } from 'api';
 import { useOnScreen, capitalize } from '@/utils/index'
 import { ANIMATE_BREAKPOINT } from '@/utils/constants'
 import { motion } from 'framer-motion'
@@ -24,40 +25,32 @@ const recommendedProducts:TRecommended[] = [
     {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 10000},
 ]
 
-const Reloj:NextPageAugmented<{reloj: string}> = ({reloj}) => {
-    
+const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
+   
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
-    const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj}/reloj-de-madera-artesanal-${reloj}-${item}.webp`)
-    const product:ProductType = {
-        id: 1,
-        name: reloj,
-        price: 10900,
-        sellingPrice: 10900,
-        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
-        href: ""
-    }
-    const addThisToCart = () => addToCart(product.name)
+    const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj.name}/reloj-de-madera-artesanal-${reloj.name}-${item}.webp`)
+    const addThisToCart = () => addToCart(reloj.name)
 
     return (
         <>
         <Head>
-            <title>{capitalize(reloj)} | Relojes | Lengas</title>
+            <title>{reloj.name} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
-            <FixedProductCta product={product} show={showFixedCta} addToCart={addThisToCart} />
-            <TopProductSection imgs={imgs} product={product} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
+            <FixedProductCta product={reloj} show={showFixedCta} addToCart={addThisToCart} />
+            <TopProductSection imgs={imgs} product={reloj} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
             <div className='container'>
                 <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
             </div>
             <div className={styles.Reloj__slightGray}>
                 <div className='container'>
-                    <SuiGeneris reloj={reloj} />
+                    <SuiGeneris reloj={reloj.name} />
                     <div className={styles.Reloj__overlapSections}>
-                        <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj}/cuadrante.webp`} />}  assetLeft={false} />
+                        <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj.name}/cuadrante.webp`} />}  assetLeft={false} />
                         <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} />
-                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj}/ligero.webp`} />}  assetLeft={false} />
-                        <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj}/correas.webp`} />} />
+                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj.name}/ligero.webp`} />}  assetLeft={false} />
+                        <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj.name}/correas.webp`} />} />
                     </div>
                 </div>
             </div>
@@ -237,22 +230,21 @@ const WatchSpecs:React.FC = () => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    const res = await getProducts('relojes')
+    const paths = res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
     return {
-        paths: [
-          { params: { reloj: 'quemanta' } },
-          { params: { reloj: 'tesh' } },
-          { params: { reloj: 'jauke' } },
-          { params: { reloj: 'mahai' } },
-        ],
-        fallback: true
+        paths,
+        fallback: false
       };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { reloj } = context.params as IParams 
-    // const props = fetch(`/api/${reloj}`)
-    const props = {reloj}
-    return { props }
+    console.log('RELOJ', reloj)
+    const res = await getProduct('relojes', reloj)
+    const product = res.data.product
+    const props = { reloj:product }
+    return { props, revalidate: 1 }
 }
 
 Reloj.nav = <Nav theme="scrolled" />

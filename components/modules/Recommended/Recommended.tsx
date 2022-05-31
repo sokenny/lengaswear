@@ -16,7 +16,7 @@ export type TRecommended = {
 const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
 
     const h2Ref = useRef<HTMLHeadingElement>(null);
-    const isIntersecting = useOnScreen(h2Ref, ANIMATE_BREAKPOINT);
+    const isIntersecting = useOnScreen(h2Ref, ANIMATE_BREAKPOINT * 1.2);
 
     return (
         <section className={styles.Recommended}>
@@ -28,7 +28,7 @@ const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
                 <motion.div 
                 initial={{opacity: 0, x: 30}}
                 animate={isIntersecting && {opacity: 1, x: 0}}
-                transition={{duration: 1.3, delay: (i+1) * .1, ease: "easeOut"}}
+                transition={{duration: 1.3, delay: (i+1) * .2, ease: "easeOut"}}
                 className={styles.item}
                 key={product.name} 
                 >
