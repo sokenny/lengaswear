@@ -111,8 +111,6 @@
                 }
 
                 .listado{
-                    margin-top: $pxs2;
-
                     ul{
                         margin: 0;
                         color: color(g1);
@@ -120,7 +118,7 @@
                 }
 
                 .envio{
-                    margin-top: 80px;
+                    margin-top: $pxs3;
                     margin-bottom: $pxs1;
 
                     >div{
@@ -202,6 +200,10 @@
 
         .inputRow:last-child{
             margin-bottom: $pxs2;
+
+            @include mobile{
+                margin-bottom: 20px;
+            }
         }
 
         .inputRow-full{
@@ -390,10 +392,10 @@
 }
 
 .CodigoDescuento{
+    margin-bottom: 32px;
 
     >div:first-child{
         font-size: 14px;
-        margin-bottom: 8px;
         color: color(g1);
     }
 

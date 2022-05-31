@@ -66,13 +66,18 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
 const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
     const divRef = useRef(null)
     const isOnScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
+    const [cursor, setCursor] = useState<{x: number, y:number}>({x: 0, y: 0})
     return (
-        <div className={styles.WatchPartAsset}>
+        <div 
+        className={styles.WatchPartAsset}
+        onMouseMove={(e)=>setCursor({x: e.clientX, y: e.clientY})}
+        >
             <motion.div
             ref={divRef}
             initial={{scale: 1.4}}
             animate={isOnScreen && {scale: 1.1}}
             transition={{duration: 1.5}}
+            style={{y: -cursor.y / 45, x: -cursor.x / 45}}
             >
                 <Image src={img} layout="fill" objectFit="contain" alt="Watch part" />
             </motion.div>

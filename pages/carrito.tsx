@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useCallback } from "react";
+import { useRouter } from "next/router";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
-import { capitalize, scrollTo, formatNumber } from "../utils";
+import { capitalize, scrollTo, formatNumber, provincias, fuentes } from "../utils";
 import { registerCheckout } from "api";
 import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
 import { chat } from "@/utils/icons";
@@ -15,18 +16,24 @@ import Footer from "@/components/modules/Footer/Footer";
 import Button from "@/components/elements/Button/Button";
 import ArrowInput from "@/components/elements/ArrowInput/ArrowInput";
 import Input from "@/components/elements/Input/Input";
+import Select from "@/components/elements/Select/Select";
 import styles from '../styles/Carrito.module.scss';
 
 const Carrito: NextPageAugmented = () => {
 
+    const router = useRouter();
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
     const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito]);
     const cartIsEmpty = checkout.carrito.length < 1;
 
     useEffect(()=>{
-        setCheckout({...checkout, step: 1})
+        router.push({ query: { ...router.query, step: 1 } }, undefined, {shallow: true})
     }, [])
+
+    useEffect(()=>{
+        setCheckout({...checkout, step: router.query.step});
+    }, [router.query.step])
 
     useEffect(()=>{
         setCheckout({...checkout, cartTotal: getCartTotal()})
@@ -51,7 +58,7 @@ const Carrito: NextPageAugmented = () => {
     }, [cartDetail, store]);
 
     function handleIniciarCompra(){
-        setCheckout({...checkout, step: 2})
+        router.push({ query: { ...router.query, step: 2 } }, undefined, {shallow: true})
         scrollTo(carritoRef, -50)
     }
 
@@ -81,8 +88,15 @@ const Carrito: NextPageAugmented = () => {
                     <div className={styles.col2}>
                         <section className={styles.detalle}>
                             <h2>Detalle final</h2>
-                            <CodigoDescuento />
-                            
+
+                            <motion.div
+                            style={{overflow: "hidden"}}
+                            initial={{height: 0}}
+                            animate={router.query.step === "1" ? {height: "auto"} : {height: 0, opacity: 0}}
+                            >
+                                <CodigoDescuento />
+                            </motion.div>
+                        
                             <div className={styles.listado}>
                                 <div>Productos:</div>
                                 <ul>
@@ -103,11 +117,11 @@ const Carrito: NextPageAugmented = () => {
                                 animate={{y: 0}}
                                 key={checkout.cartTotal}
                                 >
-                                    {formatNumber(checkout.cartTotal)}
+                                    ${formatNumber(checkout.cartTotal)}
                                 </motion.div>
                             </div>
                             <AnimatePresence>
-                                {checkout.step === 1 &&
+                                {router.query.step === "1" &&
                                 <motion.div 
                                 style={{overflow: "hidden"}}
                                 initial={{height:"auto"}}
@@ -182,6 +196,7 @@ const StepOne:React.FC<{cartDetail:any}> = ({cartDetail}) => {
 
 const StepTwo:React.FC = () => {
 
+    const router = useRouter();
     const { checkout, setCheckout } = useAppContext();
     const stepIsValid = checkout.nombre !== "" && checkout.mail !== "" && checkout.telefono !== "" && checkout.fuente !== "";
 
@@ -190,7 +205,7 @@ const StepTwo:React.FC = () => {
             <div className={styles.header}>
                 <h1><motion.div {...slideDownProps}>02</motion.div>/03</h1>
                 <h2 {...slideDownProps}>
-                    <div>Datos de contacto - Información de envío - Método de pago</div>
+                    <div>Introducí tus datos de contacto!</div>
                 </h2>
             </div>
             <motion.section 
@@ -207,11 +222,14 @@ const StepTwo:React.FC = () => {
                     <LabelAndInput label="Whatsapp / Telefono" name="telefono" type="number" value={checkout.telefono} onChange={(telefono)=>setCheckout({...checkout, telefono})} placeholder="1123456789" />
                 </div>
                 <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
-                    <LabelAndInput label="Por donde nos conociste?" name="fuente" type="text" value={checkout.fuente} onChange={(fuente)=>setCheckout({...checkout, fuente})} placeholder="Instagram" />
+                    <div className={styles.LabelAndInput}>
+                        <label htmlFor="fuente">Cómo nos conociste?</label>
+                        <Select value={checkout.fuente} options={fuentes} name="fuente" onChange={(fuente)=>setCheckout({...checkout, fuente})} randomize={true} />
+                    </div>
                 </div>
             </motion.section>
             <div className={styles.cta}>
-                <Button onClick={()=>setCheckout({...checkout, step: 3})} active={stepIsValid}>Siguiente</Button>
+                <Button onClick={()=>router.push({ query: { ...router.query, step: 3 } }, undefined, {shallow: true})} active={stepIsValid}>Siguiente</Button>
             </div>
         </section>
     )
@@ -235,7 +253,7 @@ const StepThree:React.FC = () => {
             <div className={styles.header}>
                 <h1><motion.div {...slideDownProps}>03</motion.div>/03</h1>
                 <h2 {...slideDownProps}>
-                    <div>Datos de contacto - Información de envío - Método de pago</div>
+                    <div>Introducí tu información de envío</div>
                 </h2>
             </div>
             <motion.section 
@@ -247,7 +265,10 @@ const StepThree:React.FC = () => {
                     <LabelAndInput label="País" type="text" value={checkout.pais} onChange={(pais)=>setCheckout({...checkout, pais})} placeholder="Argentina" disabled={true} />
                 </div>
                 <div className={styles.inputRow}>
-                    <LabelAndInput label="Provincia" type="text" value={checkout.provincia} onChange={(provincia)=>setCheckout({...checkout, provincia})} placeholder="CABA" />
+                    <div className={styles.LabelAndInput}>
+                        <label htmlFor="provincia">Provincia</label>
+                        <Select options={provincias.map((provincia)=>{return {value: provincia, label: provincia}})} value={checkout.provincia} name="provincia" onChange={(provincia)=>setCheckout({...checkout, provincia})} />
+                    </div>
                     <LabelAndInput label="Localidad" type="text" value={checkout.localidad} onChange={(localidad)=>setCheckout({...checkout, localidad})} placeholder="Nuñez" />
                 </div>
                 <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
@@ -265,10 +286,10 @@ const StepThree:React.FC = () => {
     )
 }
 
-const LabelAndInput:React.FC<{label:string, value:string | number, type:string, name?:string, onChange?:(value:string | number)=>void, disabled?:boolean, placeholder: string}> = ({label, value, type, name, disabled, onChange=()=>{}, placeholder}) => {
+const LabelAndInput:React.FC<{label:string, value:string | number, type:string, name?:string, onChange?:(value:string | number)=>void, disabled?:boolean, placeholder?: string}> = ({label, value, type, name, disabled, onChange=()=>{}, placeholder}) => {
     return (
         <div className={styles.LabelAndInput}>
-            <label htmlFor="pais">{label}</label>
+            <label htmlFor={name}>{label}</label>
             <Input value={value} type={type} name={name || label} disabled={disabled} onChange={onChange} placeholder={placeholder} />
         </div>
     )
@@ -296,7 +317,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     <h3>{product.name}</h3>
                 </div>
                 <div className={styles.price}>
-                    {formatNumber(product.price)}
+                    ${formatNumber(product.price)}
                 </div>
                 <div className={`${styles.qty} no-select`}>
                     <div onClick={addThisToCart}>+</div>
@@ -309,7 +330,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     initial={{y: -NUMBER_BOUNCE_DISTANCE}}
                     animate={{y: 0}}
                     >
-                        {formatNumber(product.sellingPrice * qty)}
+                        ${formatNumber(product.sellingPrice * qty)}
                     </motion.div>
                 </div>
                 <div className={styles.delete}>

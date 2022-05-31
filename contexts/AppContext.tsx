@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { tryLocalStorage, useScrolledBottom } from "@/utils/index";
+import { tryLocalStorage, useScrolledBottom, useFirstRender } from "@/utils/index";
 import { useMemo } from "react";
 import { ProductType, CheckoutType } from 'types';
 
@@ -33,6 +33,8 @@ const initialCheckoutValue:CheckoutType = {
 const AppContext = React.createContext<AppContextInterface | null>(null);
 
 export function AppProvider(props:any){
+
+    const isFirstRender = useFirstRender();
     const scrolledBottom:boolean = useScrolledBottom();
 
     // Hardcodeando temporalmente el store
@@ -49,13 +51,12 @@ export function AppProvider(props:any){
     const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
 
     useEffect(()=>{
-        tryLocalStorage.set("checkout", {...checkout, step: 1});
-        console.log('checkout: ', checkout);
+        if(isFirstRender){
+            setCheckout(tryLocalStorage.get("checkout") || initialCheckoutValue);
+        }else{
+            tryLocalStorage.set("checkout", {...checkout, step: 1});
+        }
     }, [checkout])
-
-    useEffect(()=>{
-        setCheckout(tryLocalStorage.get("checkout") || initialCheckoutValue);
-    }, [])
 
     function addToCart(prdName:string){
         setCheckout({...checkout, carrito: [...checkout.carrito, prdName]});

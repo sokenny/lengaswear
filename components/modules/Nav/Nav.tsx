@@ -28,7 +28,7 @@ const Nav:React.FC<NavProps> = ({theme, whiteFooter}) => {
     )
 }
 
-const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/relojes'}, {label: 'Billeteras', path: '/billeteras'}, {label: 'Contacto', path: '/relojes'}, {label: 'Carrito', path: '/relojes'}]; 
+const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/relojes'}, {label: 'Billeteras', path: '/billeteras'}, {label: 'Carrito', path: '/carrito'}]; 
 
 const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
 

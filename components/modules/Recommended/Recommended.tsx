@@ -28,7 +28,7 @@ const Recommended:React.FC<{products: TRecommended[]}> = ({products}) => {
                 <motion.div 
                 initial={{opacity: 0, x: 30}}
                 animate={isIntersecting && {opacity: 1, x: 0}}
-                transition={{duration: 1.3, delay: (i+1) * .2, ease: "easeOut"}}
+                transition={{duration: 2, delay: (i+1) * .3, ease: "easeOut"}}
                 className={styles.item}
                 key={product.name} 
                 >

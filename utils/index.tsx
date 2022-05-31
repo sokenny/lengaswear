@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const colors:{} = {
     gold: '#BC8C3E',
@@ -141,3 +141,22 @@ export const categories = ["relojes", "billeteras"]
 export const formatNumber = (x:number):string => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
+
+export const provincias = ["Buenos Aires", "Buenos Aires Capital", "Catamarca", "Chaco", "Chubut", "Cordoba", "Corrientes", "Entre Rios", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquen", "Rio Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucuman"]
+export const fuentes = [
+    {label: "Me lo mostró un amigx", value: "Referido"},
+    {label: "Instagram", value: "Instagram Ads"},
+    {label: "Facebook", value: "Facebook Ads"},
+    {label: "YouTube", value: "YouTube"},
+    {label: "Lo refirió un influencer", value: "Influencer"},
+    {label: "Prensa", value: "Prensa"},
+    {label: "Otro", value: "Otro"}
+]
+
+export const useFirstRender = () => {
+    const isFirstRender = useRef(true);
+    useEffect(() => {
+        isFirstRender.current = false;
+    }, []);
+    return isFirstRender.current;
+};

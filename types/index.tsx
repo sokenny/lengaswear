@@ -34,3 +34,5 @@ export type CheckoutType = {
     numero: string,
     dpto: string,
 }
+
+export type OptionsType = {label:string, value:string}[]
