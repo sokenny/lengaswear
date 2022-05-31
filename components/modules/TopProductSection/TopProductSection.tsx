@@ -8,7 +8,6 @@ import { TitleWDescription } from 'pages/relojes/[reloj]';
 import AddToCart from '@/components/elements/AddToCart/AddToCart';
 import styles from './TopProductSection.module.scss';
 
-
 type TopProductSectionProps = {
     product: ProductType,
     imgs: string[],
