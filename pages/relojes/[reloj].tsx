@@ -240,7 +240,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { reloj } = context.params as IParams 
-    console.log('RELOJ', reloj)
     const res = await getProduct('relojes', reloj)
     const product = res.data.product
     const props = { reloj:product }
