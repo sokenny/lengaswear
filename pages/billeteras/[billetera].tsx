@@ -227,7 +227,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const { billetera } = context.params as IParams 
     const res = await getProduct('billeteras', billetera)
-    const product = res.data.product
+    const product = {...res.data.product}
     const props = { billetera:product }
     return { props, revalidate: 1 }
 }
