@@ -1,6 +1,6 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useScrollPosition, useOnScreen } from '@/utils/index'
+import { useScrollPosition, useOnScreen, formatNumber } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ProductType } from 'types';
 import Image from 'next/image';
@@ -61,7 +61,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             <div className={styles.TopProductSection__namePrice}>   
                                 <div>
                                     <h1>{product.name}</h1>
-                                    <div>${product.price}</div>
+                                    <div>${formatNumber(product.price)}</div>
                                 </div>
                             </div>
                             <div className={styles.TopProductSection__description}>
@@ -95,7 +95,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
                             </div>
-                            <div className={styles.TopProductSection__price}>$ {product.price}</div>
+                            <div className={styles.TopProductSection__price}>${formatNumber(product.price)}</div>
                             <AddToCart onClick={addToCart} />
                             <div className={styles.TopProductSection__verMas}>
                                 <div>Ver más características</div>

@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from 'contexts/AppContext';
+import { formatNumber } from '@/utils/index';
 import { ProductType } from 'types';
 import AddToCart from '@/components/elements/AddToCart/AddToCart';
-import Button from '@/components/elements/Button/Button';
 import styles from './FixedProductCta.module.scss';
 
 type FixedProductCtaProps = {
@@ -33,7 +33,7 @@ const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show, addToCar
             >
                 <div>
                     <div className={styles.productInfo}>
-                        <h1>{product.name}</h1><div>${product.price}</div>
+                        <h1>{product.name}</h1><div>${formatNumber(product.price)}</div>
                     </div>
                     <div className={styles.ctas}>
                         <AddToCart onClick={addToCart} />
