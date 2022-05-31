@@ -137,3 +137,7 @@ export const tryLocalStorage = {
 }
 
 export const categories = ["relojes", "billeteras"]
+
+export const formatNumber = (x:number):string => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}

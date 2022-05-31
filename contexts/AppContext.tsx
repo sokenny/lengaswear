@@ -58,9 +58,7 @@ export function AppProvider(props:any){
     }, [])
 
     function addToCart(prdName:string){
-        if(checkout !== null){
-            setCheckout({...checkout, carrito: [...checkout.carrito, prdName]});
-        }
+        setCheckout({...checkout, carrito: [...checkout.carrito, prdName]});
     }
 
     function removeFromCart(prdName: string, all: boolean = false){

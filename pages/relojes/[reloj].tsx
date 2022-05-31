@@ -35,7 +35,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
     return (
         <>
         <Head>
-            <title>{reloj.name} | Relojes | Lengas</title>
+            <title>{capitalize(reloj.name)} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
             <FixedProductCta product={reloj} show={showFixedCta} addToCart={addThisToCart} />

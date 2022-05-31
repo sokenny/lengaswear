@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useCallback } from "react";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
-import { capitalize, scrollTo } from "../utils";
+import { capitalize, scrollTo, formatNumber } from "../utils";
 import { registerCheckout } from "api";
 import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
 import { chat } from "@/utils/icons";
@@ -103,7 +103,7 @@ const Carrito: NextPageAugmented = () => {
                                 animate={{y: 0}}
                                 key={checkout.cartTotal}
                                 >
-                                    {checkout.cartTotal}
+                                    {formatNumber(checkout.cartTotal)}
                                 </motion.div>
                             </div>
                             <AnimatePresence>
@@ -151,7 +151,8 @@ const EmptyCart = () => {
 
 const slideDownProps = {
     initial:{y: -10},
-    animate:{y: 0}
+    animate:{y: 0},
+    transition: {duration: .25, delay: .2}
 }
 
 const StepOne:React.FC<{cartDetail:any}> = ({cartDetail}) => {
@@ -295,7 +296,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     <h3>{product.name}</h3>
                 </div>
                 <div className={styles.price}>
-                    {product.price}
+                    {formatNumber(product.price)}
                 </div>
                 <div className={`${styles.qty} no-select`}>
                     <div onClick={addThisToCart}>+</div>
@@ -308,7 +309,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     initial={{y: -NUMBER_BOUNCE_DISTANCE}}
                     animate={{y: 0}}
                     >
-                        {product.sellingPrice * qty}
+                        {formatNumber(product.sellingPrice * qty)}
                     </motion.div>
                 </div>
                 <div className={styles.delete}>

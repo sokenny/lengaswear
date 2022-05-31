@@ -1,5 +1,6 @@
 import { ProductType } from 'types';
 import { motion } from 'framer-motion';
+import { formatNumber } from '@/utils/index';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './ProductCategory.module.scss';
@@ -58,7 +59,7 @@ const ProductItem:React.FC<ProductItemProps> = ({product}) => {
                     </div>
                     <div>
                         <h3>{product.name}</h3>
-                        <div>{product.price}</div>
+                        <div>{formatNumber(product.price)}</div>
                     </div>
                 </div>
             </a>

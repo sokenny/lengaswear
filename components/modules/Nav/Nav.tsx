@@ -73,7 +73,9 @@ const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                             </Link>
                         )}
                     </ul>
-                    <div>Necesitas ayuda? Chateá con nosotros!</div>
+                    <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+                        <div>Necesitás ayuda? Chatea con nosotros!</div>
+                    </a>
                 </div>
             </motion.div>
             }

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion'
 import { useOnScreen, useIsMobile } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
@@ -38,9 +38,26 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
     const textRef = useRef(null);
     const isOnScreen = useOnScreen(textRef, ANIMATE_BREAKPOINT * (isMobile ? .6 : .3));
     const BASE_DELAY = 0;
+    const [cursor, setCursor] = useState<{x: number, y:number}>({x: 0, y: 0})
+    const [hovering, setHovering] = useState(false)
+    const initialAnimationFinished = useRef(false);
+
+    useEffect(()=>{
+        if(isOnScreen){
+            const timeoutId = setTimeout(() => {
+                initialAnimationFinished.current = true
+            }, 1000);
+            return () => clearTimeout(timeoutId);
+        }
+    }, [isOnScreen])
 
     return (
-        <div className={styles.CategoryPoster}>
+        <div 
+        className={styles.CategoryPoster} 
+        onMouseMove={(e)=>initialAnimationFinished.current && setCursor({x: e.clientX, y: e.clientY})}
+        onMouseEnter={()=>initialAnimationFinished.current && setHovering(true)}
+        onMouseLeave={()=>initialAnimationFinished.current && setHovering(false)}
+        >
             <div ref={textRef}>
                 <motion.h3
                 initial={{ opacity: 0, y: 30 }}
@@ -59,9 +76,10 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
             </div>
             <motion.div 
             className={styles.CategoryPoster__image}
-            initial={{scale: 1.2}}
-            animate={isOnScreen && {scale: 1}}
+            initial={{scale: 1.25}}
+            animate={isOnScreen && {scale: hovering ? 1.12 : 1.1}}
             transition={{duration: 1, delay: BASE_DELAY}}
+            style={{y: -cursor.y / 45, x: -cursor.x / 45}}
             >
                 <div>
                     <Image src={image} layout="fill" objectFit="cover" />

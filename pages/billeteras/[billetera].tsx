@@ -41,7 +41,7 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     return (
         <>
         <Head>
-            <title>{billetera.name} | Billeteras | Lengas</title>
+            <title>{capitalize(billetera.name)} | Billeteras | Lengas</title>
         </Head>
         <div className={styles.Billetera}>
             <FixedProductCta product={billetera} show={showFixedCta} addToCart={addThisToCart} />
@@ -50,7 +50,7 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 <AssetAndText 
                 title="Una nueva forma de llevarlo todo" 
                 description="Ser feliz es simple, ser simple no tanto. Proponemos una billetera que viene a instaurar un andar más sencillo." 
-                asset={`/billeteras/${billetera}/billetera-en-uso.webp`} 
+                asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
                 assetLeft={false} />
             </div>
             <CarrouselSection billetera={billetera.name} />
@@ -58,12 +58,12 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 <AssetAndText 
                 title="La simpleza de Lengas en una billetera" 
                 description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
-                asset={`/billeteras/${billetera}/billetera-en-uso.webp`} 
+                asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
                 />
                 <AssetAndText 
                 title="Creado con propósito" 
                 description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
-                asset={`/billeteras/${billetera}/billetera-en-uso.webp`} 
+                asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
                 assetLeft={false} 
                 />
             </div>
