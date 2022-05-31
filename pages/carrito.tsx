@@ -21,6 +21,7 @@ import styles from '../styles/Carrito.module.scss';
 
 const Carrito: NextPageAugmented = () => {
 
+    // 
     const router = useRouter();
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
