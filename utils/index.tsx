@@ -139,7 +139,10 @@ export const tryLocalStorage = {
 export const categories = ["relojes", "billeteras"]
 
 export const formatNumber = (x:number):string => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    if(x !== undefined){
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    return ""
 }
 
 export const provincias = ["Buenos Aires", "Buenos Aires Capital", "Catamarca", "Chaco", "Chubut", "Cordoba", "Corrientes", "Entre Rios", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquen", "Rio Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucuman"]
