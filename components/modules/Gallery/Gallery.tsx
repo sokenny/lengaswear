@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useOnScreen, variants } from '@/utils/index';
+import { useOnScreen, getMotionProps } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import Image from 'next/image';
 import styles from './Gallery.module.scss';
@@ -8,15 +8,9 @@ import styles from './Gallery.module.scss';
 const Gallery:React.FC = () => {
     
     const titleRef = useRef<HTMLDivElement>(null);
-    const titleIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
-    const BASE_DELAY = 0;
-
-    const motionProps = {
-        variants: variants.slideUp,
-        initial: 'hidden',
-        animate: titleIntersecting && 'visible',
-        transition: {delay: BASE_DELAY, duration: 1}
-    }
+    const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
+    const hasIntersected = useRef(false)
+    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
 
     return (
         <section 
@@ -25,7 +19,7 @@ const Gallery:React.FC = () => {
             <div>
                 <div>
                     <motion.h3 
-                    {...motionProps}
+                    {...getMotionProps("slideUp", hasIntersected.current)}
                     ref={titleRef}
                     >
                         Uno con la naturaleza
@@ -33,14 +27,13 @@ const Gallery:React.FC = () => {
                 </div>
                 <motion.div 
                 className={styles.image}
-                {...motionProps}
+                {...getMotionProps("slideUp", hasIntersected.current)}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-1.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>
                 <motion.div 
                 className={styles.image}
-                {...motionProps}
-                transition={{...motionProps.transition, delay: BASE_DELAY + .8}}
+                {...getMotionProps("slideUp", hasIntersected.current, {delay: .8})}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-2.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>
@@ -48,15 +41,13 @@ const Gallery:React.FC = () => {
             <div>
                 <motion.div 
                 className={styles.image}
-                {...motionProps}
-                transition={{...motionProps.transition, delay: BASE_DELAY + .5}}
+                {...getMotionProps("slideUp", hasIntersected.current, {delay: .5})}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-3.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>
                 <motion.div 
                 className={styles.image}
-                {...motionProps}
-                transition={{...motionProps.transition, delay: BASE_DELAY + 1}}
+                {...getMotionProps("slideUp", hasIntersected.current, {delay: 1})}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-4.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>

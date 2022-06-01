@@ -1,7 +1,7 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useOnScreen, variants } from '@/utils/index';
+import { useOnScreen, getMotionProps } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import styles from './AssetAndText.module.scss';
 
@@ -15,18 +15,12 @@ type AssetAndTextProps = {
 
 const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ctaSection=false, assetLeft=true}) => {
     
+    const hasComplexAsset = typeof asset !== 'string';    
     const titleRef = useRef<HTMLDivElement>(null);
     const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT);
-    const BASE_DELAY = 0;
-    const hasComplexAsset = typeof asset !== 'string';
+    const hasIntersected = useRef(false)
+    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
 
-    
-    const motionProps = {
-        variants: variants.slideUp,
-        initial: 'hidden',
-        animate: isIntersecting && 'visible',
-        transition: {delay: BASE_DELAY, duration: 1, ease: "easeOut"}
-    }
 
     return (
         <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]} ${hasComplexAsset ? styles[`AssetAndText-complexAsset`] : ''}`} data-component="AssetAndText">
@@ -45,23 +39,20 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
             </div>
             <div className={styles.text}>
                 <motion.h3
-                {...motionProps}
+                {...getMotionProps("slideUp", hasIntersected.current)}
                 ref={titleRef}
                 >
                     {title}
                 </motion.h3>
                 <motion.p
-                {...motionProps}
-                transition={{delay: BASE_DELAY + .2, duration: 1, ease: "easeOut"}}
+                {...getMotionProps("slideUp", hasIntersected.current, {delay: .2})}
                 >
                     {description}
                 </motion.p>
                 {ctaSection &&
                 <motion.div 
                 className={styles.ctaSection}
-                {...motionProps}
-                initial={{opacity: 0, y: -15}}
-                transition={{delay: BASE_DELAY + .4, duration: 1, ease: "easeOut"}}
+                {...getMotionProps("slideUp", hasIntersected.current, {delay: .4})}
                 >
                     {ctaSection}
                 </motion.div>

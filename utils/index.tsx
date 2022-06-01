@@ -89,29 +89,6 @@ export const scrollTo = (ref:React.RefObject<HTMLDivElement>, yOffset=0, side="t
     }
 }
 
-export const variants = {
-    slideUp: {
-        hidden: {
-            opacity: 0,
-            y: 30,
-        },
-        visible: {
-            opacity: 1,
-            y: 0
-        }
-    },
-    scaleUp: {
-        hidden: {
-            scale: .8,
-            opacity: 0,
-        },
-        visible: {
-            scale: 1,
-            opacity: 1
-        }
-    }
-}
-
 export const tryLocalStorage = {
     ERROR_MESSAGE: 'Error occured. Possibly localStorage is either blocked or not supported.',
     get: (key:string) => {
@@ -163,3 +140,21 @@ export const useFirstRender = () => {
     }, []);
     return isFirstRender.current;
 };
+
+export const getMotionProps = (variant:"slideUp", isIntersecting=true, config:any={}) => {
+    const variants = {
+        slideUp: {
+            initial: {opacity: 0, y: 30},
+            animate: isIntersecting && {opacity: 1, y: 0},
+            exit: {opacity: 0, y: 30},
+            transition: {duration: 1, ease: "easeOut"}
+        }
+    }
+    Object.keys(variants[variant]).map(function(key) {
+        if(key === "initial" || key === "animate" || key === "exit" || key === "transition"){
+            variants[variant][key] = {...variants[variant][key], ...config};
+        }
+    })
+    const motionProps = variants[variant]
+    return motionProps
+}

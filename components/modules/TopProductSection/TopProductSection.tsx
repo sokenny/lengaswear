@@ -1,6 +1,6 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useScrollPosition, useOnScreen, formatNumber } from '@/utils/index'
+import { useScrollPosition, useOnScreen, formatNumber, getMotionProps } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ProductType } from 'types';
 import Image from 'next/image';
@@ -13,12 +13,6 @@ type TopProductSectionProps = {
     imgs: string[],
     onCtaIntersect: (isIntersecting: boolean) => void,
     addToCart: () => void,
-}
-
-const motionProps = {
-    initial: {opacity: 0, y: 20},
-    animate: {opacity: 1, y: 0},
-    transition: {duration: 1, ease: 'easeOut'}
 }
 
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {
@@ -55,7 +49,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                         <motion.div 
                         className={`mobile ${styles.TopProductSection__mobileInfo}`} 
                         ref={ctaRef}
-                        {...motionProps}
+                        {...getMotionProps("slideUp", true)}
                         >
                             <div className={styles.TopProductSection__namePrice}>   
                                 <div>
@@ -86,7 +80,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                 <div className={`${styles.TopProductSection__headerInfo} desktop`} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
                     <div>
                         <motion.div
-                        {...motionProps}
+                        {...getMotionProps("slideUp", true)}
                         >
                             <h1>{product.name}</h1>
                             <div className={styles.TopProductSection__description}>
@@ -123,8 +117,7 @@ const PurchaseInfo:React.FC = () => {
                 <motion.div 
                 className={styles.PurchaseInfo__item} 
                 key={item.text}
-                {...motionProps}
-                transition={{...motionProps.transition, delay:0.1 * items.indexOf(item)}}
+                {...getMotionProps("slideUp", true, {delay:0.1 * items.indexOf(item)})}
                 >
                     <div>{item.icon}</div>
                     <div>{item.text}</div>
