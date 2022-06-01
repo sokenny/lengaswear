@@ -237,9 +237,9 @@ const WatchSpecs:React.FC = () => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const res = await getProducts('relojes')
-    const paths = res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
+    // const paths = res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
     return {
-        paths,
+        paths: res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}})),
         fallback: false
       };
 }
@@ -247,8 +247,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const { reloj } = context.params as IParams 
     const res = await getProduct('relojes', reloj)
-    const product = {...res.data.product}
-    const props = { reloj:product }
+    // const product = {...res.data.product}
+    const props = { reloj:res.data.product }
     return { props, revalidate: 1 }
 }
 
