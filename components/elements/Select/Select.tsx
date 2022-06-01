@@ -11,7 +11,7 @@ const Select:React.FC<{value:string, onChange:(value:string | number)=>void, opt
         }else{
             return options;
         }
-    } , [options]);
+    } , [options, randomize]);
     
     return (
         <select className={styles.Select} value={value} onChange={(e)=>onChange(e.target.value)} name={name} disabled={disabled}>

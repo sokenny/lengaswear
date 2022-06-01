@@ -32,7 +32,7 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
                 transition={{duration: 1.5}}
                 className={styles.imgContainer}
                 >
-                    <Image src={asset} layout="fill" objectFit='cover' /> 
+                    <Image src={asset} layout="fill" objectFit='cover' alt={title} /> 
                 </motion.div>
                 : 
                 asset}

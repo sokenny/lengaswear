@@ -27,7 +27,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
 
     useEffect(()=>{
         onCtaIntersect(ctaOnScreen)
-    }, [ctaOnScreen])
+    }, [onCtaIntersect, ctaOnScreen])
 
     useEffect(()=>{
         if(lastPicRef.current !== null){
@@ -65,12 +65,12 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             </div>
                         </motion.div>
                         }
-                        <Image src={img} layout="fill" objectFit='cover' key={img} />
+                        <Image src={img} layout="fill" objectFit='cover' key={img} alt={product.name} />
                     </div>
                     )}
                     <div ref={lastPicRef}>
                         <div>
-                            <Image src={imgs[3]} layout="fill" objectFit='cover' />
+                            <Image src={imgs[3]} layout="fill" objectFit='cover' alt={product.name} />
                         </div>
                         <div>
                             <TitleWDescription title="El tuyo es único" description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." />

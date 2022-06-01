@@ -197,7 +197,7 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
             className="CarrouselSection">
                 {slides.map((slide, i)=>
                     <SwiperSlide key={i}>
-                        <Image src={slide} height={600} width={522} />
+                        <Image src={slide} height={600} width={522} alt={billetera} />
                     </SwiperSlide>
                 )}
             </Swiper>
@@ -208,9 +208,9 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const res = await getProducts('billeteras')
-    // const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
+    const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
     return {
-        paths: res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}})),
+        paths,
         fallback: false
       };
 }
@@ -218,8 +218,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const { billetera } = context.params as IParams 
     const res = await getProduct('billeteras', billetera)
-    // const product = {...res.data.product}
-    const props = { billetera:res.data.product }
+    const product = {...res.data.product}
+    const props = { billetera:product }
     return { props, revalidate: 1 }
 }
 

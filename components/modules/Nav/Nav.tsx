@@ -41,7 +41,7 @@ const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
         return () => {
             router.events.off('routeChangeComplete', handleRouteComplete)
         }
-    }, [])
+    }, [router.events])
 
     return (
         <nav className={`${styles.MobileNav} ${isOpen ? styles['MobileNav-isOpen'] : ''}`} onClick={()=>setIsOpen(false)}>

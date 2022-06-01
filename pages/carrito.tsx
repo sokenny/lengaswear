@@ -310,7 +310,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={styles.image}>
                     <Link href={product.href}>
                         <a>
-                            <Image src={thumbnailSrc} alt={product.name} layout="fill" objectFit="cover" />
+                            <Image src={thumbnailSrc} layout="fill" objectFit="cover" alt={product.name} />
                         </a>
                     </Link>
                 </div>
@@ -342,7 +342,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={styles.image}>
                     <Link href={product.href}>
                         <a>
-                            <Image src={thumbnailSrc} alt={product.name} layout="fill" objectFit="cover" />
+                            <Image src={thumbnailSrc} layout="fill" objectFit="cover" alt={product.name} />
                         </a>
                     </Link>
                 </div>

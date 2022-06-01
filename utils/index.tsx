@@ -105,7 +105,7 @@ export const tryLocalStorage = {
     },
     set: (key:string, value:string | number | {}) => {
         try{
-            // return localStorage.setItem(key, JSON.stringify(value))
+            return localStorage.setItem(key, JSON.stringify(value))
         }catch(e){
             console.log(tryLocalStorage.ERROR_MESSAGE, e)
             return false

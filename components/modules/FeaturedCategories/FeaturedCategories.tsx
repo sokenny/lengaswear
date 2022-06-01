@@ -79,7 +79,7 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
             style={{y: -cursor.y / 45, x: -cursor.x / 45}}
             >
                 <div>
-                    <Image src={image} layout="fill" objectFit="cover" />
+                    <Image src={image} layout="fill" objectFit="cover" alt={title} />
                 </div>
             </motion.div>
         </div>
