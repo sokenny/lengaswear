@@ -1,7 +1,7 @@
 import { ReactNode, useRef } from "react";
 import { motion } from 'framer-motion';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
-import { useOnScreen } from "@/utils/index";
+import { useOnScreen, getMotionProps } from "@/utils/index";
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import styles from './StoreInfo.module.scss';
 
@@ -15,8 +15,9 @@ export const perkItems:{icon:ReactNode, title: string, text:string}[] = [
 const StoreInfo:React.FC = () => {
 
     const divRef = useRef(null)
-    const isOnScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT);
-    const BASE_DELAY = 0;
+    const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT);
+    const hasIntersected = useRef(false)
+    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
 
     return (
         <section className={styles.StoreInfo}>
@@ -24,9 +25,7 @@ const StoreInfo:React.FC = () => {
                 {perkItems.map((item, i)=>
                     <motion.div 
                     className={styles.item} key={item.title}
-                    initial={{opacity: 0, y: 30}}
-                    animate={isOnScreen && {opacity: 1, y:0}}
-                    transition={{delay: BASE_DELAY + ((i+1)*.15), duration: 1}}
+                    {...getMotionProps("slideUp", hasIntersected.current, {delay: (i+1)*.15})}
                     >
                         <div className={styles.icon}>{item.icon}</div>
                         <div>

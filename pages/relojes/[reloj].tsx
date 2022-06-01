@@ -3,7 +3,7 @@ import { NextPageAugmented, ProductType } from 'types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAppContext } from "contexts/AppContext";
 import { getProduct, getProducts } from 'api';
-import { useOnScreen, capitalize } from '@/utils/index'
+import { useOnScreen, capitalize, getMotionProps } from '@/utils/index'
 import { ANIMATE_BREAKPOINT } from '@/utils/constants'
 import { motion } from 'framer-motion'
 import { ParsedUrlQuery } from 'querystring'
@@ -65,7 +65,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
 
 const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
     const divRef = useRef(null)
-    const isOnScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
+    const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
     const [cursor, setCursor] = useState<{x: number, y:number}>({x: 0, y: 0})
     return (
         <div 
@@ -75,7 +75,7 @@ const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
             <motion.div
             ref={divRef}
             initial={{scale: 1.4}}
-            animate={isOnScreen && {scale: 1.1}}
+            animate={isIntersecting && {scale: 1.1}}
             transition={{duration: 1.5}}
             style={{y: -cursor.y / 45, x: -cursor.x / 45}}
             >
@@ -103,7 +103,9 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     const [hovering, setHovering] = useState<string>("")
     const materials = ['cristal', 'madera', 'aluminio']
     const divRef = useRef<HTMLDivElement>(null)
-    const onScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT)
+    const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT)
+    const hasIntersected = useRef(false)
+    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
 
     function getMaterialImg(material:string) {
         return material === 'madera' ? `/relojes/${reloj}/${material}.png` : `/relojes/${material}.png`
@@ -128,9 +130,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                             onMouseLeave={()=>setHovering("")} 
                             style={{backgroundImage: `url('${getMaterialImg(material)}')`}}
                             key={material} 
-                            initial={{opacity: 0, y: 20}}
-                            animate={onScreen && {opacity: 1, y: 0}}
-                            transition={{delay: .5 + (.1 * i), duration: .75}}
+                            {...getMotionProps("slideUp", hasIntersected.current, {delay: .5 + (.1 * i), duration: .75})}
                             />
                         )}
                     </div>
@@ -184,9 +184,14 @@ const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hoverin
 const WatchSpecs:React.FC = () => {
 
     const divRef1 = useRef<HTMLDivElement>(null)
-    const onScreen1 = useOnScreen(divRef1, ANIMATE_BREAKPOINT)
+    const isIntersecting = useOnScreen(divRef1, ANIMATE_BREAKPOINT)
     const divRef2 = useRef<HTMLDivElement>(null)
-    const onScreen2 = useOnScreen(divRef2, ANIMATE_BREAKPOINT)
+    const isIntersecting2 = useOnScreen(divRef2, ANIMATE_BREAKPOINT)
+    const hasIntersected = useRef(false)
+    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
+    const hasIntersected2 = useRef(false)
+    if(isIntersecting2 && !hasIntersected2.current) hasIntersected2.current = true;
+
     const specs = [
         [{label: 'Correas', value: 'Cuero genuino marron'},
         {label: 'Vidro', value: 'Cristal mineral'}],
@@ -202,18 +207,14 @@ const WatchSpecs:React.FC = () => {
         <section className={styles.WatchSpecs}>
             <motion.div 
             className={styles.WatchSpecs__asset}
-            initial={{opacity: 0, y: 40}}
-            animate={onScreen1 && {opacity: 1, y: 0}}
-            transition={{duration: 1.5}}
+            {...getMotionProps("slideUp", hasIntersected.current)}
             ref={divRef1}
             >
                 <img src="/relojes/specs.webp" alt="Watch specs" />
             </motion.div>
             <motion.div 
             className={styles.WatchSpecs__specs}
-            initial={{opacity: 0, y: 40}}
-            animate={onScreen2 && {opacity: 1, y: 0}}
-            transition={{duration: 1.5}}
+            {...getMotionProps("slideUp", hasIntersected2.current)}
             ref={divRef2}
             >
                 <h2>Especificaciones</h2>
