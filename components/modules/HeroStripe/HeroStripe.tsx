@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useOnScreen, getMotionProps } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
@@ -10,10 +10,12 @@ type HeroStripeProps= {
     description: string,
     cta: string,
     image: string,
+    extraText?:string
 }
 
-const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) => {
+const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image, extraText}) => {
 
+    const [expand, setExpand] = useState<boolean>(false);
     const titleRef = useRef<HTMLDivElement>(null);
     const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT * .8);
     const hasIntersected = useRef(false)
@@ -36,10 +38,24 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image}) 
                     {description}
                 </motion.p>
                 <motion.div
+                className={styles.ctaContainer}
                 {...getMotionProps("slideUp", hasIntersected.current, {delay: .4})}
                 >
-                    <ArrowCta cta={cta} />
+                    {!expand &&
+                        <div onClick={()=>setExpand(true)}>
+                            <ArrowCta cta={cta} />
+                        </div>
+                    }
                 </motion.div>
+                {extraText && 
+                <motion.p
+                className={styles.extraText}
+                initial={{opacity: 0, height: 0}}
+                animate={expand && {opacity: 1, height: "auto", transition: {duration: .5, stiffness: 0}}}
+                >
+                    {extraText}
+                </motion.p>
+                }
             </div>
         </section>
     )

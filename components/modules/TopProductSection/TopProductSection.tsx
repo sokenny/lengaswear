@@ -1,6 +1,6 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useScrollPosition, useOnScreen, formatNumber, getMotionProps } from '@/utils/index'
+import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ProductType } from 'types';
 import Image from 'next/image';
@@ -17,11 +17,14 @@ type TopProductSectionProps = {
 
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {
 
+    const isMobile = useIsMobile();
     const scrollPosition = useScrollPosition()
     const lastPicRef = useRef<HTMLDivElement>(null)
     const picOnScreen = useOnScreen(lastPicRef)
-    const ctaRef = useRef<HTMLDivElement>(null)
-    const ctaOnScreen = useOnScreen(ctaRef)
+    const ctaRefMobile = useRef<HTMLDivElement>(null)
+    const ctaRefDesktop = useRef<HTMLDivElement>(null)
+    
+    const ctaOnScreen = useOnScreen(isMobile ? ctaRefMobile : ctaRefDesktop)
     const [lockAt, setLockAt] = useState<number>(0)
 
 
@@ -48,7 +51,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                         {i === 0 &&
                         <motion.div 
                         className={`mobile ${styles.TopProductSection__mobileInfo}`} 
-                        ref={ctaRef}
+                        ref={ctaRefMobile}
                         {...getMotionProps("slideUp", true)}
                         >
                             <div className={styles.TopProductSection__namePrice}>   
@@ -80,6 +83,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                 <div className={`${styles.TopProductSection__headerInfo} desktop`} style={shouldLockHeader() ? {top: lockAt, position: "absolute"} : undefined}>
                     <div>
                         <motion.div
+                        ref={ctaRefDesktop}
                         {...getMotionProps("slideUp", true)}
                         >
                             <h1>{product.name}</h1>

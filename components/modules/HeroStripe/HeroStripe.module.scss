@@ -25,7 +25,14 @@
         p{
             max-width: 400px;
             color: white;
-            margin-bottom: $pxs3;
+            margin-bottom: $pxs2;
         }
+        .ctaContainer{
+            min-height: 25px;
+        }
+    }
+
+    .extraText{
+        margin-bottom: 0;
     }
 }

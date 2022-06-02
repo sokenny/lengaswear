@@ -32,7 +32,13 @@ const Home: NextPage = () => {
                 <StoreInfo />
                 <AssetAndText title="Hecho acá, por nosotros" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas"} color="gray" />} />
             </div>
-            <HeroStripe title="Plantas un árbol" description="Con tu compra, en conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia." cta="Leer más" image="/bosque-de-lengas.webp" />
+            <HeroStripe 
+            title="Plantas un árbol" 
+            description="Con tu compra, en conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia." 
+            cta="Leer más" 
+            image="/bosque-de-lengas.webp" 
+            extraText="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam molestias in atque deleniti aliquid earum perspiciatis sed cupiditate eius assumenda vel fuga libero, totam placeat neque unde cum autem qui."
+            />
             <div className="container">
                 <Gallery />
             </div>
