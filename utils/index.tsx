@@ -142,11 +142,12 @@ export const useFirstRender = () => {
 };
 
 export const getMotionProps = (variant:"slideUp", isIntersecting=true, config:any={}) => {
+    const getValue = (defaultValue:number) => config.value ? config.value : defaultValue
     const variants = {
         slideUp: {
-            initial: {opacity: 0, y: 30},
+            initial: {opacity: 0, y: getValue(30)},
             animate: isIntersecting && {opacity: 1, y: 0},
-            exit: {opacity: 0, y: 30},
+            exit: {opacity: 0, y: getValue(30)},
             transition: {duration: 1, ease: "easeOut"}
         }
     }

@@ -5,6 +5,7 @@
     display: flex;
     width: fit-content;
     width: 185px;
+    align-items: center;
 
     >div{
         transition: .2s ease-in-out;
@@ -18,8 +19,28 @@
         width: 100%;
         padding-right: 50px;
     }
+
+    .loader{
+
+        >svg{
+            animation: spin .85s linear infinite;
+        }      
+    }
 }
 
 .ArrowInput:hover div{
     transform: translateX(10px);
+}
+
+.ArrowInput:hover .loader{
+    transform: translateX(0px);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

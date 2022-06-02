@@ -36,3 +36,8 @@ export type CheckoutType = {
 }
 
 export type OptionsType = {label:string, value:string}[]
+
+export interface ApiResponse {
+    status: "success" | "failure",
+}
+  

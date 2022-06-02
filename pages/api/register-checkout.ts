@@ -1,10 +1,8 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { CheckoutType } from '../../types/index'
+import { CheckoutType, ApiResponse } from '../../types/index'
 
-type CheckoutResponse = {
-  status: "success" | "failure",
-  paymentLink?: string
+interface CheckoutResponse extends ApiResponse {
+    paymentLink?: string
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<CheckoutResponse>) {

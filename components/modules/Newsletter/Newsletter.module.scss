@@ -1,1 +1,19 @@
 @import '../../../styles/variables';
+
+.Newsletter{}
+
+.NewsletterInput{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .message{
+        min-height: $pxs2;
+
+        >div{
+            margin-top: 5px;
+            font-size: 14px;
+            color: color(gold);
+        }
+    }
+}
