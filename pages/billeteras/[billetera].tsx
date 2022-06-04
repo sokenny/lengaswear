@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { NextPageAugmented, ProductType } from 'types'
+import { getProductPaths, getProduct } from '@/utils/db';
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAppContext } from "contexts/AppContext";
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import { capitalize, colors as utilityColors, scrollTo, useIsMobile, useOnScreen, getMotionProps } from '@/utils/index'
-import { getProduct, getProducts } from 'api';
 import { WalletHTML }  from '@/utils/wallet'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
@@ -31,16 +31,16 @@ const recommendedProducts:TRecommended[] = [
     {name: 'quemanta', image: '/relojes/quemanta/thumbnail.webp', href: '/relojes/quemanta', price: 3950},
 ]
 
-const Billetera:NextPageAugmented<{billeteraName: string}> = ({billeteraName}) => {
+const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     
-    const billetera= {
-        id: 1,
-        name: billeteraName,
-        price: 3950,
-        sellingPrice: 3950,
-        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
-        href: ""
-    }
+    // const billetera= {
+    //     id: 1,
+    //     name: billeteraName,
+    //     price: 3950,
+    //     sellingPrice: 3950,
+    //     description: 'Texto corto de descripción del modelo, cual es el diferencial.',
+    //     href: ""
+    // }
 
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
@@ -216,40 +216,18 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // return {
-    //     paths: [
-    //       { params: { billetera: 'chocolate' } },
-    //       { params: { billetera: 'suela' } },
-    //       { params: { billetera: 'boom' } },
-    //     ],
-    //     fallback: true
-    // };
-
-    // const { data } = await getProducts('billeteras')
-    // console.log('RESDAT: ', data)
-    // const paths = data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
-    // const paths = data.products
+    const paths = await getProductPaths('billeteras', 'billetera')
     return {
-        paths: [
-            { params: { billetera: 'chocolate' } },
-            { params: { billetera: 'suela' } },
-            { params: { billetera: 'boom' } },
-        ],
+        paths,
         fallback: false
-      };
+    };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { billetera } = context.params as IParams 
-    const props = { billeteraName: billetera }
+    const product = await getProduct(billetera)
+    const props = { billetera: product }
     return { props }
-
-
-    // const { billetera } = context.params as IParams 
-    // const res = await getProduct('billeteras', billetera)
-    // const product = {...res.data.product}
-    // const props = { billetera:product }
-    // return { props, revalidate: 1 }
 }
 
 Billetera.nav = <Nav theme="scrolled" />

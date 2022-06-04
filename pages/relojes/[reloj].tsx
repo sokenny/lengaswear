@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NextPageAugmented, ProductType } from 'types';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAppContext } from "contexts/AppContext";
-import { getProduct, getProducts } from 'api';
+import { getProductPaths, getProduct } from '@/utils/db';
 import { useOnScreen, capitalize, getMotionProps } from '@/utils/index'
 import { ANIMATE_BREAKPOINT } from '@/utils/constants'
 import { motion } from 'framer-motion'
@@ -19,25 +19,13 @@ import TopProductSection from '@/components/modules/TopProductSection/TopProduct
 import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
 import styles from '../../styles/Reloj.module.scss'
 
-import mongooseConnect from '@/utils/db-connect';
-import Product from 'models/product';
-
 const recommendedProducts:TRecommended[] = [
     {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: 10000},
     {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: 10000},
     {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 10000},
 ]
 
-const Reloj:NextPageAugmented<{relojName: string}> = ({relojName}) => {
-
-    const reloj = {
-        id: 1,
-        name: relojName,
-        price: 10900,
-        sellingPrice: 10900,
-        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
-        href: ""
-    }
+const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
    
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
@@ -248,25 +236,18 @@ const WatchSpecs:React.FC = () => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    await mongooseConnect();
-    const products = await Product.find({category: 'relojes'})
-    const paths = products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
+    const paths = await getProductPaths('relojes', 'reloj')
     return {
         paths,
         fallback: false
-      };
+    };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { reloj } = context.params as IParams 
-    const props = {relojName:reloj}
+    const product = await getProduct(reloj)
+    const props = { reloj: product }
     return { props }
-
-    // const { reloj } = context.params as IParams 
-    // const res = await getProduct('relojes', reloj)
-    // const product = {...res.data.product}
-    // const props = { reloj:product }
-    // return { props, revalidate: 1 }
 }
 
 Reloj.nav = <Nav theme="scrolled" />
