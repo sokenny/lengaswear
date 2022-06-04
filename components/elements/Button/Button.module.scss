@@ -25,3 +25,9 @@
     background-color: color(b1);
     color: white;
 }
+
+.Button.Button-loading:hover{
+    svg{
+        filter: invert(1);
+    }
+}

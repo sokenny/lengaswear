@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { tryLocalStorage, useScrolledBottom, useFirstRender } from "@/utils/index";
+import { getStore } from 'api';
 import { useMemo } from "react";
 import { ProductType, CheckoutType } from 'types';
 
@@ -36,19 +37,19 @@ export function AppProvider(props:any){
 
     const isFirstRender = useFirstRender();
     const scrolledBottom:boolean = useScrolledBottom();
-
-    // Hardcodeando temporalmente el store
-    const store:ProductType[] = [
-        {id: 1, name: "Quemanta", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/quemanta", image: "", category: "relojes"},
-        {id: 2, name: "Tesh", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/tesh", image: "", category: "relojes"},
-        {id: 3, name: "Jauke", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/jauke", image: "", category: "relojes"},
-        {id: 4, name: "Mahai", price: 10670, sellingPrice: 10670, stock: 10, href: "/relojes/mahai", image: "", category: "relojes"},
-        {id: 5, name: "Chocolate", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/chocolate", image: "", category: "billeteras"},
-        {id: 5, name: "Suela", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/suela", image: "", category: "billeteras"},
-        {id: 5, name: "Boom", price: 3950, sellingPrice: 3950, stock: 10, href: "/relojes/boom", image: "", category: "billeteras"},
-    ]
-
     const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
+    const [store, setStore] = useState<ProductType[]>([]);
+
+    useEffect(()=>{
+        const cachedStore = tryLocalStorage.get("store");
+        if (cachedStore.length > 0) setStore(cachedStore)
+        getStore().then(res => {
+            if(res.data.status === "success"){
+                setStore(res.data.store)
+                tryLocalStorage.set("store", res.data.store)
+            }
+        })
+    }, [])
 
     useEffect(()=>{
         if(isFirstRender){

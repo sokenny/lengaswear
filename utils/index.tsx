@@ -69,7 +69,7 @@ export function capitalize (string:string): string {
 }
 
 export const useIsMobile = ():{} => {
-    const [isMobile, setIsMobile] = useState<boolean>(false);
+    const [isMobile, setIsMobile] = useState<boolean>((typeof window !== 'undefined' && window.innerWidth <= 800));
     useEffect(() => {
       const handleResize = ():void => { setIsMobile(window.innerWidth <= 800) }
       window.addEventListener("resize", handleResize);

@@ -281,7 +281,7 @@ const StepThree:React.FC = () => {
                 </div>
             </motion.section>
             <div className={styles.cta}>
-                <Button onClick={handleIrAPagar} active={stepIsValid}>Ir a pagar</Button>
+                <Button onClick={handleIrAPagar} active={stepIsValid} loading={true}>Ir a pagar</Button>
             </div>
         </section>
     )
@@ -360,13 +360,13 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                         </div>
                     </div>
                     <div className={styles.price}>
-                        <div>{product.sellingPrice}</div>
+                        <div>${formatNumber(product.sellingPrice)}</div>
                         <motion.div
                         key={qty}
                         initial={{y: -NUMBER_BOUNCE_DISTANCE}}
                         animate={{y: 0}}
                         >
-                            {product.sellingPrice * qty}
+                            ${formatNumber(product.sellingPrice * qty)}
                         </motion.div>
                     </div>
                 </div>

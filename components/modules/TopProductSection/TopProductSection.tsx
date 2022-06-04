@@ -23,14 +23,12 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
     const picOnScreen = useOnScreen(lastPicRef)
     const ctaRefMobile = useRef<HTMLDivElement>(null)
     const ctaRefDesktop = useRef<HTMLDivElement>(null)
-    
     const ctaOnScreen = useOnScreen(isMobile ? ctaRefMobile : ctaRefDesktop)
     const [lockAt, setLockAt] = useState<number>(0)
 
-
     useEffect(()=>{
         onCtaIntersect(ctaOnScreen)
-    }, [onCtaIntersect, ctaOnScreen])
+    }, [onCtaIntersect, ctaOnScreen, isMobile])
 
     useEffect(()=>{
         if(lastPicRef.current !== null){

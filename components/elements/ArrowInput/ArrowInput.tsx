@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { arrow, spinner } from '@/utils/icons';
+import { arrow } from '@/utils/icons';
+import Spinner from '../Spinner/Spinner';
 import Input from '../Input/Input';
 import styles from './ArrowInput.module.scss';
 
@@ -10,8 +10,8 @@ const ArrowInput:React.FC<{value:string | number, onChange:(value:string | numbe
             
             {loading ? 
             <div className={styles.loader}>
-                {spinner(15, "gray")}
-            </div> 
+                <Spinner />
+            </div>
             : 
             <div>{arrow(25, "gray")}</div> 
             }
