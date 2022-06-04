@@ -21,7 +21,6 @@ import styles from '../styles/Carrito.module.scss';
 
 const Carrito: NextPageAugmented = () => {
 
-    // 
     const router = useRouter();
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
@@ -29,6 +28,7 @@ const Carrito: NextPageAugmented = () => {
     const cartIsEmpty = checkout.carrito.length < 1;
 
     useEffect(()=>{
+        scrollTo(carritoRef, -50)
         router.push({ query: { ...router.query, step: 1 } }, undefined, {shallow: true})
     }, [])
 

@@ -44,7 +44,7 @@ const Billetera:NextPageAugmented<{billeteraName: string}> = ({billeteraName}) =
 
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
-    const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera}/billetera-cuero-genuino-${item}.webp`)
+    const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera.name}/billetera-cuero-genuino-${item}.webp`)
     const addThisToCart = () => addToCart(billetera.name)
 
     return (
@@ -225,8 +225,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     //     fallback: true
     // };
 
-    const res = await getProducts('billeteras')
-    const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
+    const { data } = await getProducts('billeteras')
+    console.log('RESDAT: ', data)
+    const paths = data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
     return {
         paths,
         fallback: false

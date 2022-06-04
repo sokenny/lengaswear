@@ -255,8 +255,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     //     fallback: true
     //   }
 
-    const res = await getProducts('relojes')
-    const paths = res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
+    const { data } = await getProducts('relojes')
+    console.log('RESDATA: ', data)
+    const paths = data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
     return {
         paths,
         fallback: false
