@@ -216,21 +216,21 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-        paths: [
-          { params: { billetera: 'chocolate' } },
-          { params: { billetera: 'suela' } },
-          { params: { billetera: 'boom' } },
-        ],
-        fallback: true
-    };
-
-    // const res = await getProducts('billeteras')
-    // const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
     // return {
-    //     paths,
-    //     fallback: false
-    //   };
+    //     paths: [
+    //       { params: { billetera: 'chocolate' } },
+    //       { params: { billetera: 'suela' } },
+    //       { params: { billetera: 'boom' } },
+    //     ],
+    //     fallback: true
+    // };
+
+    const res = await getProducts('billeteras')
+    const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
+    return {
+        paths,
+        fallback: false
+      };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
