@@ -225,11 +225,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
     //     fallback: true
     // };
 
-    const { data } = await getProducts('billeteras')
-    console.log('RESDAT: ', data)
-    const paths = data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
+    // const { data } = await getProducts('billeteras')
+    // console.log('RESDAT: ', data)
+    // const paths = data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
+    // const paths = data.products
     return {
-        paths,
+        paths: [
+            { params: { billetera: 'chocolate' } },
+            { params: { billetera: 'suela' } },
+            { params: { billetera: 'boom' } },
+        ],
         fallback: false
       };
 }

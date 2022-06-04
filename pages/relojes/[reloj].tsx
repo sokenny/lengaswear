@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import { NextPageAugmented, ProductType } from 'types'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { useEffect, useRef, useState } from 'react';
+import { NextPageAugmented, ProductType } from 'types';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAppContext } from "contexts/AppContext";
 import { getProduct, getProducts } from 'api';
 import { useOnScreen, capitalize, getMotionProps } from '@/utils/index'
@@ -18,6 +18,9 @@ import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import TopProductSection from '@/components/modules/TopProductSection/TopProductSection'
 import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
 import styles from '../../styles/Reloj.module.scss'
+
+import mongooseConnect from '@/utils/db-connect';
+import Product from 'models/product';
 
 const recommendedProducts:TRecommended[] = [
     {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: 10000},
@@ -245,19 +248,9 @@ const WatchSpecs:React.FC = () => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // return {
-    //     paths: [
-    //       { params: { reloj: 'quemanta' } },
-    //       { params: { reloj: 'tesh' } },
-    //       { params: { reloj: 'jauke' } },
-    //       { params: { reloj: 'mahai' } },
-    //     ],
-    //     fallback: true
-    //   }
-
-    const { data } = await getProducts('relojes')
-    console.log('RESDATA: ', data)
-    const paths = data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
+    await mongooseConnect();
+    const products = await Product.find({category: 'relojes'})
+    const paths = products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
     return {
         paths,
         fallback: false
