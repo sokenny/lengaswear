@@ -31,8 +31,17 @@ const recommendedProducts:TRecommended[] = [
     {name: 'quemanta', image: '/relojes/quemanta/thumbnail.webp', href: '/relojes/quemanta', price: 3950},
 ]
 
-const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
+const Billetera:NextPageAugmented<{billeteraName: string}> = ({billeteraName}) => {
     
+    const billetera= {
+        id: 1,
+        name: billeteraName,
+        price: 3950,
+        sellingPrice: 3950,
+        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
+        href: ""
+    }
+
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera}/billetera-cuero-genuino-${item}.webp`)
@@ -207,20 +216,34 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await getProducts('billeteras')
-    const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
     return {
-        paths,
-        fallback: false
-      };
+        paths: [
+          { params: { billetera: 'chocolate' } },
+          { params: { billetera: 'suela' } },
+          { params: { billetera: 'boom' } },
+        ],
+        fallback: true
+    };
+
+    // const res = await getProducts('billeteras')
+    // const paths = res.data.products.map((billetera:ProductType)=>({params: {billetera: billetera.name.toLocaleLowerCase()}}))
+    // return {
+    //     paths,
+    //     fallback: false
+    //   };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { billetera } = context.params as IParams 
-    const res = await getProduct('billeteras', billetera)
-    const product = {...res.data.product}
-    const props = { billetera:product }
-    return { props, revalidate: 1 }
+    const props = { billeteraName: billetera }
+    return { props }
+
+
+    // const { billetera } = context.params as IParams 
+    // const res = await getProduct('billeteras', billetera)
+    // const product = {...res.data.product}
+    // const props = { billetera:product }
+    // return { props, revalidate: 1 }
 }
 
 Billetera.nav = <Nav theme="scrolled" />

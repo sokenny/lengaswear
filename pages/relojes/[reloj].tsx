@@ -25,7 +25,16 @@ const recommendedProducts:TRecommended[] = [
     {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 10000},
 ]
 
-const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
+const Reloj:NextPageAugmented<{relojName: string}> = ({relojName}) => {
+
+    const reloj = {
+        id: 1,
+        name: relojName,
+        price: 10900,
+        sellingPrice: 10900,
+        description: 'Texto corto de descripción del modelo, cual es el diferencial.',
+        href: ""
+    }
    
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
@@ -236,20 +245,34 @@ const WatchSpecs:React.FC = () => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await getProducts('relojes')
-    const paths = res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
     return {
-        paths,
-        fallback: false
-      };
+        paths: [
+          { params: { reloj: 'quemanta' } },
+          { params: { reloj: 'tesh' } },
+          { params: { reloj: 'jauke' } },
+          { params: { reloj: 'mahai' } },
+        ],
+        fallback: true
+      }
+
+    // const res = await getProducts('relojes')
+    // const paths = res.data.products.map((reloj:ProductType)=>({params: {reloj: reloj.name.toLocaleLowerCase()}}))
+    // return {
+    //     paths,
+    //     fallback: false
+    //   };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { reloj } = context.params as IParams 
-    const res = await getProduct('relojes', reloj)
-    const product = {...res.data.product}
-    const props = { reloj:product }
-    return { props, revalidate: 1 }
+    const props = {relojName:reloj}
+    return { props }
+
+    // const { reloj } = context.params as IParams 
+    // const res = await getProduct('relojes', reloj)
+    // const product = {...res.data.product}
+    // const props = { reloj:product }
+    // return { props, revalidate: 1 }
 }
 
 Reloj.nav = <Nav theme="scrolled" />
