@@ -3,39 +3,100 @@
 .HeroBanner{
     padding: var(--sp3);
     height: 100vh;
+    position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    color: white;
+    align-items: center;
+    overflow: hidden;
 
     @include mobile{
-        justify-content: flex-end;
-        padding: var(--sp2);
-        height: 75vh;
+        justify-content: center;
     }
 
-    .title{
-        font-size: 96px;
-        margin-bottom: $pxs2;
-        font-weight: 400;
-        font-family: Silk Serif;
+    .background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 
-        @include mobile{
-            font-size: $fs7;
+        >div{
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            .mask, .base{
+                width: 100%;
+                height: 100%;
+            }
+
+            .base{
+                transform: scale(1.07);
+                animation: pan-in-out 35s linear infinite;
+            }
+
+            .mask{
+                position: absolute;
+                top: 0;
+                z-index: 2;
+                transition: .25s ease-out;
+
+                @include mobile{
+                    display: none;
+                }
+            }
         }
     }
-    .subtitle{
-        font-size: $fs2;
-        text-transform: uppercase;
-        color: color(gold);
-        font-weight: 500;
-        letter-spacing: 0.255em;
-        text-transform: uppercase;
 
+    .text{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        color: white;
+        z-index: 1;
+    
         @include mobile{
-            font-size: $fs1;
+            justify-content: flex-end;
+            padding: var(--sp2);
+            height: 75vh;
         }
+    
+        .title{
+            font-size: 96px;
+            margin-bottom: $pxs2;
+            font-weight: 400;
+            font-family: Silk Serif;
+    
+            @include mobile{
+                font-size: $fs7;
+            }
+        }
+        .subtitle{
+            font-size: $fs2;
+            text-transform: uppercase;
+            color: color(gold);
+            font-weight: 500;
+            letter-spacing: 0.255em;
+            text-transform: uppercase;
+    
+            @include mobile{
+                font-size: $fs1;
+            }
+        }
+    }
+}
+
+
+@keyframes pan-in-out {
+    0% {
+        transform: scale(1.07);
+    }
+    50% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.07);
     }
 }
