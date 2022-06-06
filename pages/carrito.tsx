@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useRef, useCallback } from "react";
+import { useEffect, useMemo, useRef, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
-import { capitalize, scrollTo, formatNumber, provincias, fuentes } from "../utils";
+import { capitalize, scrollTo, formatNumber, provincias, fuentes, useFirstRender, getMotionProps } from "../utils";
 import { registerCheckout } from "api";
 import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
 import { chat } from "@/utils/icons";
@@ -22,6 +22,7 @@ import styles from '../styles/Carrito.module.scss';
 const Carrito: NextPageAugmented = () => {
 
     const router = useRouter();
+    const isFirstRender = useFirstRender();
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
     const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito]);
@@ -29,15 +30,12 @@ const Carrito: NextPageAugmented = () => {
 
     useEffect(()=>{
         scrollTo(carritoRef, -50)
-        router.push({ query: { ...router.query, step: 1 } }, undefined, {shallow: true})
-    }, [])
-
-    useEffect(()=>{
         setCheckout({...checkout, step: router.query.step});
-    }, [router.query.step])
+        if(router.query.step === undefined || isFirstRender) router.replace({ query: { ...router.query, step: 1 } }, undefined, {shallow: true})
+    }, [router.query.step, isFirstRender])
 
     useEffect(()=>{
-        setCheckout({...checkout, cartTotal: getCartTotal()})
+        setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
     }, [cartDetail])
 
     function getCartDetail(carrito:string[]){
@@ -48,7 +46,7 @@ const Carrito: NextPageAugmented = () => {
         return cartDetail;
     }
 
-    const getCartTotal = useCallback(() => {
+    const getCartGrossTotal = useCallback(():number => {
         let total = 0;
         Object.keys(cartDetail).forEach(prdName => {
             const qty = cartDetail[prdName];
@@ -60,12 +58,11 @@ const Carrito: NextPageAugmented = () => {
 
     function handleIniciarCompra(){
         router.push({ query: { ...router.query, step: 2 } }, undefined, {shallow: true})
-        scrollTo(carritoRef, -50)
     }
 
     const stepScreens:any = useMemo(()=>{
         return {
-            1: <StepOne cartDetail={cartDetail} />,
+            1: <StepOne cartDetail={cartDetail} cartGrossTotal={getCartGrossTotal()} />,
             2: <StepTwo />,
             3: <StepThree />,
         }
@@ -113,13 +110,28 @@ const Carrito: NextPageAugmented = () => {
                             </div>
                             <div className={styles.total}>
                                 <h3 className={styles.detalleLabel}>Total (ARS)</h3>
-                                <motion.div
-                                initial={{y: -NUMBER_BOUNCE_DISTANCE}}
-                                animate={{y: 0}}
-                                key={checkout.cartTotal}
-                                >
-                                    ${formatNumber(checkout.cartTotal)}
-                                </motion.div>
+                                <div className={styles.totalDetail}>
+                                    {checkout.carrito.length > 1 &&
+                                        <div  
+                                        className={styles.crossedTotal}
+                                        key={checkout.carrito.length}
+                                        >
+                                            {"$" + formatNumber(checkout.cartGrossTotal)}
+                                        </div>
+                                    }
+                                    <motion.div
+                                    initial={{y: -NUMBER_BOUNCE_DISTANCE}}
+                                    animate={{y: 0}}
+                                    key={checkout.cartGrossTotal}
+                                    >
+                                        {checkout.carrito.length > 1 
+                                        ?
+                                        "$" + formatNumber(checkout.cartNetTotal)
+                                        :
+                                        "$" + formatNumber(checkout.cartGrossTotal)
+                                        }
+                                    </motion.div>
+                                </div>
                             </div>
                             <AnimatePresence>
                                 {router.query.step === "1" &&
@@ -170,13 +182,26 @@ const slideDownProps = {
     transition: {duration: .25, delay: .2}
 }
 
-const StepOne:React.FC<{cartDetail:any}> = ({cartDetail}) => {
+const StepOne:React.FC<{cartDetail:any, cartGrossTotal:number}> = ({cartDetail, cartGrossTotal}) => {
+
+    const { checkout } = useAppContext();
 
     return (
         <section className={styles.StepOne}>
             <div className={styles.header}>
                 <h1><motion.div {...slideDownProps}>01</motion.div>/03</h1>
-                <h2 {...slideDownProps}>Llevando 2 o más productos tenés un 10% off!</h2>
+                <h2 {...slideDownProps}>
+                    {checkout.carrito.length > 1 ?
+                    <motion.div 
+                    className={styles.descuentoAplicado}
+                    initial={{rotateX: 100, y: -10}} 
+                    animate={{rotateX: 0, y: 0}} 
+                    key={"aplicado"}
+                    >10% off aplicado! Estas ahorrando <motion.span initial={{scale: 1.1}} animate={{scale: 1}} key={cartGrossTotal}>${formatNumber(checkout.cartGrossTotal - checkout.cartNetTotal)}</motion.span></motion.div>
+                    :
+                    <motion.div initial={{y: -10}} animate={{y: 0}} key={"por aplicar"}>Llevando 2 o más productos tenés un 10% off!</motion.div>
+                    }
+                </h2>
             </div>
             <section className={styles.products}>
                 {Object.keys(cartDetail).map((prdName) =>
@@ -240,12 +265,16 @@ const StepThree:React.FC = () => {
 
     const { checkout, setCheckout } = useAppContext();
     const stepIsValid = checkout.pais !== "" && checkout.provincia !== "" && checkout.localidad !== "" && checkout.calle !== "" && checkout.numero !== "";
+    const [loading, setLoading] = useState<boolean>(false);
     
     async function handleIrAPagar () {
+        setLoading(true);
         setCheckout({...checkout, completed: true});
         const res = await registerCheckout(checkout);
         if(res.data.status === "success") {
             window.location.href = res.data.paymentLink
+        }else{
+            setLoading(false);
         }
     }
 
@@ -281,7 +310,7 @@ const StepThree:React.FC = () => {
                 </div>
             </motion.section>
             <div className={styles.cta}>
-                <Button onClick={handleIrAPagar} active={stepIsValid} loading={true}>Ir a pagar</Button>
+                <Button onClick={handleIrAPagar} active={stepIsValid} loading={loading}>Ir a pagar</Button>
             </div>
         </section>
     )
@@ -315,7 +344,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                     </Link>
                 </div>
                 <div className={styles.name}>
-                    <h3>{product.name}</h3>
+                    <h3>{capitalize(product.name)}</h3>
                 </div>
                 <div className={styles.price}>
                     ${formatNumber(product.price)}
@@ -349,7 +378,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                 <div className={styles.cols}>
                     <div>
                         <div>
-                            <h3>{product.name}</h3>
+                            <h3>{capitalize(product.name)}</h3>
                             <div className={styles.qty}>
                                 <span>QTY:</span> {qty}
                             </div>

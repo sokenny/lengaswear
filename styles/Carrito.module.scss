@@ -138,6 +138,21 @@
                     }
                 }
 
+                .totalDetail{
+                    position: relative;
+
+                    .crossedTotal{
+                        text-align: right;
+                        text-decoration: line-through;
+                        font-size: 1rem;
+                        color: rgba(0,0,0,0.3);
+                        position: absolute;
+                        right: 0;
+                        top: -80%;
+                    }
+                }
+                
+
                 .detalleLabel{
                     font-family: Manrope;
                     font-size: $fs1;
@@ -417,6 +432,18 @@
 .StepOne, .StepTwo, .StepThree{
     @include mobile{
         padding: 0 20px;
+    }
+}
+
+.StepOne{
+    .descuentoAplicado{
+        display: flex;
+
+        span{
+            color: color(gold);
+            margin-left: 5px;
+            font-weight: 600;
+        }
     }
 }
 

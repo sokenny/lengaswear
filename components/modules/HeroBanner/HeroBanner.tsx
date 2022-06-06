@@ -14,17 +14,17 @@ type HeroBannerProps = {
 
 const HeroBanner:React.FC<HeroBannerProps> = ({title, subtitle, cta, image, onClick}) => {
 
-    const [cursor, setCursor] = useState({x: 0, y: 0})
+    // const [cursor, setCursor] = useState({x: 0, y: 0})
 
     return (
         <section 
         className={styles.HeroBanner}
-        onMouseMove={(e)=>setCursor({x: e.clientX, y: e.clientY})}
+        // onMouseMove={(e)=>setCursor({x: e.clientX, y: e.clientY})}
         >
             <div className={styles.text}>
                 <h2 className={styles.subtitle}>{subtitle}</h2>
                 <h1 className={styles.title}>{title}</h1>
-                <span onClick={onClick}><ArrowCta cta={cta} /></span>
+                {/* <span onClick={onClick}><ArrowCta cta={cta} /></span> */}
             </div>
             <div className={styles.background}>
                 <div>
@@ -33,7 +33,7 @@ const HeroBanner:React.FC<HeroBannerProps> = ({title, subtitle, cta, image, onCl
                     </div>
                     <motion.div 
                     className={styles.mask}
-                    style={{y: -cursor.y / 150, x: -cursor.x / 150, scale: 1.15}}
+                    // style={{y: -cursor.y / 150, x: -cursor.x / 150, scale: 1.15}}
                     >
                         <Image src={'/stich-2.webp'} alt="craftman working" layout="fill" objectFit="cover" />
                     </motion.div>

@@ -7,10 +7,10 @@ import styles from './HeroStripe.module.scss';
 
 type HeroStripeProps= {
     title: string,
-    description: string,
+    description: JSX.Element,
     cta: string,
     image: string,
-    extraText?:string
+    extraText?:JSX.Element
 }
 
 const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image, extraText}) => {

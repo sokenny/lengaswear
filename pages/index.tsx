@@ -34,10 +34,10 @@ const Home: NextPage = () => {
             </div>
             <HeroStripe 
             title="Plantas un árbol" 
-            description="Con tu compra, en conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia." 
+            description={<>En conjunto con la fundacion ReforestArg estamos ayudando a restaurar areas degradadas de Patagonia.</>}
             cta="Leer más" 
             image="/bosque-de-lengas.webp" 
-            extraText="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam molestias in atque deleniti aliquid earum perspiciatis sed cupiditate eius assumenda vel fuga libero, totam placeat neque unde cum autem qui."
+            extraText={<>Empezamos con un concepto muy romántico y ambicioso. Por cada compra plantamos un árbol. Al día de hoy donamos el 5% de cada compra a la reforestación de bosques nativos. Esto promedia alrededor de 1 árbol cada 3 ventas. Conocé a la fundación que hace todo esto posible: <a href="https://www.reforestarg.org.ar/" target="_blank" rel="noreferrer" style={{fontWeight: 500}} >ReforestArg.</a></>}
             />
             <div className="container">
                 <Gallery />

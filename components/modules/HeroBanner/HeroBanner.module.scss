@@ -31,7 +31,7 @@
 
             .base{
                 transform: scale(1.07);
-                animation: pan-in-out 35s linear infinite;
+                animation: pan-in-out 35s linear infinite;   
             }
 
             .mask{
@@ -39,9 +39,11 @@
                 top: 0;
                 z-index: 2;
                 transition: .25s ease-out;
+                transform: scale(1.1);
+                animation: translate-left-right 35s linear infinite;
 
                 @include mobile{
-                    display: none;
+                    z-index: 1;
                 }
             }
         }
@@ -61,6 +63,7 @@
             justify-content: flex-end;
             padding: var(--sp2);
             height: 75vh;
+            z-index: 2;
         }
     
         .title{
@@ -98,5 +101,23 @@
     }
     100% {
         transform: scale(1.07);
+    }
+}
+
+@keyframes translate-left-right {
+    0% {
+        transform: scale(1.1) translateX(0);
+    }
+    25% {
+        transform: scale(1.1) translateX(5px);
+    }
+    50% {
+        transform: scale(1.1) translateX(0);
+    }
+    75% {
+        transform: scale(1.1) translateX(-5px);
+    }
+    100% {
+        transform: scale(1.1) translateX(0);
     }
 }
