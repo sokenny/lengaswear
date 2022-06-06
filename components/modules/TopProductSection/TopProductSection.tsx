@@ -1,4 +1,5 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion'
 import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
@@ -17,6 +18,7 @@ type TopProductSectionProps = {
 
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {
 
+    const router = useRouter();
     const isMobile = useIsMobile();
     const scrollPosition = useScrollPosition()
     const lastPicRef = useRef<HTMLDivElement>(null)
@@ -93,8 +95,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             <div className={styles.TopProductSection__price}>${formatNumber(product.price)}</div>
                             <AddToCart onClick={addToCart} />
                             <div className={styles.TopProductSection__verMas}>
-                                <div>Ver más características</div>
-                                <div>Ver más detalles</div>
+                                <div onClick={()=>router.push(`${router.asPath}#specs`)}>Ver especificaciones</div>
                             </div>
                         </motion.div>
                         <PurchaseInfo />

@@ -1,16 +1,12 @@
 import { NextPageAugmented, ProductType } from "types";
+import { GetStaticProps } from 'next';
+import { getProductCategory } from "@/utils/db";
 import Head from "next/head";
 import ProductCategory from '@/components/layouts/ProductCategory/ProductCategory';
 import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
 
-const billeteras:ProductType[] = [
-    {id: 5, name: 'Chocolate', price: 3950, sellingPrice: 3950, href: "/billeteras/chocolate", image: "/billeteras/chocolate/thumbnail.webp"},
-    {id: 6, name: 'Suela', price: 3950, sellingPrice: 3950, href: "/billeteras/suela", image: "/billeteras/suela/thumbnail.webp"},
-    {id: 7, name: 'Boom', price: 3950, sellingPrice: 3950, href: "/billeteras/boom", image: "/billeteras/boom/thumbnail.webp"},
-]
-
-const Billeteras:NextPageAugmented = () => {
+const Billeteras:NextPageAugmented<{billeteras: ProductType[]}> = ({billeteras}) => {
     return (
         <>
             <Head>
@@ -23,6 +19,12 @@ const Billeteras:NextPageAugmented = () => {
             />
         </>
     )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+    const billeteras = await getProductCategory('billeteras');
+    const props = { billeteras }
+    return { props }
 }
 
 Billeteras.nav = <Nav theme="scrolled" whiteFooter={true} />

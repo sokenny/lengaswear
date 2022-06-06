@@ -14,3 +14,9 @@ export const getProduct = async (name:string):Promise<ProductType> => {
     const product = await Product.findOne({name}, '-_id').lean()
     return product;
 }
+
+export const getProductCategory = async (category:string) => {
+    await mongooseConnect();
+    const products = await Product.find({category}, '-_id').lean()
+    return products;
+}

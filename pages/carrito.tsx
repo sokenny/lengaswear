@@ -273,9 +273,8 @@ const StepThree:React.FC = () => {
         const res = await registerCheckout(checkout);
         if(res.data.status === "success") {
             window.location.href = res.data.paymentLink
-        }else{
-            setLoading(false);
         }
+        setLoading(false);
     }
 
     return (
@@ -331,7 +330,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
     const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
     const addThisToCart = () => addToCart(prdName);
     const removeThisFromCart = (all=false) => removeFromCart(prdName, all);
-    const thumbnailSrc = `/${product.category}/${product.name.toLocaleLowerCase()}/main.webp`
+    const thumbnailSrc = `/${product.category}/${product.name.toLocaleLowerCase()}/thumbnail.webp`
 
     return (
         <div className={styles.ProductRow}>

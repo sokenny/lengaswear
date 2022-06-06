@@ -1,17 +1,12 @@
 import { NextPageAugmented, ProductType } from "types";
+import { GetStaticProps } from 'next';
+import { getProductCategory } from "@/utils/db";
 import Head from "next/head";
 import ProductCategory from '@/components/layouts/ProductCategory/ProductCategory';
 import Nav from "@/components/modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
 
-const relojes:ProductType[] = [
-    {id: 1, name: 'Quemanta', price: 10900, sellingPrice: 10900, href: "/relojes/quemanta", image: "/relojes/quemanta/thumbnail.webp"},
-    {id: 2, name: 'Jauke', price: 10900, sellingPrice: 10900, href: "/relojes/jauke", image: "/relojes/jauke/thumbnail.webp"},
-    {id: 3, name: 'Tesh', price: 10900, sellingPrice: 10900, href: "/relojes/tesh", image: "/relojes/tesh/thumbnail.webp"},
-    {id: 4, name: 'Mahai', price: 10900, sellingPrice: 10900, href: "/relojes/mahai", image: "/relojes/mahai/thumbnail.webp"},
-]
-
-const Relojes:NextPageAugmented = () => {
+const Relojes:NextPageAugmented<{relojes: ProductType[]}> = ({relojes}) => {
     return (
         <>
             <Head>
@@ -24,6 +19,12 @@ const Relojes:NextPageAugmented = () => {
             />
         </>
     )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+    const relojes = await getProductCategory('relojes');
+    const props = { relojes }
+    return { props }
 }
 
 Relojes.nav = <Nav theme="scrolled" whiteFooter={true} />

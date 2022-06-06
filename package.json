@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/react-gtm-module": "^2.0.1",
+    "@types/smoothscroll-polyfill": "^0.3.1",
     "axios": "^0.27.2",
     "framer-motion": "^6.3.3",
     "mongoose": "^6.3.4",
     "next": "12.1.6",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-gtm-module": "^2.0.11",
     "sass": "^1.50.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^8.1.4"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { ProductType } from 'types';
 import { motion } from 'framer-motion';
-import { formatNumber, getMotionProps } from '@/utils/index';
+import { formatNumber, getMotionProps, capitalize } from '@/utils/index';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './ProductCategory.module.scss';
@@ -48,14 +48,14 @@ type ProductItemProps = {
 
 const ProductItem:React.FC<ProductItemProps> = ({product}) => {
     return (
-        <Link href={product.href}>
+        <Link href={`${product.category}/${product.name}`}>
             <a>
                 <div className={styles.ProductItem}>
                     <div className={styles.ProductItem__image}>
-                        <Image src={product.image || ""} layout="fill" objectFit="cover" alt={product.name} />
+                        <Image src={`/${product.category}/${product.name}/thumbnail.webp`} layout="fill" objectFit="cover" alt={product.name} />
                     </div>
                     <div>
-                        <h3>{product.name}</h3>
+                        <h3>{capitalize(product.name)}</h3>
                         <div>{formatNumber(product.price)}</div>
                     </div>
                 </div>
