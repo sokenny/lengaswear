@@ -59,7 +59,7 @@ export const ProcessVideoAsset:React.FC = () => {
     }, [isOnScreen])
     return (
         <div className={styles.ProcessVideoAsset} data-component="ProcessVideoAsset" ref={videoRef}>
-            <video src={src} poster="/relojes/process-placeholder.webp" autoPlay muted loop></video>
+            <video src={src} poster="/relojes/process-placeholder.webp" autoPlay muted loop playsInline></video>
         </div>
     )
 }

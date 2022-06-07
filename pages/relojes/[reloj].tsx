@@ -19,6 +19,8 @@ import TopProductSection from '@/components/modules/TopProductSection/TopProduct
 import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
 import styles from '../../styles/Reloj.module.scss'
 
+const materials = ['cristal', 'madera', 'aluminio']
+
 const recommendedProducts:TRecommended[] = [
     {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: 10000},
     {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: 10000},
@@ -101,7 +103,6 @@ interface IParams extends ParsedUrlQuery {
 const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
 
     const [hovering, setHovering] = useState<string>("")
-    const materials = ['cristal', 'madera', 'aluminio']
     const divRef = useRef<HTMLDivElement>(null)
     const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT)
     const hasIntersected = useRef(false)
@@ -111,10 +112,19 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
         return material === 'madera' ? `/relojes/${reloj}/${material}.png` : `/relojes/${material}.png`
     }
 
+    useEffect(()=>{
+        let timeoutId;
+        if(hasIntersected.current){
+            timeoutId = setTimeout(() => {
+                [...materials, ""].forEach((material, i) => { timeoutId = setTimeout(() => { setHovering(material) }, 500 * (i + 1)) })
+            }, 750);
+        }
+    }, [hasIntersected.current])
+
     return (
         <section className={styles.SuiGeneris}>
             <div>
-                <DisAssembly reloj={reloj} hovering={hovering} />
+                <DisAssembly reloj={reloj} hovering={hovering} setHovering={setHovering} />
             </div>
             <div ref={divRef}>
                 <TitleWDescription 
@@ -141,7 +151,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     )
 }
 
-const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hovering}) => {
+const DisAssembly:React.FC<{reloj: string, hovering:string, setHovering(material:string): void}> = ({reloj, hovering, setHovering}) => {
 
     const divRef = useRef<HTMLDivElement>(null)
     const onScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT)
@@ -156,26 +166,42 @@ const DisAssembly:React.FC<{reloj: string, hovering?:string}> = ({reloj, hoverin
         }
     }, [onScreen])
 
+    const getY = (material:string) => material === 'cristal' ? -80 : material === 'madera' ? 0 : 80
+    const getImg = (material:string) => material === 'cristal' ? `/relojes/cristal.webp` : material === 'madera' ? `/relojes/${reloj}/mecanizado.webp` : `/relojes/tapa.webp`
+
     return (
         <div className={`${styles.DisAssembly} ${float ? styles['DisAssembly-float'] : ''}`} ref={divRef}>
+            {materials.map((material)=>
+                <motion.div 
+                className={`${hovering !== '' && hovering !== material ? styles['DisAssembly__piece-notHovered'] : ''} ${styles['DisAssembly__piece']} ${styles[`DisAssembly__piece-${material}`]}`}
+                initial={{y: 0}}
+                animate={onScreen && {y: getY(material)}}
+                transition={{duration: 1.5, ease: "easeOut"}}
+                key={material}
+                >
+                    <img src={getImg(material)} />
+                    <Tag hovering={hovering} material={material} />
+                </motion.div>
+            )}
+        </div>
+    )
+}
+
+const Tag:React.FC<{hovering: string, material: string}> = ({hovering, material}) => {
+
+    const tagSpecs = {
+        cristal: "cristal mineral",
+        aluminio: "aluminio 6065",
+        madera: "madera"
+    }
+
+    return (
+        <div className={styles.Tag}>
             <motion.div 
-            className={hovering !== '' && hovering !== 'cristal' ? styles['DisAssembly__piece-notHovered'] : ''}
-            initial={{y: 0}}
-            animate={onScreen && {y: -80}}
-            transition={{duration: 1.5, ease: "easeOut"}}
+            className={styles.tag}
+            {...getMotionProps("slideUp", hovering === material, {duration: .25})}
             >
-                <img src='/relojes/cristal.webp' />
-            </motion.div>
-            <div className={hovering !== '' && hovering !== 'madera' ? styles['DisAssembly__piece-notHovered'] : ''}>
-                <img src={`/relojes//${reloj}/mecanizado.webp`} />
-            </div>
-            <motion.div 
-            className={hovering !== '' && hovering !== 'aluminio' ? styles['DisAssembly__piece-notHovered'] : ''}
-            initial={{y: 0}}
-            animate={onScreen && {y: 80}}
-            transition={{duration: 1.5, ease: "easeOut"}}
-            >
-                <img src='/relojes/tapa.webp' />
+                {tagSpecs[material as keyof {}]}
             </motion.div>
         </div>
     )
