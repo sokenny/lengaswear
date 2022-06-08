@@ -69,6 +69,7 @@ const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
     const divRef = useRef(null)
     const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
     const [cursor, setCursor] = useState<{x: number, y:number}>({x: 0, y: 0})
+
     return (
         <div 
         className={styles.WatchPartAsset}
@@ -80,6 +81,7 @@ const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
             animate={isIntersecting && {scale: 1.1}}
             transition={{duration: 1.5}}
             style={{y: -cursor.y / 45, x: -cursor.x / 45}}
+            whileHover={{scale: 1.05, transition:{delay: .5, duration: 1}}}
             >
                 <Image src={img} layout="fill" objectFit="contain" alt="Watch part" />
             </motion.div>

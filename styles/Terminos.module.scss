@@ -1,0 +1,32 @@
+@import './variables';
+
+.Terminos{
+    padding: var(--sp1);
+    padding-top: var(--pt1);
+
+    header{
+        text-align: center;
+        margin-bottom: $pxs3;
+        
+        h1{
+            font-family: Silk Serif;
+            font-size: 80px;
+            font-weight: 400;
+        }
+    }
+
+    main{
+
+        >div{
+            margin-bottom: $pxs2;
+
+            h3{
+                font-weight: 400;
+            }
+        }
+
+        ul{
+            margin-bottom: 10px 0 30px 0;
+        }
+    }
+}

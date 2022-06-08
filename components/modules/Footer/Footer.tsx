@@ -40,9 +40,21 @@ const Footer:React.FC<FooterProps> = ({theme}) => {
                 </ul>
                 <ul>
                     <li>Soporte</li>
-                    <li>FAQ</li>
-                    <li>Políticas de devolución</li>
-                    <li>Garantía</li>
+                    <Link href="/terminos">
+                        <a>
+                            <li>FAQ</li>
+                        </a>
+                    </Link>
+                    <Link href="/terminos">
+                        <a>
+                            <li>Políticas de devolución</li>
+                        </a>
+                    </Link>
+                    <Link href="/terminos">
+                        <a>
+                            <li>Garantía</li>
+                        </a>
+                    </Link>
                     <li>Contactanos</li>
                 </ul>
             </div>

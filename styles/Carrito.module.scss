@@ -439,6 +439,10 @@
     .descuentoAplicado{
         display: flex;
 
+        @include mobile{
+            flex-wrap: wrap;
+        }
+
         span{
             color: color(gold);
             margin-left: 5px;
