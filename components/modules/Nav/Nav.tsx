@@ -22,15 +22,15 @@ const Nav:React.FC<NavProps> = ({theme, whiteFooter}) => {
   
     return (
         <div className={`${styles.Nav} ${(hasScrolled || theme === "scrolled") ? styles['Nav-scrolled'] : ''} ${scrolledBottom ? styles['Nav-scrolledBottom'] : ''} ${whiteFooter ? styles['Nav-whiteFooter'] : ''}`}>
-            <MobileNav carrito={checkout?.carrito || []} />
-            <DesktopNav carrito={checkout?.carrito || []} />
+            <MobileNav carrito={checkout?.carrito || []} hasScrolled={hasScrolled} />
+            <DesktopNav carrito={checkout?.carrito || []} hasScrolled={hasScrolled} />
         </div>
     )
 }
 
 const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/relojes'}, {label: 'Billeteras', path: '/billeteras'}, {label: 'Carrito', path: '/carrito'}]; 
 
-const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
+const MobileNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito, hasScrolled}) => {
 
     const router = useRouter();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -46,6 +46,7 @@ const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
     return (
         <nav className={`${styles.MobileNav} ${isOpen ? styles['MobileNav-isOpen'] : ''}`} onClick={()=>setIsOpen(false)}>
             <div>
+                <StatusBar show={hasScrolled} />
                 <div className={styles.MobileNav__hamburger} onClick={(e)=>{e.stopPropagation(), setIsOpen(!isOpen)}}>{hamburger()}</div>
                 <div className={styles.MobileNav__logo}>
                     <Link href="/">
@@ -84,10 +85,11 @@ const MobileNav:React.FC<{carrito: string[]}> = ({carrito}) => {
     )
 }
 
-const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
+const DesktopNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito, hasScrolled}) => {
     return (
         <nav className={`${styles.DesktopNav}`}>
             <div>
+                <StatusBar show={hasScrolled} />
                 <div>
                     <div className={styles.DesktopNav__logo}>
                         <Link href="/">
@@ -131,6 +133,31 @@ const DesktopNav:React.FC<{carrito: string[]}> = ({carrito}) => {
                 </div>
             </div>
         </nav>
+    )
+}
+
+const StatusBar:React.FC<{show?:boolean}> = ({show=true}) => {
+
+    const router = useRouter();
+    const statusBarRoutes = ['/', '/relojes/[reloj]', '/billeteras/[billetera]'];
+
+    return (
+        <AnimatePresence>
+        {show && statusBarRoutes.includes(router.route) &&
+        <div 
+        className={styles.StatusBar}
+        data-component="StatusBar"
+        >
+            <motion.div
+            initial={{opacity: 0, y: -5}}
+            animate={{opacity: 1, y: 0, transition: {delay: .25, stiffness: 0}}}
+            exit={{opacity: 0, y: -5, transition: {duration: .25}}}
+            >
+                <div className={styles.message}>Pre venta abierta - DESPACHANDO TODOS SUS PEDIDOS EL <span>22 DE JUNIO</span></div>
+            </motion.div>
+        </div>
+        }
+        </AnimatePresence>
     )
 }
 

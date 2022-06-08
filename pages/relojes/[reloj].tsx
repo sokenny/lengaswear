@@ -106,6 +106,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     const divRef = useRef<HTMLDivElement>(null)
     const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT)
     const hasIntersected = useRef(false)
+    const initialAnimationFinished = useRef(false)
     if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
 
     function getMaterialImg(material:string) {
@@ -116,7 +117,10 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
         let timeoutId;
         if(hasIntersected.current){
             timeoutId = setTimeout(() => {
-                [...materials, ""].forEach((material, i) => { timeoutId = setTimeout(() => { setHovering(material) }, 500 * (i + 1)) })
+                [...materials, ""].forEach((material, i) => { timeoutId = setTimeout(() => { 
+                    setHovering(material); 
+                    if(i === materials.length) initialAnimationFinished.current = true 
+                }, 600 * (i + 1)) })
             }, 750);
         }
     }, [hasIntersected.current])
@@ -134,6 +138,9 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                 <div className={styles.SuiGeneris__materiales}>
                     <div>
                         {materials.map((material, i)=>
+                        <motion.div
+                        animate={(hovering === material && !initialAnimationFinished.current) ? {y: -10} : {y: 0}}
+                        >
                             <motion.div 
                             className={`${styles.SuiGeneris__material} ${styles[`SuiGeneris__material-${material}`]}`}  
                             onMouseEnter={()=>setHovering(material)} 
@@ -142,6 +149,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                             key={material} 
                             {...getMotionProps("slideUp", hasIntersected.current, {delay: .5 + (.1 * i), duration: .75})}
                             />
+                        </motion.div>
                         )}
                     </div>
                     <div>Materiales que te van a encantar</div>

@@ -77,16 +77,12 @@ const Carrito: NextPageAugmented = () => {
             <div className="container" style={{paddingTop: 0}}>
                 <main>
                     <div className={styles.col1}>
-
                         {cartIsEmpty ? <EmptyCart /> : stepScreens[checkout.step]}
-
                     </div>
-
                     {!cartIsEmpty && 
                     <div className={styles.col2}>
                         <section className={styles.detalle}>
                             <h2>Detalle final</h2>
-
                             <motion.div
                             style={{overflow: "hidden"}}
                             initial={{height: 0}}
@@ -94,7 +90,6 @@ const Carrito: NextPageAugmented = () => {
                             >
                                 <CodigoDescuento />
                             </motion.div>
-                        
                             <div className={styles.listado}>
                                 <div>Productos:</div>
                                 <ul>
@@ -185,6 +180,7 @@ const slideDownProps = {
 const StepOne:React.FC<{cartDetail:any, cartGrossTotal:number}> = ({cartDetail, cartGrossTotal}) => {
 
     const { checkout } = useAppContext();
+    const sortedUniqueCartProducts = useMemo(()=>Object.keys(cartDetail).sort((a, b) => a.localeCompare(b)), [cartDetail]);
 
     return (
         <section className={styles.StepOne}>
@@ -204,7 +200,7 @@ const StepOne:React.FC<{cartDetail:any, cartGrossTotal:number}> = ({cartDetail, 
                 </h2>
             </div>
             <section className={styles.products}>
-                {Object.keys(cartDetail).map((prdName) =>
+                {sortedUniqueCartProducts.map((prdName) =>
                     <ProductRow prdName={prdName} qty={cartDetail[prdName]} key={prdName} />
                 )}
             </section>
