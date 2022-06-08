@@ -140,6 +140,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                         {materials.map((material, i)=>
                         <motion.div
                         animate={(hovering === material && !initialAnimationFinished.current) ? {y: -10} : {y: 0}}
+                        key={material}
                         >
                             <motion.div 
                             className={`${styles.SuiGeneris__material} ${styles[`SuiGeneris__material-${material}`]}`}  
