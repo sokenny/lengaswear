@@ -51,7 +51,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
                     <div className={styles.Reloj__overlapSections}>
                         <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj.name}/cuadrante.webp`} />}  assetLeft={false} />
                         <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} />
-                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj.name}/ligero.webp`} />}  assetLeft={false} />
+                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj.name}/ligero.webp`} baseScale={2} />}  assetLeft={false} />
                         <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj.name}/correas.webp`} />} />
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
     )
 }
 
-const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
+const WatchPartAsset:React.FC<{img:string, baseScale?:number}> = ({img, baseScale=1}) => {
     const divRef = useRef(null)
     const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
     const [cursor, setCursor] = useState<{x: number, y:number}>({x: 0, y: 0})
@@ -77,11 +77,11 @@ const WatchPartAsset:React.FC<{img:string}> = ({img}) => {
         >
             <motion.div
             ref={divRef}
-            initial={{scale: 1.4}}
-            animate={isIntersecting && {scale: 1.1}}
+            initial={{scale: baseScale * 2}}
+            animate={isIntersecting && {scale: baseScale}}
             transition={{duration: 1.5}}
             style={{y: -cursor.y / 45, x: -cursor.x / 45}}
-            whileHover={{scale: 1.05, transition:{delay: .5, duration: 1}}}
+            whileHover={{scale: baseScale * 0.9, transition:{delay: .5, duration: 1}}}
             >
                 <Image src={img} layout="fill" objectFit="contain" alt="Watch part" />
             </motion.div>
@@ -150,7 +150,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
                             onMouseLeave={()=>setHovering("")} 
                             style={{backgroundImage: `url('${getMaterialImg(material)}')`}}
                             key={material} 
-                            {...getMotionProps("slideUp", hasIntersected.current, {delay: .5 + (.1 * i), duration: .75})}
+                            {...getMotionProps("slideVertical", hasIntersected.current, {delay: .5 + (.1 * i), duration: .75})}
                             />
                         </motion.div>
                         )}
@@ -210,7 +210,7 @@ const Tag:React.FC<{hovering: string, material: string}> = ({hovering, material}
         <div className={styles.Tag}>
             <motion.div 
             className={styles.tag}
-            {...getMotionProps("slideUp", hovering === material, {duration: .25})}
+            {...getMotionProps("slideVertical", hovering === material, {duration: .25})}
             >
                 {tagSpecs[material as keyof {}]}
             </motion.div>
@@ -244,14 +244,14 @@ const WatchSpecs:React.FC = () => {
         <section className={styles.WatchSpecs}>
             <motion.div 
             className={styles.WatchSpecs__asset}
-            {...getMotionProps("slideUp", hasIntersected.current)}
+            {...getMotionProps("slideVertical", hasIntersected.current)}
             ref={divRef1}
             >
                 <img src="/relojes/specs.webp" alt="Watch specs" />
             </motion.div>
             <motion.div 
             className={styles.WatchSpecs__specs}
-            {...getMotionProps("slideUp", hasIntersected2.current)}
+            {...getMotionProps("slideVertical", hasIntersected2.current)}
             ref={divRef2}
             >
                 <h2>Especificaciones</h2>

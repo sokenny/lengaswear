@@ -21,7 +21,7 @@ const Relojes:NextPageAugmented<{relojes: ProductType[]}> = ({relojes}) => {
     )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
     const relojes = await getProductCategory('relojes');
     const props = { relojes }
     return { props }

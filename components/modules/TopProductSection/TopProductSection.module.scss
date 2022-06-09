@@ -5,6 +5,15 @@
     display: flex;
     width: 100%;
 
+    .wDiscount{
+        display: flex;
+
+        .price{
+            margin-right: 6px;
+            text-decoration: line-through;
+        }
+    }
+
     .TopProductSection__gallery{
         display: flex;
         flex-direction: column;
@@ -23,6 +32,7 @@
             width: 60%;
 
             .TopProductSection__namePrice{
+                
                 >div:first-child{
                     font-size: 18px;
                     display: flex;
@@ -39,6 +49,7 @@
                         margin-top: -7px;
                     }
                 }
+
             }
 
             .TopProductSection__description{
@@ -155,6 +166,22 @@
                 >div{
                     margin-bottom: 10px;
                     cursor: pointer;
+                }
+            }
+
+            .wDiscount{
+                font-size: $fs2;
+                font-weight: 600;
+                margin-bottom: 20px;
+                
+                .price{
+                    margin-right: 6px;
+                    text-decoration: line-through;
+                    opacity: .5;
+                }
+
+                .sellingPrice{
+                    color:  color(gold);
                 }
             }
         }

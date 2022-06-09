@@ -157,12 +157,12 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                 <div>
                     <motion.h3
                     ref={titleRef}
-                    {...getMotionProps("slideUp", hasIntersected.current)}
+                    {...getMotionProps("slideVertical", hasIntersected.current)}
                     >
                         Lo que nos define son nuestras elecciones
                     </motion.h3>
                     <motion.p
-                    {...getMotionProps("slideUp", hasIntersected.current, {delay: .2})}
+                    {...getMotionProps("slideVertical", hasIntersected.current, {delay: .2})}
                     >
                         Hicimos billeteras que se ajusten a distintas estilos de vida. Deslizá para descubrir cuál es la indicada para vos.
                     </motion.p>
@@ -171,7 +171,7 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                             {colors.map((color, i)=>
                                 <motion.div 
                                 className={`${styles.color} ${styles[`color-${color?.toLocaleLowerCase()}`]} ${billetera?.toLocaleLowerCase() === color?.toLocaleLowerCase() ? styles[`color-selected`] : ''}`} 
-                                {...getMotionProps("slideUp", hasIntersected.current, {delay: .1 + (.2 * i), duration: .75})}
+                                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .1 + (.2 * i), duration: .75})}
                                 onMouseEnter={()=>setHoveringOn(color)}
                                 onMouseLeave={()=>setHoveringOn("")}
                                 onClick={()=>router.push({

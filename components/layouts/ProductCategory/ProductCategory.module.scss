@@ -82,5 +82,38 @@
             font-size: $fs2;
             font-weight: 400;
         }
+
+        .price{
+
+            @include mobile{
+                font-size: 14px;
+            }
+        }
+
+        .wDiscount{
+            display: flex;
+
+            @include mobile{
+                font-size: 14px;
+            }
+
+            .price{
+                margin-right: 10px;
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                .lineThrough{
+                    position: absolute;
+                    width: 60px;
+                    height: 1px;
+                    background-color: white;
+                }
+            }
+
+            .sellingPrice{
+                font-weight: 600;
+            }
+        }
     }
 }

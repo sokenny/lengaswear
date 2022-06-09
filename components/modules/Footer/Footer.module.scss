@@ -9,12 +9,13 @@
     background-color: color(b1);
     font-family: Manrope;
     font-weight: 300;
+    font-size: 14px;
 
     @include mobile{
         flex-direction: column;
         padding-left: 40px;
         padding-right: 40px;
-        min-height: 100vh;
+        height: 100vh;
     }
 
     .logo{
@@ -43,7 +44,7 @@
             margin-right: 100px;
 
             @include mobile{
-                margin-bottom: $pxs2;
+                margin-bottom: $pxs1;
             }
 
             >li:first-child{
@@ -51,7 +52,7 @@
                 margin-bottom: $pxs2;
 
                 @include mobile{
-                    margin-bottom: $pxs1;
+                    margin-bottom: 5px;
                 }
             }
 

@@ -52,12 +52,19 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                         <motion.div 
                         className={`mobile ${styles.TopProductSection__mobileInfo}`} 
                         ref={ctaRefMobile}
-                        {...getMotionProps("slideUp", true)}
+                        {...getMotionProps("slideVertical", true)}
                         >
                             <div className={styles.TopProductSection__namePrice}>   
                                 <div>
                                     <h1>{product.name}</h1>
+                                    {product.price === product.sellingPrice ?
                                     <div>${formatNumber(product.price)}</div>
+                                    :
+                                    <div className={styles.wDiscount}>
+                                        <div className={styles.price}>${formatNumber(product.price)}</div>
+                                        <div className={styles.sellingPrice}>${formatNumber(product.sellingPrice)}</div>
+                                    </div>
+                                    }
                                 </div>
                             </div>
                             <div className={styles.TopProductSection__description}>
@@ -84,7 +91,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                     <div>
                         <motion.div
                         ref={ctaRefDesktop}
-                        {...getMotionProps("slideUp", true)}
+                        {...getMotionProps("slideVertical", true)}
                         >
                             <h1>{product.name}</h1>
                             <div className={styles.TopProductSection__description}>
@@ -92,7 +99,14 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
                             </div>
+                            {product.price === product.sellingPrice ? 
                             <div className={styles.TopProductSection__price}>${formatNumber(product.price)}</div>
+                            :
+                            <div className={styles.wDiscount}>
+                                <div className={styles.price}>${formatNumber(product.price)}</div>
+                                <div className={styles.sellingPrice}>${formatNumber(product.sellingPrice)}</div>
+                            </div>
+                            }
                             <AddToCart onClick={addToCart} />
                             <div className={styles.TopProductSection__verMas}>
                                 <div onClick={()=>router.push(`${router.asPath}#specs`)}>Ver especificaciones</div>
@@ -120,7 +134,7 @@ const PurchaseInfo:React.FC = () => {
                 <motion.div 
                 className={styles.PurchaseInfo__item} 
                 key={item.text}
-                {...getMotionProps("slideUp", true, {delay:0.1 * items.indexOf(item)})}
+                {...getMotionProps("slideVertical", true, {delay:0.1 * items.indexOf(item)})}
                 >
                     <div>{item.icon}</div>
                     <div>{item.text}</div>

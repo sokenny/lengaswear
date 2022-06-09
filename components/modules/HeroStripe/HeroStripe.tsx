@@ -26,20 +26,20 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image, e
             <div>
                 <motion.h3 
                 className={styles.HeroStripe__title} 
-                {...getMotionProps("slideUp", hasIntersected.current)}
+                {...getMotionProps("slideVertical", hasIntersected.current)}
                 ref={titleRef}
                 >
                     {title}
                 </motion.h3>
                 <motion.p 
                 className={styles.HeroStripe__description}
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .2})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .2})}
                 >
                     {description}
                 </motion.p>
                 <motion.div
                 className={styles.ctaContainer}
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .4})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .4})}
                 >
                     {!expand &&
                         <div onClick={()=>setExpand(true)}>

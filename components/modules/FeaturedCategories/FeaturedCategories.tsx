@@ -61,12 +61,12 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
         >
             <div ref={textRef}>
                 <motion.h3
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .1})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .1})}
                 >
                     {title}
                 </motion.h3>
                 <motion.div
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .2})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .2})}
                 >
                     <ArrowCta cta={cta} />
                 </motion.div>
@@ -82,6 +82,7 @@ const CategoryPoster:React.FC<CategoryPosterProps> = ({image, title, cta, href})
                     <Image src={image} layout="fill" objectFit="cover" alt={title} />
                 </div>
             </motion.div>
+
         </div>
     )
 }

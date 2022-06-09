@@ -25,7 +25,7 @@ const StoreInfo:React.FC = () => {
                 {perkItems.map((item, i)=>
                     <motion.div 
                     className={styles.item} key={item.title}
-                    {...getMotionProps("slideUp", hasIntersected.current, {delay: (i+1)*.15})}
+                    {...getMotionProps("slideVertical", hasIntersected.current, {delay: (i+1)*.15})}
                     >
                         <div className={styles.icon}>{item.icon}</div>
                         <div>

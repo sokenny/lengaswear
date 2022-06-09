@@ -19,7 +19,7 @@ const Gallery:React.FC = () => {
             <div>
                 <div>
                     <motion.h3 
-                    {...getMotionProps("slideUp", hasIntersected.current)}
+                    {...getMotionProps("slideVertical", hasIntersected.current)}
                     ref={titleRef}
                     >
                         Uno con la naturaleza
@@ -27,13 +27,13 @@ const Gallery:React.FC = () => {
                 </div>
                 <motion.div 
                 className={styles.image}
-                {...getMotionProps("slideUp", hasIntersected.current)}
+                {...getMotionProps("slideVertical", hasIntersected.current)}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-1.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>
                 <motion.div 
                 className={styles.image}
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .8})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .8})}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-2.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>
@@ -41,13 +41,13 @@ const Gallery:React.FC = () => {
             <div>
                 <motion.div 
                 className={styles.image}
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .5})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .5})}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-3.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>
                 <motion.div 
                 className={styles.image}
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: 1})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: 1})}
                 >
                     <Image src="/gallery/relojes-de-madera-artesanales-4.webp" layout="fill" objectFit='cover' alt="Reloj de madera artesanal" />
                 </motion.div>

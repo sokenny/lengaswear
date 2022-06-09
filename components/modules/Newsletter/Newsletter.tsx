@@ -37,7 +37,7 @@ const NewsletterInput:React.FC<{email:string, setEmail(val:string):void, hint:st
             <ArrowInput value={email} type="email" placeholder="Tu mail" onChange={(val:any)=>setEmail(val)} loading={loading} />
             <div className={styles.message}>
                 <motion.div
-                {...getMotionProps("slideUp", hint !== "", {value: 10, duration: .25})}
+                {...getMotionProps("slideVertical", hint !== "", {value: 10, duration: .25})}
                 >
                     {hint}
                 </motion.div>

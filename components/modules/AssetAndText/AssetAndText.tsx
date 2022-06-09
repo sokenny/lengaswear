@@ -39,20 +39,20 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
             </div>
             <div className={styles.text}>
                 <motion.h3
-                {...getMotionProps("slideUp", hasIntersected.current)}
+                {...getMotionProps("slideVertical", hasIntersected.current)}
                 ref={titleRef}
                 >
                     {title}
                 </motion.h3>
                 <motion.p
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .2})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .2})}
                 >
                     {description}
                 </motion.p>
                 {ctaSection &&
                 <motion.div 
                 className={styles.ctaSection}
-                {...getMotionProps("slideUp", hasIntersected.current, {delay: .4})}
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: .4})}
                 >
                     {ctaSection}
                 </motion.div>
