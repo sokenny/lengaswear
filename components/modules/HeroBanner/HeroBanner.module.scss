@@ -1,7 +1,6 @@
 @import '../../../styles/variables';
 
-$scale1: 1.05;
-$scale2: 1.1;
+$scale1: 1.07;
 
 .HeroBanner{
     padding: var(--sp3);
@@ -35,14 +34,15 @@ $scale2: 1.1;
             width: 100%;
             height: 100%;
 
-            .mask, .base{
-                width: 100%;
-                height: 100%;
-            }
-
             .base{
+                height: 100%;
+                width: 100%;
                 transform: scale($scale1);
-                animation: pan-in-out 35s linear infinite;   
+                animation: pan-in-out 30s linear infinite;
+                
+                @include mobile{
+                    animation-duration: 15s;
+                }
             }
 
         }
@@ -83,6 +83,7 @@ $scale2: 1.1;
             font-weight: 500;
             letter-spacing: 0.255em;
             text-transform: uppercase;
+            text-shadow: 1px 1px 3px rgba(0,0,0,1);
     
             @include mobile{
                 font-size: $fs1;

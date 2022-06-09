@@ -159,3 +159,14 @@ export const getMotionProps = (variant:"slideVertical", isIntersecting=true, con
     const motionProps = variants[variant]
     return motionProps
 }
+
+const months = {
+    spanish: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+} 
+
+export const constructDate = (date:Date):string => {
+    // if(date === null) return ""
+    const day = date.getDate()
+    const month = months["spanish"][date.getMonth()]
+    return `${day} de ${month}`
+}

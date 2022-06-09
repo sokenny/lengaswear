@@ -50,7 +50,7 @@ const Carrito: NextPageAugmented = () => {
         let total = 0;
         Object.keys(cartDetail).forEach(prdName => {
             const qty = cartDetail[prdName];
-            const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
+            const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
             total += qty * product.price;
         });
         return total;
@@ -323,7 +323,7 @@ const LabelAndInput:React.FC<{label:string, value:string | number, type:string, 
 const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
 
     const { store, addToCart, removeFromCart } = useAppContext();
-    const product:ProductType = store.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
+    const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
     const addThisToCart = () => addToCart(prdName);
     const removeThisFromCart = (all=false) => removeFromCart(prdName, all);
     const thumbnailSrc = `/${product.category}/${product.name.toLocaleLowerCase()}/thumbnail.webp`

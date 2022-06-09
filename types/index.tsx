@@ -42,3 +42,7 @@ export interface ApiResponse {
     status: "success" | "failure",
 }
   
+export type ConfigType = {
+    preOrderDate: string | null,
+    mpCredentials: "juan" | "fran",
+}

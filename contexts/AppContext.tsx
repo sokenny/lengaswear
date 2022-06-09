@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { tryLocalStorage, useScrolledBottom, useFirstRender } from "@/utils/index";
 import { getStore } from 'api';
 import { useMemo } from "react";
-import { ProductType, CheckoutType } from 'types';
+import { ProductType, CheckoutType, ConfigType } from 'types';
 
 interface AppContextInterface {
     scrolledBottom: boolean;
-    store: ProductType[];
+    store: {products: ProductType[], config: ConfigType};
     checkout: CheckoutType;
     setCheckout: (checkout:any)=> void;
     addToCart: (prdName: string) => void;
@@ -39,7 +39,7 @@ export function AppProvider(props:any){
     const isFirstRender = useFirstRender();
     const scrolledBottom:boolean = useScrolledBottom();
     const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
-    const [store, setStore] = useState<ProductType[]>([]);
+    const [store, setStore] = useState<{products: ProductType[], config: ConfigType} | {}>({});
 
     useEffect(()=>{
         const cachedStore = tryLocalStorage.get("store");
@@ -51,6 +51,10 @@ export function AppProvider(props:any){
             }
         })
     }, [])
+
+    useEffect(()=>{
+        console.log('store: ', store)
+    })
 
     useEffect(()=>{
         if(isFirstRender){
