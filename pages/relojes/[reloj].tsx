@@ -81,7 +81,7 @@ const WatchPartAsset:React.FC<{img:string, baseScale?:number}> = ({img, baseScal
             animate={isIntersecting && {scale: baseScale}}
             transition={{duration: 1.5}}
             style={{y: -cursor.y / 45, x: -cursor.x / 45}}
-            whileHover={{scale: baseScale * 0.9, transition:{delay: .5, duration: 1}}}
+            whileHover={{scale: baseScale * 0.9, transition:{duration: 1}}}
             >
                 <Image src={img} layout="fill" objectFit="contain" alt="Watch part" />
             </motion.div>

@@ -1,6 +1,6 @@
 import { NextPage } from "next"
 import { useState, useRef, useEffect } from "react";
-import { useOnScreen, scrollTo } from "@/utils/index";
+import { useOnScreen, scrollTo, useIsMobile } from "@/utils/index";
 import ArrowCta from "@/components/elements/ArrowCta/ArrowCta";
 import HeroBanner from "@/components/modules/HeroBanner/HeroBanner";
 import FeaturedCategories from "@/components/modules/FeaturedCategories/FeaturedCategories";
@@ -22,11 +22,12 @@ const testimonials:TestimonialsType = [
 
 const Home: NextPage = () => {
 
+    const isMobile = useIsMobile();
     const productsRef = useRef(null)
 
     return (
         <div className={styles.Home}>
-            <HeroBanner title="artesanales" subtitle="Piezas de tiempo" cta="Ver productos" image="/home-banner.webp" onClick={()=>scrollTo(productsRef)} />
+            <HeroBanner title="artesanales" subtitle="Piezas de tiempo" cta="Ver productos" image={`/banners/piezas-artesanales-2${isMobile ? '-mobile' : ''}.webp`} onClick={()=>scrollTo(productsRef, -50)} />
             <div className="container" ref={productsRef}>
                 <FeaturedCategories />
                 <StoreInfo />
