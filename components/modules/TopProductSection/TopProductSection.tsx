@@ -13,7 +13,7 @@ type TopProductSectionProps = {
     product: ProductType,
     imgs: string[],
     onCtaIntersect: (isIntersecting: boolean) => void,
-    addToCart: () => void,
+    addToCart: () => boolean,
 }
 
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {

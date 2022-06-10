@@ -9,7 +9,7 @@ interface AppContextInterface {
     store: {products: ProductType[], config: ConfigType};
     checkout: CheckoutType;
     setCheckout: (checkout:any)=> void;
-    addToCart: (prdName: string) => void;
+    addToCart: (prdName: string) => boolean;
     removeFromCart: (prdName: string, all?:boolean) => void;
 }
 

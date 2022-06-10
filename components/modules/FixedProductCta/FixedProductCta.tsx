@@ -8,7 +8,7 @@ import styles from './FixedProductCta.module.scss';
 type FixedProductCtaProps = {
     product:ProductType, 
     show:boolean,
-    addToCart: () => void,
+    addToCart: () => boolean,
 }
 
 const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show, addToCart}) => {
