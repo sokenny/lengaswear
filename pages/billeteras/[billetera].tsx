@@ -33,15 +33,6 @@ const recommendedProducts:TRecommended[] = [
 
 const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     
-    // const billetera= {
-    //     id: 1,
-    //     name: billeteraName,
-    //     price: 3950,
-    //     sellingPrice: 3950,
-    //     description: 'Texto corto de descripción del modelo, cual es el diferencial.',
-    //     href: ""
-    // }
-
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera.name}/billetera-cuero-genuino-${item}.webp`)

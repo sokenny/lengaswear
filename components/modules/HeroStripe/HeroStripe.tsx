@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useOnScreen, getMotionProps } from '@/utils/index';
+import { useOnScreen, getMotionProps, scrollTo } from '@/utils/index';
 import { ANIMATE_BREAKPOINT } from '@/utils/constants';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import styles from './HeroStripe.module.scss';
@@ -20,6 +20,11 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image, e
     const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT * .8);
     const hasIntersected = useRef(false)
     if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
+
+    function handleCtaClick(){
+        setExpand(true)
+        scrollTo(titleRef, -150)
+    }
 
     return (
         <section className={styles.HeroStripe} style={{backgroundImage: `url('${image}')`}}>
@@ -42,7 +47,7 @@ const HeroStripe:React.FC<HeroStripeProps> = ({title, description, cta, image, e
                 {...getMotionProps("slideVertical", hasIntersected.current, {delay: .4})}
                 >
                     {!expand &&
-                        <div onClick={()=>setExpand(true)}>
+                        <div onClick={handleCtaClick}>
                             <ArrowCta cta={cta} />
                         </div>
                     }

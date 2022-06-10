@@ -26,7 +26,7 @@ const Carrito: NextPageAugmented = () => {
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
     const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito]);
-    const cartIsEmpty = checkout.carrito.length < 1;
+    const cartIsEmpty = checkout.carrito.length < 1 && store.products.length > 0;
 
     useEffect(()=>{
         scrollTo(carritoRef, -50)
@@ -35,7 +35,7 @@ const Carrito: NextPageAugmented = () => {
     }, [router.query.step, isFirstRender])
 
     useEffect(()=>{
-        setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
+            setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
     }, [cartDetail])
 
     function getCartDetail(carrito:string[]){
@@ -48,11 +48,14 @@ const Carrito: NextPageAugmented = () => {
 
     const getCartGrossTotal = useCallback(():number => {
         let total = 0;
-        Object.keys(cartDetail).forEach(prdName => {
-            const qty = cartDetail[prdName];
-            const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
-            total += qty * product.price;
-        });
+        if(Object.keys(cartDetail).length > 0 && store.products.length > 0){
+            console.log('entro! cartDetail', cartDetail)
+            Object.keys(cartDetail).forEach(prdName => {
+                const qty = cartDetail[prdName];
+                const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
+                total += qty * product.price;
+            });
+        }
         return total;
     }, [cartDetail, store]);
 
@@ -236,11 +239,11 @@ const StepTwo:React.FC = () => {
             animate={{y: 0, opacity: 1}}
             >
                 <div className={styles.inputRow}>
-                    <LabelAndInput label="Nombre" type="text" value={checkout.nombre} onChange={(nombre)=>setCheckout({...checkout, nombre})} placeholder="Chuck" />
-                    <LabelAndInput label="Apellido" type="text" value={checkout.apellido} onChange={(apellido)=>setCheckout({...checkout, apellido})} placeholder="Norris" />
+                    <LabelAndInput label="Nombre" type="text" value={checkout.nombre} onChange={(nombre)=>setCheckout({...checkout, nombre})} placeholder="Ryan" />
+                    <LabelAndInput label="Apellido" type="text" value={checkout.apellido} onChange={(apellido)=>setCheckout({...checkout, apellido})} placeholder="Gosling" />
                 </div>
                 <div className={styles.inputRow}>
-                    <LabelAndInput label="Mail" type="mail" value={checkout.mail} onChange={(mail)=>setCheckout({...checkout, mail})} placeholder="chucknorris@mail.com" />
+                    <LabelAndInput label="Mail" type="mail" value={checkout.mail} onChange={(mail)=>setCheckout({...checkout, mail})} placeholder="ryangosling@mail.com" />
                     <LabelAndInput label="Whatsapp / Telefono" name="telefono" type="number" value={checkout.telefono} onChange={(telefono)=>setCheckout({...checkout, telefono})} placeholder="1123456789" />
                 </div>
                 <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
@@ -322,11 +325,13 @@ const LabelAndInput:React.FC<{label:string, value:string | number, type:string, 
 
 const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
 
+    
     const { store, addToCart, removeFromCart } = useAppContext();
+    if(store.products.length < 1) return <></>
     const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
     const addThisToCart = () => addToCart(prdName);
     const removeThisFromCart = (all=false) => removeFromCart(prdName, all);
-    const thumbnailSrc = `/${product.category}/${product.name.toLocaleLowerCase()}/thumbnail.webp`
+    const thumbnailSrc = store.products.length > 0 ? `/${product.category}/${product.name.toLocaleLowerCase()}/thumbnail.webp` : ''
 
     return (
         <div className={styles.ProductRow}>

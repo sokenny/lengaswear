@@ -30,6 +30,7 @@ const initialCheckoutValue:CheckoutType = {
     calle: "",
     numero: "",
     dpto: "",
+    mpCredentials: null
 } 
 
 const AppContext = React.createContext<AppContextInterface | null>(null);
@@ -39,7 +40,7 @@ export function AppProvider(props:any){
     const isFirstRender = useFirstRender();
     const scrolledBottom:boolean = useScrolledBottom();
     const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
-    const [store, setStore] = useState<{products: ProductType[], config: ConfigType} | {}>({});
+    const [store, setStore] = useState<{products: ProductType[], config: ConfigType | {}}>({products: [], config: {}});
 
     useEffect(()=>{
         const cachedStore = tryLocalStorage.get("store");
@@ -48,24 +49,23 @@ export function AppProvider(props:any){
             if(res.data.status === "success"){
                 setStore(res.data.store)
                 tryLocalStorage.set("store", res.data.store)
+                const checkout = tryLocalStorage.get("checkout") || initialCheckoutValue
+                setCheckout({...checkout, mpCredentials: res.data.store.config.mpCredentials})
             }
         })
     }, [])
 
     useEffect(()=>{
-        console.log('store: ', store)
-    })
-
-    useEffect(()=>{
-        if(isFirstRender){
-            setCheckout(tryLocalStorage.get("checkout") || initialCheckoutValue);
-        }else{
-            tryLocalStorage.set("checkout", {...checkout, step: 1});
-        }
+        if(!isFirstRender) tryLocalStorage.set("checkout", {...checkout, step: 1});
     }, [checkout])
 
     function addToCart(prdName:string){
-        setCheckout({...checkout, carrito: [...checkout.carrito, prdName]});
+        const productAdded:any = store.products.find((product) => product.name === prdName)
+        if(productAdded.stock > 0){
+            setCheckout({...checkout, carrito: [...checkout.carrito, prdName]});
+            return true
+        }
+        return false
     }
 
     function removeFromCart(prdName: string, all: boolean = false){
@@ -90,6 +90,7 @@ export function AppProvider(props:any){
             removeFromCart
         }
     }, [scrolledBottom, store, checkout]);
+    
     return <AppContext.Provider value={value} {...props} />
 }
 

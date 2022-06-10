@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { motion } from 'framer-motion';
 import styles from './AddToCart.module.scss';
 
-const AddToCart:React.FC<{onClick: ()=>void}> = ({onClick}) => {
+const AddToCart:React.FC<{onClick: ()=>boolean}> = ({onClick}) => {
 
     const AGREGAR = "Agregar al carrito";
     const AGREGADO = "Ir al carrito!";
@@ -17,8 +17,12 @@ const AddToCart:React.FC<{onClick: ()=>void}> = ({onClick}) => {
         if(hasAdded){
             router.push('/carrito')
         }else{
-            onClick()
-            setAnimate(true)
+            if(onClick()){
+                setAnimate(true)
+            }else{
+                // Show modal outOfStock
+                alert("Out of stock!")
+            }
         }
     }
 

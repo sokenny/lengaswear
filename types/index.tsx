@@ -34,6 +34,7 @@ export type CheckoutType = {
     calle: string,
     numero: string,
     dpto: string,
+    mpCredentials: "juan" | "fran" | null
 }
 
 export type OptionsType = {label:string, value:string}[]
