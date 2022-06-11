@@ -71,7 +71,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div>{product.description}</div>
                                 <div>Madera: <strong>Lenga</strong></div>
                                 <div>Peso: <strong>22g</strong></div>
-                                <AddToCart onClick={addToCart} />
+                                <AddToCart onClick={addToCart} product={product.name} />
                             </div>
                         </motion.div>
                         }
@@ -107,7 +107,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                                 <div className={styles.sellingPrice}>${formatNumber(product.sellingPrice)}</div>
                             </div>
                             }
-                            <AddToCart onClick={addToCart} />
+                            <AddToCart onClick={addToCart} product={product.name} />
                             <div className={styles.TopProductSection__verMas}>
                                 <div onClick={()=>router.push(`${router.asPath}#specs`)}>Ver especificaciones</div>
                             </div>

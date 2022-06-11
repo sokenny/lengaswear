@@ -7,7 +7,7 @@
     width: 185px;
     align-items: center;
 
-    >div{
+    .arrowContainer{
         transition: .2s ease-in-out;
         position: absolute;
         right: 0;
@@ -19,9 +19,16 @@
         width: 100%;
         padding-right: 50px;
     }
+
+    button{
+        border: none;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
 }
 
-.ArrowInput:hover div{
+.ArrowInput:hover .arrowContainer{
     transform: translateX(10px);
 }
 

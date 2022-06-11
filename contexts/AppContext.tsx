@@ -11,6 +11,8 @@ interface AppContextInterface {
     setCheckout: (checkout:any)=> void;
     addToCart: (prdName: string) => boolean;
     removeFromCart: (prdName: string, all?:boolean) => void;
+    modal: React.ReactNode | false,
+    setModal: (modal:React.ReactNode) => void
 }
 
 const initialCheckoutValue:CheckoutType = {
@@ -41,6 +43,7 @@ export function AppProvider(props:any){
     const scrolledBottom:boolean = useScrolledBottom();
     const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
     const [store, setStore] = useState<{products: ProductType[], config: ConfigType | {}}>({products: [], config: {}});
+    const [modal, setModal] = useState<React.ReactNode | false>(false)
 
     useEffect(()=>{
         const cachedStore = tryLocalStorage.get("store");
@@ -87,9 +90,11 @@ export function AppProvider(props:any){
             checkout,
             setCheckout,
             addToCart,
-            removeFromCart
+            removeFromCart,
+            modal,
+            setModal
         }
-    }, [scrolledBottom, store, checkout]);
+    }, [scrolledBottom, store, checkout, modal]);
     
     return <AppContext.Provider value={value} {...props} />
 }

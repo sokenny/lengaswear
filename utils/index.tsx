@@ -165,8 +165,12 @@ const months = {
 } 
 
 export const constructDate = (date:Date):string => {
-    // if(date === null) return ""
     const day = date.getDate()
     const month = months["spanish"][date.getMonth()]
     return `${day} de ${month}`
+}
+
+export const emailIsValid = (email:string):boolean => {
+    const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regEx.test(String(email).toLowerCase());
 }

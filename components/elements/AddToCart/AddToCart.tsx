@@ -2,9 +2,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from 'framer-motion';
+import { useAppContext } from "contexts/AppContext";
+import ModalWaitingList from "@/components/modules/ModalWaitingList/ModalWaitingList";
 import styles from './AddToCart.module.scss';
 
-const AddToCart:React.FC<{onClick: ()=>boolean}> = ({onClick}) => {
+const AddToCart:React.FC<{onClick: ()=>boolean, product:string}> = ({onClick, product}) => {
 
     const AGREGAR = "Agregar al carrito";
     const AGREGADO = "Ir al carrito!";
@@ -12,6 +14,7 @@ const AddToCart:React.FC<{onClick: ()=>boolean}> = ({onClick}) => {
     const [cta, setCta] = useState<string>(AGREGAR)
     const [animate, setAnimate] = useState<boolean>(false)
     const hasAdded = cta === AGREGADO 
+    const { setModal } = useAppContext();
 
     function handleClick(){
         if(hasAdded){
@@ -20,8 +23,7 @@ const AddToCart:React.FC<{onClick: ()=>boolean}> = ({onClick}) => {
             if(onClick()){
                 setAnimate(true)
             }else{
-                // Show modal outOfStock
-                alert("Out of stock!")
+                setModal(<ModalWaitingList product={product} />)
             }
         }
     }

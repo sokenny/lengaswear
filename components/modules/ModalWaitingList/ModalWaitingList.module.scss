@@ -1,0 +1,16 @@
+@import '../../../styles/variables';
+
+.ModalWaitingList{
+    .header{
+        margin-bottom: $pxs2;
+
+        >div:first-child{
+            font-family: Silk Serif;
+            font-size: $fs3;
+        }
+
+        >div:last-child{
+            color: color(g1);
+        }
+    }
+}

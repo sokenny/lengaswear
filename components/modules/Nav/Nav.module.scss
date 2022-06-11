@@ -77,6 +77,10 @@
             margin-right: 0;
         }
 
+        .tab-active{
+            color: color(gold);
+        }
+
         li:hover{
             color: color(gold);
             cursor: pointer;
@@ -174,6 +178,11 @@
             color: color(g1);
             ul{
                 margin-bottom: $pxs2;
+
+                .tab-active{
+                    color: color(gold);
+                }
+
                 li{
                     border-bottom: 1px solid color(g1);
                     padding: 12px 0;

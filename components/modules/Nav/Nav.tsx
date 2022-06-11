@@ -28,7 +28,7 @@ const Nav:React.FC<NavProps> = ({theme, whiteFooter}) => {
     )
 }
 
-const mobileTabs:{label: string, path:string}[] = [{label: 'Relojes', path: '/relojes'}, {label: 'Billeteras', path: '/billeteras'}, {label: 'Carrito', path: '/carrito'}]; 
+const mobileTabs:{label: string, route:string}[] = [{label: 'Relojes', route: '/relojes'}, {label: 'Billeteras', route: '/billeteras'}, {label: 'Carrito', route: '/carrito'}]; 
 
 const MobileNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito, hasScrolled}) => {
 
@@ -67,8 +67,13 @@ const MobileNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito,
                 <div>
                     <ul>
                         {mobileTabs.map((tab, i)=>
-                            <Link href={tab.path} key={tab.label}>
-                            <motion.li initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: i*.05}}>
+                            <Link href={tab.route} key={tab.label}>
+                            <motion.li 
+                            className={tab.route === router.route ? styles['tab-active'] : ''}
+                            initial={{opacity: 0}} 
+                            animate={{opacity: 1}} 
+                            transition={{delay: i*.05}}
+                            >
                                 {tab.label}
                             </motion.li>
                             </Link>
@@ -86,6 +91,9 @@ const MobileNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito,
 }
 
 const DesktopNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito, hasScrolled}) => {
+
+    const router = useRouter();
+
     return (
         <nav className={`${styles.DesktopNav}`}>
             <div>
@@ -100,10 +108,14 @@ const DesktopNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito
                     </div>
                     <ul>
                         <Link href="/relojes">
-                            <a><li>Relojes</li></a>
+                            <a><li
+                                className={router.route === '/relojes' ? styles['tab-active'] : ''}
+                                >Relojes</li></a>
                         </Link>
                         <Link href="/billeteras">
-                            <a><li>Billeteras</li></a>
+                            <a><li
+                                className={router.route === '/billeteras' ? styles['tab-active'] : ''}
+                                >Billeteras</li></a>
                         </Link>
                     </ul>
                 </div>
@@ -117,7 +129,7 @@ const DesktopNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito
                         </a>
                         <Link href="/carrito">
                             <a>
-                                <li>
+                                <li className={router.route === '/carrito'  ? styles['tab-active'] : ''}>
                                     <div className={styles.DesktopNav__cart}>
                                         <div>
                                             <CartLength carrito={carrito} />
