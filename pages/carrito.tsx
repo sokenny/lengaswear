@@ -49,7 +49,6 @@ const Carrito: NextPageAugmented = () => {
     const getCartGrossTotal = useCallback(():number => {
         let total = 0;
         if(Object.keys(cartDetail).length > 0 && store.products.length > 0){
-            console.log('entro! cartDetail', cartDetail)
             Object.keys(cartDetail).forEach(prdName => {
                 const qty = cartDetail[prdName];
                 const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];

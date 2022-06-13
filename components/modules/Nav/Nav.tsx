@@ -157,7 +157,7 @@ const StatusBar:React.FC<{show?:boolean}> = ({show=true}) => {
 
     return (
         <AnimatePresence>
-        {show && statusBarRoutes.includes(router.route) &&
+        {(show && statusBarRoutes.includes(router.route) && preOrderDate !== "") &&
         <div 
         className={styles.StatusBar}
         data-component="StatusBar"

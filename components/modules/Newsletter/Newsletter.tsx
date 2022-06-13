@@ -15,7 +15,7 @@ const Newsletter:React.FC = () => {
     async function handleSubmit(){
         if(emailIsValid(email)){
             setLoading(true)
-            const res = await subscribeToNewsletter(email)
+            const res = await subscribeToNewsletter({email})
             setLoading(false)
             if(res.data.status === "success"){
                 setHint("Suscrito con éxito!")

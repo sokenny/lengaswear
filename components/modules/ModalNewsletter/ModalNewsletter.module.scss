@@ -1,0 +1,70 @@
+@import '../../../styles/variables';
+
+.ModalNewsletter{
+    display: flex;
+    max-width: 1100px;
+
+    @include mobile{
+        flex-direction: column;
+    }
+
+    .image{
+        min-width: 400px;
+        background-color: gray;
+        position: relative;
+    }
+
+    .text{
+        padding: $pxs3;
+
+        @include mobile{
+            padding: $pxs2;
+        }
+
+        .header{
+            margin-bottom: $pxs2;
+
+            >div:first-child{
+                font-size: $fs3;
+                font-family: Silk Serif;
+
+                @include mobile{
+                    font-size: $fs2;
+                }
+            }
+            p{
+                color: color(g1);
+                @include mobile{
+                    font-size: 14px;
+                }
+            }
+        }
+
+        form{
+
+            input{
+                @include mobile{
+                    width: 100%;
+                }
+            }
+
+            >div:first-child{
+                margin-bottom: $pxs1;
+
+                input:first-child{
+                    margin-right: $pxs1;
+
+                    @include mobile{
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            button{
+                @include mobile{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

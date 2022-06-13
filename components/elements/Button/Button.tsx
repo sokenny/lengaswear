@@ -13,11 +13,16 @@ const Button:React.FC<ButtonProps> = ({onClick, theme, children, active=true, lo
     return (
         <button 
         className={`${styles.Button} ${styles[`Button-${theme ? theme : 'main'}`]} ${!active ? styles['Button-inActive'] : '' } ${loading ? styles['Button-loading'] : '' }`} 
-        onClick={active ? onClick : undefined}
+        onClick={(e)=>active ? onClick : e.preventDefault()}
         >
             {
-            loading ? 
-            <Spinner color="white" /> 
+            loading ?
+            <>
+                <div style={{opacity: 0}}>{children}</div>
+                <div style={{position: "absolute"}}>
+                    <Spinner color="white" /> 
+                </div> 
+            </>
             : 
             children
             }

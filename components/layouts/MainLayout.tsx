@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { useAppContext } from "contexts/AppContext";
 import Nav from "../modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
 import AppModal from '@/components/modules/AppModal/AppModal';
+import ModalNewsletter from "../modules/ModalNewsletter/ModalNewsletter";
 
 type Props = {
     nav?: React.ReactNode,
@@ -13,7 +14,10 @@ type Props = {
 
 const MainLayout: React.FC<Props>  = ({nav, footer, children}) => {
 
-    const { modal } = useAppContext()
+    const { setModal } = useAppContext()
+    useEffect(()=>{
+        setModal(<ModalNewsletter />)
+    }, [])
 
     return (
         <div>

@@ -1,6 +1,14 @@
 @import '../../../styles/variables';
 
 .ModalWaitingList{
+    padding: $pxs2 $pxs3;
+    width: 600px;
+    max-width: 100%;
+    
+    @include mobile{
+        padding: $pxs2 42px;
+    }
+
     .header{
         margin-bottom: $pxs2;
 

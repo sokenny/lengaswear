@@ -9,6 +9,8 @@
     border: 1px solid transparent;
     cursor: pointer;
     transition: .2s;
+    display: flex;
+    justify-content: center;
 }
 
 .Button:hover, .Button.Button-light{
