@@ -63,6 +63,17 @@
         min-height: 200px;
     }
 
+    .ProductItem__overlay{
+        height: 50%;
+        width: 100%;
+        background: linear-gradient(0deg, rgba(29, 29, 29, .3) 0%, rgba(255,255,255,0) 100%);
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        bottom: 0;
+        transition: .25s;
+    }
+
     .ProductItem__image{
         position: absolute;
         width: 100%;
@@ -117,4 +128,8 @@
             }
         }
     }
+}
+
+.ProductItem:hover .ProductItem__overlay{
+    opacity: 0;
 }

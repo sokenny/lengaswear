@@ -16,16 +16,11 @@ import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCt
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import TopProductSection from '@/components/modules/TopProductSection/TopProductSection'
-import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
+import Recommended from '@/components/modules/Recommended/Recommended'
 import styles from '../../styles/Reloj.module.scss'
 
 const materials = ['cristal', 'madera', 'aluminio']
-
-const recommendedProducts:TRecommended[] = [
-    {name: 'mahai', image: '/relojes/mahai/recommended.webp', href: '/relojes/mahai', price: 10000},
-    {name: 'jauke', image: '/relojes/jauke/recommended.webp', href: '/relojes/jauke', price: 10000},
-    {name: 'billetera suela', image: '/billeteras/suela/recommended.webp', href: '/billeteras/suela', price: 10000},
-]
+const recommendedProducts = ["chocolate", "suela", "boom"]
 
 const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
    

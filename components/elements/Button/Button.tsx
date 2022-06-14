@@ -13,7 +13,7 @@ const Button:React.FC<ButtonProps> = ({onClick, theme, children, active=true, lo
     return (
         <button 
         className={`${styles.Button} ${styles[`Button-${theme ? theme : 'main'}`]} ${!active ? styles['Button-inActive'] : '' } ${loading ? styles['Button-loading'] : '' }`} 
-        onClick={(e)=>active ? onClick : e.preventDefault()}
+        onClick={(e)=>active ? onClick() : e.preventDefault()}
         >
             {
             loading ?

@@ -86,11 +86,9 @@
         padding-bottom: 0;
 
         >div{
-            text-transform: uppercase;
-            color: rgba(0,0,0,0.15);
-            font-weight: 600;
-            font-size: 14px;
+            color: color(g1);
             cursor: pointer;
+            font-weight: 300;
         }
     }
     .verMas>div:hover{

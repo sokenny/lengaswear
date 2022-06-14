@@ -54,6 +54,7 @@ const ProductItem:React.FC<ProductItemProps> = ({product}) => {
         <Link href={`${product.category}/${product.name}`}>
             <a>
                 <div className={styles.ProductItem}>
+                    <div className={styles.ProductItem__overlay} />
                     <div className={styles.ProductItem__image}>
                         <Image src={`/${product.category}/${product.name}/thumbnail.webp`} layout="fill" objectFit="cover" alt={product.name} />
                     </div>

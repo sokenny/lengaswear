@@ -30,12 +30,16 @@ const Carrito: NextPageAugmented = () => {
 
     useEffect(()=>{
         scrollTo(carritoRef, -50)
-        setCheckout({...checkout, step: router.query.step});
+        if(!isFirstRender){
+            setCheckout({...checkout, step: router.query.step});
+        }
         if(router.query.step === undefined || isFirstRender) router.replace({ query: { ...router.query, step: 1 } }, undefined, {shallow: true})
     }, [router.query.step, isFirstRender])
 
     useEffect(()=>{
+        if(!isFirstRender){
             setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
+        }
     }, [cartDetail])
 
     function getCartDetail(carrito:string[]){
@@ -323,7 +327,6 @@ const LabelAndInput:React.FC<{label:string, value:string | number, type:string, 
 }
 
 const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
-
     
     const { store, addToCart, removeFromCart } = useAppContext();
     if(store.products.length < 1) return <></>
@@ -336,7 +339,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
         <div className={styles.ProductRow}>
             <div className={styles.desktop}>
                 <div className={styles.image}>
-                    <Link href={product.href}>
+                    <Link href={`/${product.category}/${product.name}`}>
                         <a>
                             <Image src={thumbnailSrc} layout="fill" objectFit="cover" alt={product.name} />
                         </a>
@@ -368,7 +371,7 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
             </div>
             <div className={styles.mobile}>
                 <div className={styles.image}>
-                    <Link href={product.href}>
+                    <Link href={`/${product.category}/${product.name}`}>
                         <a>
                             <Image src={thumbnailSrc} layout="fill" objectFit="cover" alt={product.name} />
                         </a>

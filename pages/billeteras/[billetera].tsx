@@ -11,7 +11,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Head from 'next/head';
-import Recommended, {TRecommended} from '@/components/modules/Recommended/Recommended'
+import Recommended from '@/components/modules/Recommended/Recommended'
 import Nav from '@/components/modules/Nav/Nav'
 import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCta'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
@@ -25,11 +25,7 @@ import "swiper/css";
 import "swiper/css/pagination"
 SwiperCore.use([Pagination]);
 
-const recommendedProducts:TRecommended[] = [
-    {name: 'chocolate', image: '/billeteras/chocolate/thumbnail.webp', href: '/billeteras/chocolate', price: 3950},
-    {name: 'suela', image: '/billeteras/suela/thumbnail.webp', href: '/billeteras/suela', price: 3950},
-    {name: 'quemanta', image: '/relojes/quemanta/thumbnail.webp', href: '/relojes/quemanta', price: 3950},
-]
+const recommendedProducts = ["quemanta", "tesh", "jauke"]
 
 const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     
