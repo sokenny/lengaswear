@@ -1,6 +1,18 @@
 @import '../../../styles/variables';
 
-.Newsletter{}
+.Newsletter{
+
+    [data-component="AssetAndText"]{
+        >div:first-child{
+            width: 700px;
+            height: 500px;
+
+            @include mobile{
+                width: 100%;
+            }
+        }
+    }
+}
 
 .NewsletterInput{
     display: flex;
@@ -16,4 +28,5 @@
             color: color(gold);
         }
     }
+
 }

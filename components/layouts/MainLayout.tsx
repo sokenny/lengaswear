@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
+import { tryLocalStorage } from "@/utils/index";
 import { useAppContext } from "contexts/AppContext";
 import Nav from "../modules/Nav/Nav";
 import Footer from "@/components/modules/Footer/Footer";
@@ -15,8 +16,15 @@ type Props = {
 const MainLayout: React.FC<Props>  = ({nav, footer, children}) => {
 
     const { setModal } = useAppContext()
+
     useEffect(()=>{
-        setModal(<ModalNewsletter />)
+        const showModalNewsletter = tryLocalStorage.get('shownModalNewsletter');
+        if(!showModalNewsletter){
+            const timeoutId = setTimeout(() => {
+                setModal(<ModalNewsletter />)
+            }, 3000);
+            return () => clearTimeout(timeoutId)
+        }
     }, [])
 
     return (

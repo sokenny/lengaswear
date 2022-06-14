@@ -23,7 +23,9 @@ const AssetAndText:React.FC<AssetAndTextProps> = ({title, description, asset, ct
 
 
     return (
-        <section className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]} ${hasComplexAsset ? styles[`AssetAndText-complexAsset`] : ''}`} data-component="AssetAndText">
+        <section 
+        className={`${styles.AssetAndText} ${styles[`AssetAndText-asset${assetLeft ? 'Left' : 'Rigth'}`]} ${hasComplexAsset ? styles[`AssetAndText-complexAsset`] : ''}`} 
+        data-component="AssetAndText">
             <div className={styles.asset}>
                 {typeof asset === 'string' ? 
                 <motion.div 

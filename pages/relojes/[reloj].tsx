@@ -67,7 +67,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
 
 const WatchPartAsset:React.FC<{img:string, baseScale?:number}> = ({img, baseScale=1}) => {
     const divRef = useRef(null)
-    const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT*.8);
+    const isIntersecting = useOnScreen(divRef, ANIMATE_BREAKPOINT);
     const [cursor, setCursor] = useState<{x: number, y:number}>({x: 0, y: 0})
 
     return (

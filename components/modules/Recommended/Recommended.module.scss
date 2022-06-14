@@ -5,11 +5,19 @@
     >div:first-child{
         padding: 0 $pxs3;
         margin-bottom: $pxs3;
+
+        @include mobile{
+            padding-left: $pxs2;
+        }
         
         h2{
             font-family: Silk Serif;
             font-size: $fs3;
             font-weight: 400;
+
+            @include mobile{
+                font-size: $fs2;
+            }
         }
     }
 

@@ -51,7 +51,7 @@
 
 .ProductItem{
     padding: 40px;
-    min-height: 200px;
+    min-height: 250px;
     color: white;
     display: flex;
     align-items: flex-end;
@@ -60,6 +60,7 @@
 
     @include mobile{
         padding: 20px;
+        min-height: 200px;
     }
 
     .ProductItem__image{
