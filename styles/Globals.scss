@@ -124,3 +124,7 @@ div.swiper{
 .CarrouselSection .swiper-slide.swiper-slide-active{
   opacity: 1;
 }
+
+.swiper-wrapper{
+  transition-duration: .75s !important;
+}

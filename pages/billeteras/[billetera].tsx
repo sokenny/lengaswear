@@ -20,10 +20,10 @@ import Footer from '@/components/modules/Footer/Footer'
 import styles from '../../styles/Billetera.module.scss';
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Pagination } from 'swiper';
+import SwiperCore, { Pagination, Autoplay } from 'swiper';
 import "swiper/css";
 import "swiper/css/pagination"
-SwiperCore.use([Pagination]);
+SwiperCore.use([Pagination, Autoplay]);
 
 const recommendedProducts = ["quemanta", "tesh", "jauke"]
 
@@ -124,7 +124,7 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
     const router = useRouter()
     const titleRef = useRef<HTMLDivElement>(null)
     const colors:string[] = ['Chocolate', 'Suela', 'Boom']
-    const slides = [1,2,3].map((item)=> `/billeteras/${billetera}/billetera-artesanal-${item}.webp`)
+    const slides = ["frente","abierto","costado","detalle"].map((foto)=> `/billeteras/${billetera}/${foto}.webp`)
     const [hoveringOn, setHoveringOn] = useState<string>("")
     const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT) 
     const hasIntersected = useRef(false)
@@ -190,6 +190,7 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
             pagination={true}
             slidesPerView={1.2}
             spaceBetween={15}
+            autoplay={{delay: 3000}}
             className="CarrouselSection">
                 {slides.map((slide, i)=>
                     <SwiperSlide key={i}>
