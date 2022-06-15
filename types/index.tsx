@@ -10,7 +10,6 @@ export type ProductType = {
     name: string, 
     price: number, 
     sellingPrice:number, 
-    href: string, 
     image?: string, 
     description?:string
     stock?:number

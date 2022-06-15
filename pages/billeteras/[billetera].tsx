@@ -46,7 +46,7 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 <AssetAndText 
                 title="Una nueva forma de llevarlo todo" 
                 description="Ser feliz es simple, ser simple no tanto. Proponemos una billetera que viene a instaurar un andar más sencillo." 
-                asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
+                asset={`/billeteras/billetera-en-uso.webp`} 
                 assetLeft={false} />
             </div>
             <CarrouselSection billetera={billetera.name} />
@@ -54,12 +54,13 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 <AssetAndText 
                 title="La simpleza de Lengas en una billetera" 
                 description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
-                asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
+                asset={`/billeteras/simpleza.webp`} 
                 />
                 <AssetAndText 
                 title="Creado con propósito" 
                 description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
-                asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
+                // asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
+                asset={<PropositoCarrousel />} 
                 assetLeft={false} 
                 />
             </div>
@@ -200,6 +201,31 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
             </Swiper>
             </div>
         </section>
+    )
+}
+
+const PropositoCarrousel:React.FC = () => {
+
+    const isMobile = useIsMobile();
+    const slides = ["proposito-1", "proposito-2", "proposito-3", "proposito-4"]
+    
+    return (
+        <div>
+        <Swiper 
+        pagination={true}
+        slidesPerView={1.2}
+        spaceBetween={15}
+        autoplay={{delay: 3000}}
+        className="CarrouselSection">
+            {slides.map((slide, i)=>
+                <SwiperSlide key={i}>
+                    <div style={{position: "relative", width: "600px", height: isMobile ? "420px" : "750px"}}> 
+                        <Image src={`/billeteras/${slide}.webp`} layout="fill" objectFit="contain" alt={slide} />
+                    </div>
+                </SwiperSlide>
+            )}
+        </Swiper>
+        </div>
     )
 }
 

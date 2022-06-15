@@ -16,6 +16,24 @@
         }
     }
 
+    [data-component=AssetAndText]:last-child{
+        >div:first-child{
+            width: 50%;
+            height: auto;
+
+            @include mobile{
+                width: 100%;
+            }
+        }
+        >div:last-child{
+            margin-bottom: 100px;
+
+            @include mobile{
+                margin-bottom: 0;
+            }
+        }
+    }
+
     .WalletSpecs{
         background-color: color(b1);
 
