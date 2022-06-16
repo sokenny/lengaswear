@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { TitleWDescription } from 'pages/relojes/[reloj]';
 import AddToCart from '@/components/elements/AddToCart/AddToCart';
 import styles from './TopProductSection.module.scss';
+import ColoresCarrousel from '../ColoresCarrousel/ColoresCarrousel';
 
 type TopProductSectionProps = {
     product: ProductType,
@@ -46,7 +47,10 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
     return (
             <section className={styles.TopProductSection}>
                 <div className={styles.TopProductSection__gallery}>
-                    {imgs.slice(0, 3).map((img, i)=>
+                    <div>
+                        <ColoresCarrousel billetera={product.name} />
+                    </div>
+                    {imgs.slice(1, 3).map((img, i)=>
                         <div key={img}>
                             {i === 0 && <TopMobileInfo product={product} ctaRef={ctaRefMobile} specs={thisSpecs} addToCart={addToCart} /> }
                             <Image src={img} layout="fill" objectFit='cover' key={img} alt={product.name} />

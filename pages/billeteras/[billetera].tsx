@@ -16,16 +16,17 @@ import Nav from '@/components/modules/Nav/Nav'
 import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCta'
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import TopProductSection from '@/components/modules/TopProductSection/TopProductSection'
-import Footer from '@/components/modules/Footer/Footer'
+import Footer from '@/components/modules/Footer/Footer';
+import PropositoCarrousel from '@/components/modules/PropositoCarrousel/PropositoCarrousel';
 import styles from '../../styles/Billetera.module.scss';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from 'swiper';
 import "swiper/css";
 import "swiper/css/pagination"
-
-
+import ColoresCarrousel from '@/components/modules/ColoresCarrousel/ColoresCarrousel';
 SwiperCore.use([Pagination, Autoplay]);
+
 const recommendedProducts = ["quemanta", "tesh", "jauke"]
 
 const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
@@ -131,23 +132,11 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
     const titleRef = useRef<HTMLDivElement>(null)
     const carrouselRef = useRef<HTMLDivElement>(null)
     const colors:string[] = ['Chocolate', 'Suela', 'Boom']
-    const slides = ["frente","abierto","costado","detalle"].map((foto)=> `/billeteras/${billetera}/${foto}.webp`)
     const [hoveringOn, setHoveringOn] = useState<string>("")
-    const titleIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT) 
-    const carrouselIntersecting = useOnScreen(carrouselRef, ANIMATE_BREAKPOINT) 
-    const swiperRef = useRef<any>(null)
+    const titleIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT)     
     const hasIntersected = useRef(false)
-    const SwiperWRef:React.FC<AugmentedSwiperProps> = Swiper
 
     if(titleIntersecting && !hasIntersected.current) hasIntersected.current = true;
-
-    useEffect(()=>{
-        if(carrouselIntersecting) {
-            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.start()
-        }else{
-            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.stop()
-        }
-    }, [carrouselIntersecting])
 
     const transitioning = useCallback(()=>{
         return hoveringOn?.toLocaleLowerCase() !== "" && hoveringOn?.toLocaleLowerCase() !== billetera
@@ -205,60 +194,10 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                     </div>
                 </div>
             </div>
-            <div className={styles.carrousel} ref={carrouselRef}>
-            <SwiperWRef 
-            ref={swiperRef}
-            pagination={true}
-            slidesPerView={1.2}
-            spaceBetween={15}
-            autoplay={{delay: 1500, pauseOnMouseEnter: true}}
-            className="CarrouselSection">
-                {slides.map((slide, i)=>
-                    <SwiperSlide key={i}>
-                        <Image src={slide} height={600} width={522} alt={billetera} />
-                    </SwiperSlide>
-                )}
-            </SwiperWRef>
+            <div ref={carrouselRef}>
+                <ColoresCarrousel billetera={billetera} />            
             </div>
         </section>
-    )
-}
-
-const PropositoCarrousel:React.FC = () => {
-
-    const isMobile = useIsMobile();
-    const carrouselRef = useRef<HTMLDivElement>(null)
-    const slides = ["proposito-1", "proposito-2", "proposito-3", "proposito-4"]
-    const swiperRef = useRef<any>(null)
-    const carrouselIntersecting = useOnScreen(carrouselRef, ANIMATE_BREAKPOINT) 
-    const SwiperWRef:React.FC<AugmentedSwiperProps> = Swiper
-
-    useEffect(()=>{
-        if(carrouselIntersecting) {
-            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.start()
-        }else{
-            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.stop()
-        }
-    }, [carrouselIntersecting])
-    
-    return (
-        <div ref={carrouselRef}>
-        <SwiperWRef 
-        ref={swiperRef}
-        pagination={true}
-        slidesPerView={1.2}
-        spaceBetween={15}
-        autoplay={{delay: 3000}}
-        className="CarrouselSection">
-            {slides.map((slide, i)=>
-                <SwiperSlide key={i}>
-                    <div style={{position: "relative", width: "600px", height: isMobile ? "420px" : "750px"}}> 
-                        <Image src={`/billeteras/${slide}.webp`} layout="fill" objectFit="contain" alt={slide} />
-                    </div>
-                </SwiperSlide>
-            )}
-        </SwiperWRef>
-        </div>
     )
 }
 

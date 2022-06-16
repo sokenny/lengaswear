@@ -102,6 +102,17 @@ input{
 div.swiper{
   padding-bottom: $pxs3;
 }
+
+div.swiper.noPagination{
+  padding-bottom: 0;
+}
+
+.ColoresCarrousel .swiper-slide{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .swiper-pagination-bullet-active{
   background-color: color(gold)!important;
 }
