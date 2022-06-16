@@ -34,6 +34,7 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera.name}/billetera-cuero-genuino-${item}.webp`)
     const addThisToCart = () => addToCart(billetera.name)
+    const specsRef = useRef<HTMLDivElement>(null)
 
     return (
         <>
@@ -42,7 +43,7 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
         </Head>
         <div className={styles.Billetera}>
             <FixedProductCta product={billetera} show={showFixedCta} addToCart={addThisToCart} />
-            <TopProductSection imgs={imgs} product={billetera} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
+            <TopProductSection imgs={imgs} product={billetera} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} onViewSpecs={()=>scrollTo(specsRef, -100)} />
             <div className='container'>
                 <AssetAndText 
                 title="Una nueva forma de llevarlo todo" 
@@ -64,7 +65,9 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 assetLeft={false} 
                 />
             </div>
-            <WalletSpecs />
+            <div ref={specsRef}>
+                <WalletSpecs />
+            </div>
             <div className="container">
                 <Recommended products={recommendedProducts} />
             </div>
@@ -223,10 +226,10 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 const PropositoCarrousel:React.FC = () => {
 
     const isMobile = useIsMobile();
-    const ref = useRef<HTMLDivElement>(null)
+    const carrouselRef = useRef<HTMLDivElement>(null)
     const slides = ["proposito-1", "proposito-2", "proposito-3", "proposito-4"]
     const swiperRef = useRef<any>(null)
-    const carrouselIntersecting = useOnScreen(ref, ANIMATE_BREAKPOINT) 
+    const carrouselIntersecting = useOnScreen(carrouselRef, ANIMATE_BREAKPOINT) 
     const SwiperWRef:React.FC<AugmentedSwiperProps> = Swiper
 
     useEffect(()=>{
@@ -238,7 +241,7 @@ const PropositoCarrousel:React.FC = () => {
     }, [carrouselIntersecting])
     
     return (
-        <div>
+        <div ref={carrouselRef}>
         <SwiperWRef 
         ref={swiperRef}
         pagination={true}

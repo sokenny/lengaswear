@@ -51,3 +51,9 @@ export type ConfigType = {
 export interface AugmentedSwiperProps extends SwiperProps {
     ref?: any
 }
+
+export type SpecType = {
+   label: string, 
+   value:string, 
+   products:string[]
+}

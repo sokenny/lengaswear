@@ -96,7 +96,12 @@ const Gallery:React.FC = () => {
             </div>
             {!showMore &&
             <div className={styles.verMas} ref={verMasRef}>
-                <div onClick={()=>{setShowMore(true); scrollTo(verMasRef, -120)}}>Ver mas</div>
+                <motion.div 
+                {...getMotionProps("slideVertical", hasIntersected.current, {delay: 1.5})}
+                onClick={()=>{setShowMore(true); scrollTo(verMasRef, -120)}}
+                >
+                    Ver mas
+                </motion.div>
             </div>
             }
         </section>

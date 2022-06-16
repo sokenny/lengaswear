@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { SpecType } from "types";
 
 export const colors:{} = {
     gold: '#BC8C3E',
@@ -174,3 +175,12 @@ export const emailIsValid = (email:string):boolean => {
     const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regEx.test(String(email).toLowerCase());
 }
+
+export const specs:SpecType[] = [
+    {label: "Madera", value: "Lenga", products: ["quemanta"]},
+    {label: "Madera", value: "Guayubira", products: ["tesh"]},
+    {label: "Madera", value: "Moradillo", products: ["mahai"]},
+    {label: "Madera", value: "Cancharana", products: ["jauke"]},
+    {label: "Peso", value: "22g", products: ["quemanta", "tesh", "jauke", "mahai"]},
+    {label: "Material", value: "Cuero genuino", products: ["chocolate", "suela", "boom"]},
+]

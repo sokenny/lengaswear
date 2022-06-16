@@ -3,7 +3,7 @@ import { NextPageAugmented, ProductType } from 'types';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAppContext } from "contexts/AppContext";
 import { getProductPaths, getProduct } from '@/utils/db';
-import { useOnScreen, capitalize, getMotionProps } from '@/utils/index'
+import { useOnScreen, capitalize, getMotionProps, scrollTo } from '@/utils/index'
 import { ANIMATE_BREAKPOINT } from '@/utils/constants'
 import { motion } from 'framer-motion'
 import { ParsedUrlQuery } from 'querystring'
@@ -28,6 +28,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj.name}/reloj-de-madera-artesanal-${reloj.name}-${item}.webp`)
     const addThisToCart = () => addToCart(reloj.name)
+    const specsRef = useRef<HTMLDivElement>(null)
 
     return (
         <>
@@ -36,7 +37,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
         </Head>
         <div className={styles.Reloj}>
             <FixedProductCta product={reloj} show={showFixedCta} addToCart={addThisToCart} />
-            <TopProductSection imgs={imgs} product={reloj} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} />
+            <TopProductSection imgs={imgs} product={reloj} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} onViewSpecs={()=>scrollTo(specsRef, -150)} />
             <div className='container'>
                 <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
             </div>
@@ -51,7 +52,9 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
                     </div>
                 </div>
             </div>
-            <WatchSpecs />
+            <div ref={specsRef}>
+                <WatchSpecs />
+            </div>
             <div className="container">
                 <Recommended products={recommendedProducts} />
             </div>
@@ -125,7 +128,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     return (
         <section className={styles.SuiGeneris}>
             <div>
-                <DisAssembly reloj={reloj} hovering={hovering} setHovering={setHovering} />
+                <DisAssembly reloj={reloj} hovering={hovering} />
             </div>
             <div ref={divRef}>
                 <TitleWDescription 
@@ -157,7 +160,7 @@ const SuiGeneris:React.FC<{reloj:string}> = ({reloj}) => {
     )
 }
 
-const DisAssembly:React.FC<{reloj: string, hovering:string, setHovering(material:string): void}> = ({reloj, hovering, setHovering}) => {
+const DisAssembly:React.FC<{reloj: string, hovering:string}> = ({reloj, hovering}) => {
 
     const divRef = useRef<HTMLDivElement>(null)
     const onScreen = useOnScreen(divRef, ANIMATE_BREAKPOINT)

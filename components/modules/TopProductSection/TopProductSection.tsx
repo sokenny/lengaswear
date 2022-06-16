@@ -1,9 +1,9 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion'
-import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps } from '@/utils/index'
+import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps, specs } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
-import { ProductType } from 'types';
+import { ProductType, SpecType } from 'types';
 import Image from 'next/image';
 import { TitleWDescription } from 'pages/relojes/[reloj]';
 import AddToCart from '@/components/elements/AddToCart/AddToCart';
@@ -14,9 +14,10 @@ type TopProductSectionProps = {
     imgs: string[],
     onCtaIntersect: (isIntersecting: boolean) => void,
     addToCart: () => boolean,
+    onViewSpecs?: ()=>void
 }
 
-const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart}) => {
+const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart, onViewSpecs}) => {
 
     const router = useRouter();
     const isMobile = useIsMobile();
@@ -27,6 +28,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
     const ctaRefDesktop = useRef<HTMLDivElement>(null)
     const ctaOnScreen = useOnScreen(isMobile ? ctaRefMobile : ctaRefDesktop)
     const [lockAt, setLockAt] = useState<number>(0)
+    const thisSpecs:SpecType[] = specs.filter((spec)=>spec.products.includes(product.name))
 
     useEffect(()=>{
         onCtaIntersect(ctaOnScreen)
@@ -69,8 +71,9 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             </div>
                             <div className={styles.TopProductSection__description}>
                                 <div>{product.description}</div>
-                                <div>Madera: <strong>Lenga</strong></div>
-                                <div>Peso: <strong>22g</strong></div>
+                                {thisSpecs.map((spec)=>
+                                    <div key={spec.label}>{spec.label}: <strong>{spec.value}</strong></div>
+                                )}
                                 <AddToCart onClick={addToCart} product={product.name} />
                             </div>
                         </motion.div>
@@ -96,8 +99,9 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             <h1>{product.name}</h1>
                             <div className={styles.TopProductSection__description}>
                                 <div>{product.description}</div>
-                                <div>Madera: <strong>Lenga</strong></div>
-                                <div>Peso: <strong>22g</strong></div>
+                                {thisSpecs.map((spec)=>
+                                    <div key={spec.label}>{spec.label}: <strong>{spec.value}</strong></div>
+                                )}
                             </div>
                             {product.price === product.sellingPrice ? 
                             <div className={styles.TopProductSection__price}>${formatNumber(product.price)}</div>
@@ -109,7 +113,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                             }
                             <AddToCart onClick={addToCart} product={product.name} />
                             <div className={styles.TopProductSection__verMas}>
-                                <div onClick={()=>router.push(`${router.asPath}#specs`)}>Ver especificaciones</div>
+                                <div onClick={onViewSpecs}>Ver especificaciones</div>
                             </div>
                         </motion.div>
                         <PurchaseInfo />
