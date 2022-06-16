@@ -30,9 +30,10 @@ const recommendedProducts = ["quemanta", "tesh", "jauke"]
 
 const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
     
+    const isMobile = useIsMobile()
     const { addToCart } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
-    const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera.name}/billetera-cuero-genuino-${item}.webp`)
+    const imgs = [1,2,3,4].map((item)=> `/billeteras/${billetera.name}/billetera-cuero-genuino-${item}${isMobile && item === 1 ? '-mobile' : ''}.webp`)
     const addThisToCart = () => addToCart(billetera.name)
     const specsRef = useRef<HTMLDivElement>(null)
 

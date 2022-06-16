@@ -1,5 +1,4 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
-import { useRouter } from 'next/router';
 import { motion } from 'framer-motion'
 import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps, specs } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
@@ -19,7 +18,6 @@ type TopProductSectionProps = {
 
 const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCtaIntersect, addToCart, onViewSpecs}) => {
 
-    const router = useRouter();
     const isMobile = useIsMobile();
     const scrollPosition = useScrollPosition()
     const lastPicRef = useRef<HTMLDivElement>(null)
@@ -49,44 +47,20 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
             <section className={styles.TopProductSection}>
                 <div className={styles.TopProductSection__gallery}>
                     {imgs.slice(0, 3).map((img, i)=>
-                    <div key={img}>
-                        {i === 0 &&
-                        <motion.div 
-                        className={`mobile ${styles.TopProductSection__mobileInfo}`} 
-                        ref={ctaRefMobile}
-                        {...getMotionProps("slideVertical", true)}
-                        >
-                            <div className={styles.TopProductSection__namePrice}>   
-                                <div>
-                                    <h1>{product.name}</h1>
-                                    {product.price === product.sellingPrice ?
-                                    <div>${formatNumber(product.price)}</div>
-                                    :
-                                    <div className={styles.wDiscount}>
-                                        <div className={styles.price}>${formatNumber(product.price)}</div>
-                                        <div className={styles.sellingPrice}>${formatNumber(product.sellingPrice)}</div>
-                                    </div>
-                                    }
-                                </div>
-                            </div>
-                            <div className={styles.TopProductSection__description}>
-                                <div>{product.description}</div>
-                                {thisSpecs.map((spec)=>
-                                    <div key={spec.label}>{spec.label}: <strong>{spec.value}</strong></div>
-                                )}
-                                <AddToCart onClick={addToCart} product={product.name} />
-                            </div>
-                        </motion.div>
-                        }
-                        <Image src={img} layout="fill" objectFit='cover' key={img} alt={product.name} />
-                    </div>
+                        <div key={img}>
+                            {i === 0 && <TopMobileInfo product={product} ctaRef={ctaRefMobile} specs={thisSpecs} addToCart={addToCart} /> }
+                            <Image src={img} layout="fill" objectFit='cover' key={img} alt={product.name} />
+                        </div>
                     )}
                     <div ref={lastPicRef}>
                         <div>
                             <Image src={imgs[3]} layout="fill" objectFit='cover' alt={product.name} />
                         </div>
                         <div>
-                            <TitleWDescription title="El tuyo es único" description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." />
+                            <TitleWDescription 
+                            title="El tuyo es único" 
+                            description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." 
+                            />
                         </div>
                     </div>
                 </div>
@@ -120,6 +94,37 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                     </div>
                 </div>
             </section>
+    )
+}
+
+const TopMobileInfo:React.FC<{product: ProductType, ctaRef:any, specs: SpecType[], addToCart:()=>boolean}> = ({product, ctaRef, specs, addToCart}) => {
+    return (
+        <motion.div 
+        className={`mobile ${styles.TopProductSection__mobileInfo}`} 
+        ref={ctaRef}
+        {...getMotionProps("slideVertical", true)}
+        >
+            <div className={styles.TopProductSection__namePrice}>   
+                <div>
+                    <h1>{product.name}</h1>
+                    {product.price === product.sellingPrice ?
+                    <div>${formatNumber(product.price)}</div>
+                    :
+                    <div className={styles.wDiscount}>
+                        <div className={styles.price}>${formatNumber(product.price)}</div>
+                        <div className={styles.sellingPrice}>${formatNumber(product.sellingPrice)}</div>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div className={styles.TopProductSection__description}>
+                <div>{product.description}</div>
+                {specs.map((spec)=>
+                    <div key={spec.label}>{spec.label}: <strong>{spec.value}</strong></div>
+                )}
+                <AddToCart onClick={addToCart} product={product.name} />
+            </div>
+        </motion.div>
     )
 }
 
