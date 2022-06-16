@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react'
-import { NextPageAugmented, ProductType } from 'types'
+import { AugmentedSwiperProps, NextPageAugmented, ProductType } from 'types'
 import { getProductPaths, getProduct } from '@/utils/db';
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAppContext } from "contexts/AppContext";
@@ -23,8 +23,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from 'swiper';
 import "swiper/css";
 import "swiper/css/pagination"
-SwiperCore.use([Pagination, Autoplay]);
 
+
+SwiperCore.use([Pagination, Autoplay]);
 const recommendedProducts = ["quemanta", "tesh", "jauke"]
 
 const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
@@ -59,7 +60,6 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 <AssetAndText 
                 title="Creado con propósito" 
                 description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
-                // asset={`/billeteras/${billetera.name}/billetera-en-uso.webp`} 
                 asset={<PropositoCarrousel />} 
                 assetLeft={false} 
                 />
@@ -123,13 +123,27 @@ const WalletSpecs:React.FC = () => {
 const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 
     const router = useRouter()
+    const isMobile = useIsMobile();
     const titleRef = useRef<HTMLDivElement>(null)
+    const carrouselRef = useRef<HTMLDivElement>(null)
     const colors:string[] = ['Chocolate', 'Suela', 'Boom']
     const slides = ["frente","abierto","costado","detalle"].map((foto)=> `/billeteras/${billetera}/${foto}.webp`)
     const [hoveringOn, setHoveringOn] = useState<string>("")
-    const isIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT) 
+    const titleIntersecting = useOnScreen(titleRef, ANIMATE_BREAKPOINT) 
+    const carrouselIntersecting = useOnScreen(carrouselRef, ANIMATE_BREAKPOINT) 
+    const swiperRef = useRef<any>(null)
     const hasIntersected = useRef(false)
-    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
+    const SwiperWRef:React.FC<AugmentedSwiperProps> = Swiper
+
+    if(titleIntersecting && !hasIntersected.current) hasIntersected.current = true;
+
+    useEffect(()=>{
+        if(carrouselIntersecting) {
+            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.start()
+        }else{
+            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.stop()
+        }
+    }, [carrouselIntersecting])
 
     const transitioning = useCallback(()=>{
         return hoveringOn?.toLocaleLowerCase() !== "" && hoveringOn?.toLocaleLowerCase() !== billetera
@@ -162,9 +176,10 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                                 {...getMotionProps("slideVertical", hasIntersected.current, {delay: .1 + (.2 * i), duration: .75})}
                                 onMouseEnter={()=>setHoveringOn(color)}
                                 onMouseLeave={()=>setHoveringOn("")}
-                                onClick={()=>router.push({
-                                    pathname: `/billeteras/${color?.toLocaleLowerCase()}`,
-                                }, undefined, { scroll: false })}
+                                onClick={()=>{
+                                    router.push({ pathname: `/billeteras/${color?.toLocaleLowerCase()}`, }, undefined, { scroll: false });
+                                    isMobile && scrollTo(carrouselRef, -200);
+                                }}
                                 style={{backgroundColor: getHexColor(color)}}
                                 key={color}
                                 >
@@ -186,19 +201,20 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
                     </div>
                 </div>
             </div>
-            <div className={styles.carrousel}>
-            <Swiper 
+            <div className={styles.carrousel} ref={carrouselRef}>
+            <SwiperWRef 
+            ref={swiperRef}
             pagination={true}
             slidesPerView={1.2}
             spaceBetween={15}
-            autoplay={{delay: 3000}}
+            autoplay={{delay: 1500, pauseOnMouseEnter: true}}
             className="CarrouselSection">
                 {slides.map((slide, i)=>
                     <SwiperSlide key={i}>
                         <Image src={slide} height={600} width={522} alt={billetera} />
                     </SwiperSlide>
                 )}
-            </Swiper>
+            </SwiperWRef>
             </div>
         </section>
     )
@@ -207,11 +223,24 @@ const CarrouselSection:React.FC<{billetera:string}> = ({billetera}) => {
 const PropositoCarrousel:React.FC = () => {
 
     const isMobile = useIsMobile();
+    const ref = useRef<HTMLDivElement>(null)
     const slides = ["proposito-1", "proposito-2", "proposito-3", "proposito-4"]
+    const swiperRef = useRef<any>(null)
+    const carrouselIntersecting = useOnScreen(ref, ANIMATE_BREAKPOINT) 
+    const SwiperWRef:React.FC<AugmentedSwiperProps> = Swiper
+
+    useEffect(()=>{
+        if(carrouselIntersecting) {
+            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.start()
+        }else{
+            (swiperRef.current !== null) && swiperRef.current.swiper.autoplay.stop()
+        }
+    }, [carrouselIntersecting])
     
     return (
         <div>
-        <Swiper 
+        <SwiperWRef 
+        ref={swiperRef}
         pagination={true}
         slidesPerView={1.2}
         spaceBetween={15}
@@ -224,7 +253,7 @@ const PropositoCarrousel:React.FC = () => {
                     </div>
                 </SwiperSlide>
             )}
-        </Swiper>
+        </SwiperWRef>
         </div>
     )
 }

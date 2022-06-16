@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { SwiperProps } from "swiper/react";
 
 export type NextPageAugmented<P = {}, IP = P> = NextPage<P, IP> & {
     nav?: React.ReactNode,
@@ -45,4 +46,8 @@ export interface ApiResponse {
 export type ConfigType = {
     preOrderDate: string | null,
     mpCredentials: "juan" | "fran",
+}
+
+export interface AugmentedSwiperProps extends SwiperProps {
+    ref?: any
 }
