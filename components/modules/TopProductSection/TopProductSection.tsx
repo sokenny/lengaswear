@@ -47,10 +47,12 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
     return (
             <section className={styles.TopProductSection}>
                 <div className={styles.TopProductSection__gallery}>
-                    <div>
+                    {product.category === 'billeteras' &&
+                    <div style={{border: "1px solid rgba(0,0,0,0.1)"}}>
                         <ColoresCarrousel billetera={product.name} />
                     </div>
-                    {imgs.slice(1, 3).map((img, i)=>
+                    }
+                    {imgs.slice(product.category === 'billeteras' ? 1 : 0, 3).map((img, i)=>
                         <div key={img}>
                             {i === 0 && <TopMobileInfo product={product} ctaRef={ctaRefMobile} specs={thisSpecs} addToCart={addToCart} /> }
                             <Image src={img} layout="fill" objectFit='cover' key={img} alt={product.name} />

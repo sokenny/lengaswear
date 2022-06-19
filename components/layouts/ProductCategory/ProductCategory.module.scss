@@ -57,6 +57,7 @@
     align-items: flex-end;
     position: relative;
     cursor: pointer;
+    transition: .25s;
 
     @include mobile{
         padding: 20px;
@@ -132,4 +133,8 @@
 
 .ProductItem:hover .ProductItem__overlay{
     opacity: 0;
+}
+
+.ProductItem:hover{
+    filter: brightness(1.15);
 }

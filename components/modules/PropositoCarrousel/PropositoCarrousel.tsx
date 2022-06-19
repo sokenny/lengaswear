@@ -37,9 +37,7 @@ const PropositoCarrousel:React.FC = () => {
         className="CarrouselSection">
             {slides.map((slide, i)=>
                 <SwiperSlide key={i}>
-                    <div style={{position: "relative", width: "600px", height: isMobile ? "420px" : "750px"}}> 
-                        <Image src={`/billeteras/${slide}.webp`} layout="fill" objectFit="contain" alt={slide} />
-                    </div>
+                    <Image src={`/billeteras/${slide}.webp`} height={700} width={522} alt={slide}  />
                 </SwiperSlide>
             )}
         </SwiperWRef>
