@@ -382,7 +382,8 @@ const ProductRow:React.FC<{prdName:string, qty:number}> = ({prdName, qty}) => {
                         <div>
                             <h3>{capitalize(product.name)}</h3>
                             <div className={styles.qty}>
-                                <span>QTY:</span> {qty}
+                                <span>QTY:</span> 
+                                {qty}
                             </div>
                         </div>
                         <div className={styles.addSubstract}>

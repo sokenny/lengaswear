@@ -16,8 +16,9 @@ const VideoPlayer:React.FC<{src: string, show: boolean, setShow: (show:boolean)=
         >
             <motion.div
             initial={{opacity: 0, scale: .8}}
-            animate={{opacity: 1, scale: 1}}
+            animate={{opacity: 1, scale: 1, transition:{duration: .2}}}
             exit={{opacity: 0, scale: .7, transition:{duration: .2}}}
+            transition={{stiffness: 0}}
             onClick={(e)=>e.stopPropagation()}
             >
                 <video 
