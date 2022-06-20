@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import Image from "next/image";
-import { useIsMobile, useOnScreen } from "@/utils/index";
+import { useOnScreen } from "@/utils/index";
 import { AugmentedSwiperProps } from "types";
 import { ANIMATE_BREAKPOINT } from "@/utils/constants";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,7 +11,6 @@ SwiperCore.use([Pagination, Autoplay]);
 
 const PropositoCarrousel:React.FC = () => {
 
-    const isMobile = useIsMobile();
     const carrouselRef = useRef<HTMLDivElement>(null)
     const slides = ["proposito-1", "proposito-2", "proposito-3", "proposito-4"]
     const swiperRef = useRef<any>(null)

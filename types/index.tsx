@@ -57,3 +57,5 @@ export type SpecType = {
    value:string, 
    products:string[]
 }
+
+export type TestimonialsType = {stars: number, quote: string, name: string, location: string}[]

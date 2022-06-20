@@ -16,7 +16,8 @@ import FixedProductCta from '@/components/modules/FixedProductCta/FixedProductCt
 import AssetAndText from '@/components/modules/AssetAndText/AssetAndText';
 import ArrowCta from '@/components/elements/ArrowCta/ArrowCta';
 import TopProductSection from '@/components/modules/TopProductSection/TopProductSection'
-import Recommended from '@/components/modules/Recommended/Recommended'
+import Recommended from '@/components/modules/Recommended/Recommended';
+import VideoPlayer from '@/components/modules/VideoPlayer/VideoPlayer';
 import styles from '../../styles/Reloj.module.scss'
 
 const materials = ['cristal', 'madera', 'aluminio']
@@ -29,6 +30,7 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
     const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj.name}/reloj-de-madera-artesanal-${reloj.name}-${item}.webp`)
     const addThisToCart = () => addToCart(reloj.name)
     const specsRef = useRef<HTMLDivElement>(null)
+    const [showInstitucional, setShowInstitucional] = useState<boolean>(false)
 
     return (
         <>
@@ -36,10 +38,11 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
             <title>{capitalize(reloj.name)} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
+            <VideoPlayer src="/institucional.mp4" show={showInstitucional} setShow={setShowInstitucional} />
             <FixedProductCta product={reloj} show={showFixedCta} addToCart={addThisToCart} />
             <TopProductSection imgs={imgs} product={reloj} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} onViewSpecs={()=>scrollTo(specsRef, -150)} />
             <div className='container'>
-                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<ArrowCta cta={"Leer mas sobre el proceso"} color="gray" />} assetLeft={false} />
+                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<div onClick={()=>setShowInstitucional(true)}><ArrowCta cta={"Ver mas"} color="gray" /></div>} assetLeft={false} />
             </div>
             <div className={styles.Reloj__slightGray}>
                 <div className='container'>

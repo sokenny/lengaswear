@@ -1,15 +1,13 @@
-import { TestimonialsType } from 'pages';
+import { TestimonialsType } from 'types';
 import { useIsMobile } from '@/utils/index';
 import { star } from '@/utils/icons';
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination } from 'swiper';
 import "swiper/css";
 import "swiper/css/pagination"
-SwiperCore.use([Pagination]);
-
 import styles from './Testimonials.module.scss';
 
+SwiperCore.use([Pagination]);
 
 type TestimonialsProps = {
     testimonials: TestimonialsType,

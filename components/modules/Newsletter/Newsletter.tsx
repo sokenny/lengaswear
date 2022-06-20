@@ -45,7 +45,6 @@ const Newsletter:React.FC = () => {
 }
 
 export const NewsletterInput:React.FC<{email:string, setEmail(val:string):void, hint:string, loading:boolean}> = ({email, setEmail, hint, loading}) => {
-    
     return (
         <div className={styles.NewsletterInput}>
             <ArrowInput value={email} type="email" placeholder="Tu mail" onChange={(val:any)=>setEmail(val)} loading={loading} inForm={true} />

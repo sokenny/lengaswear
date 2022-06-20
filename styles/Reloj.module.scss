@@ -65,6 +65,10 @@
 .TitleWDescription{
     width: 350px;
 
+    @include mobile{
+        padding: 0 $pxs2;
+    }
+
     h2{
         font-size: 28px;
         font-family: Silk Serif;

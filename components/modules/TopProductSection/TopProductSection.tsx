@@ -54,7 +54,7 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                     }
                     {imgs.slice(product.category === 'billeteras' ? 1 : 0, 3).map((img, i)=>
                         <div key={img}>
-                            {i === 0 && <TopMobileInfo product={product} ctaRef={ctaRefMobile} specs={thisSpecs} addToCart={addToCart} /> }
+                            {i === 0 && product.category !== 'billeteras' && <TopMobileInfo product={product} ctaRef={ctaRefMobile} specs={thisSpecs} addToCart={addToCart} /> }
                             <Image src={img} layout="fill" objectFit='cover' key={img} alt={product.name} />
                         </div>
                     )}

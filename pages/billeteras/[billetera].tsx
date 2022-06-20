@@ -54,7 +54,7 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
                 assetLeft={false} />
             </div>
             <CarrouselSection billetera={billetera.name} />
-            <div className="container">    
+            <div className={`container ${styles.Billetera__containsCarrousel}`}>    
                 <AssetAndText 
                 title="La simpleza de Lengas en una billetera" 
                 description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
@@ -88,6 +88,8 @@ const WalletSpecs:React.FC = () => {
     const rotatorRef = useRef<HTMLDivElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const isIntersecting = useOnScreen(containerRef, ANIMATE_BREAKPOINT)
+    const hasIntersected = useRef(false)
+    if(isIntersecting && !hasIntersected.current) hasIntersected.current = true;
     const [rotate, setRotate] = useState<boolean>(false)
     const centerSection = useCallback(()=>{
         scrollTo(rotatorRef, !rotate ? 0 : -250)
@@ -97,8 +99,7 @@ const WalletSpecs:React.FC = () => {
 
         <section className={`${styles.WalletSpecs} ${rotate ? styles[`WalletSpecs-rotated`] : ''}`}>
             <motion.div
-            initial={{opacity: 0, y: 50}}
-            animate={isIntersecting && {opacity: 1, y: 0}}
+            {...getMotionProps("slideVertical", hasIntersected.current)}
             transition={{duration: 1}}
             ref={containerRef}
             >

@@ -34,7 +34,7 @@ export const useScrolledBottom = ():boolean => {
         const windowHeight = window.innerHeight;
         const bodyHeight = document.body.offsetHeight;
         const scrolledBottomPosition = bodyHeight - windowHeight;
-        const isScrolledBottom = (scrollPosition - scrolledBottomPosition) === 0;
+        const isScrolledBottom = (scrollPosition - scrolledBottomPosition) > -5;
         setScrolledBottom(isScrolledBottom)
     }, [scrollPosition])
     return scrolledBottom;

@@ -33,7 +33,15 @@ const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show, addToCar
             >
                 <div>
                     <div className={styles.productInfo}>
-                        <h1>{product.name}</h1><div>${formatNumber(product.price)}</div>
+                        <h1>{product.name}</h1>
+                        {product.price === product.sellingPrice ?
+                            <div>${formatNumber(product.sellingPrice)}</div>
+                        :
+                        <>
+                            <div className={styles.price}>${formatNumber(product.price)}</div>
+                            <div className={styles.sellingPrice}>${formatNumber(product.sellingPrice)}</div>
+                        </>
+                        }
                     </div>
                     <div className={styles.ctas}>
                         <AddToCart onClick={addToCart} product={product.name} />

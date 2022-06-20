@@ -51,6 +51,8 @@
         min-width: 600px;
         overflow: hidden;
         position: relative;
+        display: flex;
+        align-items: center;
 
         @include mobile{
             height: 400px;

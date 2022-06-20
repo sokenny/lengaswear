@@ -16,6 +16,16 @@
         }
     }
 
+    .Billetera__containsCarrousel{
+
+        [data-component=AssetAndText]:last-child{
+            >div:first-child{
+                display: block;
+            }
+        }
+
+    }
+
     [data-component=AssetAndText]:last-child{
         >div:first-child{
             width: 50%;
