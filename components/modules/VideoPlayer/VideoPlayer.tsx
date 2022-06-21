@@ -1,6 +1,9 @@
+import { useIsMobile } from '@/utils/index';
 import styles from './VideoPlayer.module.scss';
 
 const VideoPlayer:React.FC<{src: string}> = ({src}) => {
+
+    const isMobile = useIsMobile();
         
     return (
         <>
@@ -15,8 +18,8 @@ const VideoPlayer:React.FC<{src: string}> = ({src}) => {
                 controls={true}
                 autoPlay={true}
                 playsInline={true}
-                width="1141"
-                height="641"
+                width={isMobile ? "" : 1141}
+                height={isMobile ? "" : 641}
                 >
                 </video>
             </div>

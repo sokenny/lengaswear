@@ -99,6 +99,15 @@
                 margin-left: 20px;
             }
         }
+
+        .seguinos a{
+            display: flex;
+
+            .ig{
+                margin-left: 8px;
+                opacity: .8;
+            }
+        }
     }
 }
 
@@ -106,8 +115,9 @@
     background-color: color(w2);
     border-top: 1px solid rgba(0,0,0,0.1);
 
-    .logo{
+    .logo, .ig{
         filter: invert(.85);
+        opacity: 1;
     }
 
     .links{

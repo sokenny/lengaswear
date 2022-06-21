@@ -1,3 +1,5 @@
+import { instagram } from "@/utils/icons";
+import { INSTAGRAM_LINK } from "@/utils/constants";
 import { useAppContext } from "contexts/AppContext";
 import Link from "next/link";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
@@ -73,9 +75,10 @@ const Footer:React.FC<FooterProps> = ({theme}) => {
                     <br />
                     hola@lengaswear.com
                 </div>
-                <div>
-                    Seguinos!
-                    <div>Insta</div>
+                <div className={styles.seguinos}>
+                    <a href={INSTAGRAM_LINK} target="_blank" rel="noreferrer">
+                        Seguinos! <div className={styles.ig}>{instagram(19, "white")}</div>
+                    </a>
                 </div>
             </div>
         </footer>
