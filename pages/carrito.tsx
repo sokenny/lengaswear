@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
-import { capitalize, scrollTo, formatNumber, provincias, fuentes, useFirstRender, getMotionProps, useIsMobile, useOnScreen } from "../utils";
+import { capitalize, scrollTo, formatNumber, provincias, fuentes, useFirstRender, useIsMobile } from "../utils";
 import { registerCheckout } from "api";
 import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
 import { chat } from "@/utils/icons";
@@ -24,9 +24,8 @@ const Carrito: NextPageAugmented = () => {
     const router = useRouter();
     const isMobile = useIsMobile();
     const isFirstRender = useFirstRender();
-    const { store, checkout, setCheckout } = useAppContext();
+    const { store, checkout, setCheckout, cartDetail } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
-    const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito, checkout.step]);
     const cartIsEmpty = checkout.carrito.length < 1 && store.products.length > 0;
     const [ctaInView, setCtaInView] = useState<boolean>(false)
 
@@ -38,47 +37,17 @@ const Carrito: NextPageAugmented = () => {
         if(router.query.step === undefined || isFirstRender) router.replace({ query: { ...router.query, step: 1 } }, undefined, {shallow: true})
     }, [router.query.step, isFirstRender])
 
-    useEffect(()=>{
-        if(!isFirstRender){
-            setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
-        }
-    }, [cartDetail.length])
-
-    function getCartDetail(carrito:string[]){
-        const cartDetail:any = {};
-        carrito.forEach(element => {
-            cartDetail[element] = (cartDetail[element] || 0) + 1;
-        });
-        return cartDetail;
-    }
-
-    const getCartGrossTotal = useCallback(():number => {
-        let total = 0;
-        if(Object.keys(cartDetail).length > 0 && store.products.length > 0){
-            Object.keys(cartDetail).forEach(prdName => {
-                const qty = cartDetail[prdName];
-                const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
-                total += qty * product.price;
-            });
-        }
-        return total;
-    }, [cartDetail.length, store]);
-
     function handleIniciarCompra(){
         router.push({ query: { ...router.query, step: 2 } }, undefined, {shallow: true})
     }
 
     const stepScreens:any = useMemo(()=>{
         return {
-            1: <StepOne cartDetail={cartDetail} cartGrossTotal={getCartGrossTotal()} />,
+            1: <StepOne cartDetail={cartDetail} />,
             2: <StepTwo />,
             3: <StepThree />,
         }
-    }, [cartDetail.length])
-
-    useEffect(()=>{
-        console.log('cart  detail: ', cartDetail)
-    })
+    }, [cartDetail, checkout.carrito])
 
     return (
         <>
@@ -194,7 +163,7 @@ const slideDownProps = {
     transition: {duration: .25, delay: .2}
 }
 
-const StepOne:React.FC<{cartDetail:any, cartGrossTotal:number}> = ({cartDetail, cartGrossTotal}) => {
+const StepOne:React.FC<{cartDetail:any}> = ({cartDetail}) => {
 
     const { checkout } = useAppContext();
     const sortedUniqueCartProducts = useMemo(()=>Object.keys(cartDetail).sort((a, b) => a.localeCompare(b)), [cartDetail]);
@@ -210,7 +179,7 @@ const StepOne:React.FC<{cartDetail:any, cartGrossTotal:number}> = ({cartDetail, 
                     initial={{rotateX: 100, y: -10}} 
                     animate={{rotateX: 0, y: 0}} 
                     key={"aplicado"}
-                    >10% off aplicado! Estas ahorrando <motion.span initial={{scale: 1.1}} animate={{scale: 1}} key={cartGrossTotal}>${formatNumber(checkout.cartGrossTotal - checkout.cartNetTotal)}</motion.span></motion.div>
+                    >10% off aplicado! Estas ahorrando <motion.span initial={{scale: 1.1}} animate={{scale: 1}} key={checkout.cartGrossTotal}>${formatNumber(checkout.cartGrossTotal - checkout.cartNetTotal)}</motion.span></motion.div>
                     :
                     <motion.div initial={{y: -10}} animate={{y: 0}} key={"por aplicar"}>Llevando 2 o más productos tenés un 10% off!</motion.div>
                     }

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { tryLocalStorage, useScrolledBottom, useFirstRender } from "@/utils/index";
 import { getStore } from 'api';
-import { useMemo } from "react";
 import { ProductType, CheckoutType, ConfigType } from 'types';
 
 interface AppContextInterface {
@@ -12,7 +11,8 @@ interface AppContextInterface {
     addToCart: (prdName: string) => boolean;
     removeFromCart: (prdName: string, all?:boolean) => void;
     modal: React.ReactNode | false,
-    setModal: (modal:React.ReactNode) => void
+    setModal: (modal:React.ReactNode) => void,
+    cartDetail: any
 }
 
 const initialCheckoutValue:CheckoutType = {
@@ -44,10 +44,7 @@ export function AppProvider(props:any){
     const [checkout, setCheckout] = useState<CheckoutType>(initialCheckoutValue)
     const [store, setStore] = useState<{products: ProductType[], config: ConfigType | {}}>({products: [], config: {}});
     const [modal, setModal] = useState<React.ReactNode | false>(false)
-
-    useEffect(()=>{
-        console.log('Checkout: ', checkout)
-    })
+    const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito, checkout.step]);
 
     useEffect(()=>{
         const cachedStore = tryLocalStorage.get("store");
@@ -65,6 +62,30 @@ export function AppProvider(props:any){
     useEffect(()=>{
         if(!isFirstRender) tryLocalStorage.set("checkout", {...checkout, step: 1});
     }, [checkout])
+
+    useEffect(()=>{
+        if(!isFirstRender) setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
+    }, [cartDetail, checkout.carrito])
+
+    function getCartDetail(carrito:string[]){
+        const cartDetail:any = {};
+        carrito.forEach(element => {
+            cartDetail[element] = (cartDetail[element] || 0) + 1;
+        });
+        return cartDetail;
+    }
+
+    const getCartGrossTotal = useCallback(():number => {
+        let total = 0;
+        if(Object.keys(cartDetail).length > 0 && store.products.length > 0){
+            Object.keys(cartDetail).forEach(prdName => {
+                const qty = cartDetail[prdName];
+                const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
+                total += qty * product.price;
+            });
+        }
+        return total;
+    }, [cartDetail, checkout.carrito, store]);
 
     function addToCart(prdName:string){
         const productAdded:any = store.products.find((product) => product.name === prdName)
@@ -96,9 +117,10 @@ export function AppProvider(props:any){
             addToCart,
             removeFromCart,
             modal,
-            setModal
+            setModal,
+            cartDetail
         }
-    }, [scrolledBottom, store, checkout, modal]);
+    }, [scrolledBottom, store, checkout, modal, cartDetail]);
     
     return <AppContext.Provider value={value} {...props} />
 }
