@@ -24,7 +24,7 @@ const Carrito: NextPageAugmented = () => {
     const router = useRouter();
     const isMobile = useIsMobile();
     const isFirstRender = useFirstRender();
-    const { store, checkout, setCheckout, cartDetail } = useAppContext();
+    const { store, checkout, setCheckout, cartDetail, scrolledBottom } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
     const cartIsEmpty = checkout.carrito.length < 1 && store.products.length > 0;
     const [ctaInView, setCtaInView] = useState<boolean>(false)
@@ -57,7 +57,7 @@ const Carrito: NextPageAugmented = () => {
         <div className={`${styles.Carrito} ${cartIsEmpty ? styles['Carrito-empty'] : ''}`} ref={carritoRef}>
             <div className="container" style={{paddingTop: 0}}>
                 <main>
-                    {isMobile && <FixedCta show={ctaInView && checkout.carrito.length > 0 && checkout.step == 1} onClick={handleIniciarCompra} />}
+                    {isMobile && <FixedCta show={ctaInView && checkout.carrito.length > 0 && checkout.step == 1 && !scrolledBottom} onClick={handleIniciarCompra} />}
                     <div className={styles.col1}>
                         {cartIsEmpty ? <EmptyCart /> : stepScreens[checkout.step]}
                     </div>
@@ -80,7 +80,6 @@ const Carrito: NextPageAugmented = () => {
                                     )}
                                 </ul>
                             </div>
-                            
                             <div className={styles.envio}>
                                 <h3 className={styles.detalleLabel}>Envío</h3>
                                 <div>GRATIS!</div>

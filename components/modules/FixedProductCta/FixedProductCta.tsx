@@ -13,7 +13,7 @@ type FixedProductCtaProps = {
 
 const FixedProductCta:React.FC<FixedProductCtaProps> = ({product, show, addToCart}) => {
 
-    const {scrolledBottom} = useAppContext();
+    const { scrolledBottom } = useAppContext();
 
     return  (
         <AnimatePresence>

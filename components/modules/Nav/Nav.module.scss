@@ -268,8 +268,10 @@
     font-size: 12px;
     font-weight: 600;
     color: white;
+    position: relative;
 
     >div{
-        z-index: 1;
+        position: absolute;
+        z-index: 2;
     }
 }
