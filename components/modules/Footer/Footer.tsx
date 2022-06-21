@@ -1,4 +1,6 @@
+import { useAppContext } from "contexts/AppContext";
 import Link from "next/link";
+import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import styles from './Footer.module.scss';
 
 type FooterProps = {
@@ -6,6 +8,10 @@ type FooterProps = {
 }
 
 const Footer:React.FC<FooterProps> = ({theme}) => {
+
+    const { setModal } = useAppContext();
+    const showVideo = () => setModal(<VideoPlayer src="/institucional.mp4" />)
+
     return (
         <footer className={`${styles.Footer} ${theme ? styles[`Footer-${theme}`] : ''}`}>
             <div className={styles.logo}>
@@ -16,7 +22,7 @@ const Footer:React.FC<FooterProps> = ({theme}) => {
             <div className={styles.links}>
                 <ul>
                     <li>Sobre nosotros</li>
-                    <li>Nuestra historia</li>
+                    <li onClick={showVideo}>Nuestra historia</li>
                     <a href="https://www.reforestarg.org.ar/" target="_blank" rel="noreferrer">
                         <li>ReforestArg</li>
                     </a>

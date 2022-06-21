@@ -46,6 +46,10 @@ export function AppProvider(props:any){
     const [modal, setModal] = useState<React.ReactNode | false>(false)
 
     useEffect(()=>{
+        console.log('Checkout: ', checkout)
+    })
+
+    useEffect(()=>{
         const cachedStore = tryLocalStorage.get("store");
         if (cachedStore.length > 0) setStore(cachedStore)
         getStore().then(res => {

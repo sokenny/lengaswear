@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import { NextPageAugmented, ProductType } from "types";
 import { AnimatePresence, motion } from 'framer-motion';
-import { capitalize, scrollTo, formatNumber, provincias, fuentes, useFirstRender, getMotionProps } from "../utils";
+import { capitalize, scrollTo, formatNumber, provincias, fuentes, useFirstRender, getMotionProps, useIsMobile, useOnScreen } from "../utils";
 import { registerCheckout } from "api";
 import { NUMBER_BOUNCE_DISTANCE, WHATSAPP_LINK } from "@/utils/constants";
 import { chat } from "@/utils/icons";
@@ -22,11 +22,13 @@ import styles from '../styles/Carrito.module.scss';
 const Carrito: NextPageAugmented = () => {
 
     const router = useRouter();
+    const isMobile = useIsMobile();
     const isFirstRender = useFirstRender();
     const { store, checkout, setCheckout } = useAppContext();
     const carritoRef = useRef<HTMLDivElement>(null)
-    const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito]);
+    const cartDetail = useMemo(()=>getCartDetail(checkout.carrito), [checkout.carrito, checkout.step]);
     const cartIsEmpty = checkout.carrito.length < 1 && store.products.length > 0;
+    const [ctaInView, setCtaInView] = useState<boolean>(false)
 
     useEffect(()=>{
         scrollTo(carritoRef, -50)
@@ -40,7 +42,7 @@ const Carrito: NextPageAugmented = () => {
         if(!isFirstRender){
             setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
         }
-    }, [cartDetail])
+    }, [cartDetail.length])
 
     function getCartDetail(carrito:string[]){
         const cartDetail:any = {};
@@ -60,7 +62,7 @@ const Carrito: NextPageAugmented = () => {
             });
         }
         return total;
-    }, [cartDetail, store]);
+    }, [cartDetail.length, store]);
 
     function handleIniciarCompra(){
         router.push({ query: { ...router.query, step: 2 } }, undefined, {shallow: true})
@@ -72,7 +74,11 @@ const Carrito: NextPageAugmented = () => {
             2: <StepTwo />,
             3: <StepThree />,
         }
-    }, [cartDetail])
+    }, [cartDetail.length])
+
+    useEffect(()=>{
+        console.log('cart  detail: ', cartDetail)
+    })
 
     return (
         <>
@@ -82,6 +88,7 @@ const Carrito: NextPageAugmented = () => {
         <div className={`${styles.Carrito} ${cartIsEmpty ? styles['Carrito-empty'] : ''}`} ref={carritoRef}>
             <div className="container" style={{paddingTop: 0}}>
                 <main>
+                    {isMobile && <FixedCta show={ctaInView && checkout.carrito.length > 0 && checkout.step == 1} onClick={handleIniciarCompra} />}
                     <div className={styles.col1}>
                         {cartIsEmpty ? <EmptyCart /> : stepScreens[checkout.step]}
                     </div>
@@ -142,9 +149,13 @@ const Carrito: NextPageAugmented = () => {
                                 animate={{height:"auto"}}
                                 exit={{height: 0}}
                                 >
-                                    <div className={styles.cta}>
+                                    <motion.div 
+                                    className={styles.cta}
+                                    onViewportEnter={()=>setCtaInView(false)}
+                                    onViewportLeave={()=>setCtaInView(true)}
+                                    >
                                         <Button onClick={handleIniciarCompra}>Iniciar Compra</Button>
-                                    </div>
+                                    </motion.div>
                                 </motion.div>
                                 }
                             </AnimatePresence>
@@ -413,6 +424,48 @@ const CodigoDescuento = () => {
         <div>Tenés un código de descuento?</div>
         <ArrowInput value="" onChange={()=>{}} placeholder="RELOJ20OFF" />
     </div>)
+}
+
+const FixedCta:React.FC<{show:boolean, onClick: ()=>void}> = ({show, onClick}) => {
+    
+    const { checkout } = useAppContext();
+    
+    return (
+        <AnimatePresence>
+        {show &&
+            <motion.div 
+            className={styles.FixedCta}
+            initial={{y: "100%", opacity: 1}}
+            animate={{y: 0, opacity: 1}}
+            exit={{y: "100%", opacity: 1, 
+                transition:{duration: 0.5}
+            }}
+            transition={{
+                stiffness: 0,
+                ease: "easeOut",
+                duration: 1.2
+            }}
+            >
+                <div>
+                    <div className={styles.info}>
+                        <h1>TOTAL:</h1>
+                        {checkout.carrito.length <= 1 ?
+                            <div>${formatNumber(checkout.cartGrossTotal)}</div>
+                        :
+                        <>
+                            <div className={styles.gross}>${formatNumber(checkout.cartGrossTotal)}</div>
+                            <div className={styles.net}>${formatNumber(checkout.cartNetTotal)}</div>
+                        </>
+                        }
+                    </div>
+                    <div className={styles.cta}>
+                        <Button onClick={onClick}>Iniciar compra</Button>
+                    </div>
+                </div>
+            </motion.div>
+        }
+        </AnimatePresence>
+    )
 }
 
 Carrito.nav = <Nav theme="scrolled" whiteFooter={true} />

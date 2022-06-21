@@ -11,9 +11,9 @@ import HeroStripe from "@/components/modules/HeroStripe/HeroStripe";
 import Gallery from "@/components/modules/Gallery/Gallery";
 import Testimonials from "@/components/modules/Testimonials/Testimonials";
 import Newsletter from "@/components/modules/Newsletter/Newsletter";
+import { useAppContext } from "contexts/AppContext";
 import VideoPlayer from "@/components/modules/VideoPlayer/VideoPlayer";
 import styles from '../styles/Home.module.scss';
-
 
 const testimonials:TestimonialsType = [
     {stars: 4, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
@@ -25,16 +25,16 @@ const Home: NextPage = () => {
 
     const isMobile = useIsMobile();
     const productsRef = useRef(null)
-    const [showInstitucional, setShowInstitucional] = useState<boolean>(false)
+    const { setModal } = useAppContext();
+    const showVideo = () => setModal(<VideoPlayer src="/institucional.mp4" />)
 
     return (
         <div className={styles.Home}>
-            <VideoPlayer src="/institucional.mp4" show={showInstitucional} setShow={setShowInstitucional} />
             <HeroBanner title="artesanales" subtitle="Piezas de tiempo" cta="Ver productos" image={`/banners/piezas-artesanales-2${isMobile ? '-mobile' : ''}.webp`} onClick={()=>scrollTo(productsRef, -50)} />
             <div className="container" ref={productsRef}>
                 <FeaturedCategories />
                 <StoreInfo />
-                <AssetAndText title="Hecho acá, por nosotros" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset={<ProcessVideoAsset />} ctaSection={<div onClick={()=>setShowInstitucional(true)}><ArrowCta cta={"Ver mas"} color="gray" /></div>} />
+                <AssetAndText title="Hecho acá, por nosotros" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} />
             </div>
             <HeroStripe 
             title="Plantas un árbol" 

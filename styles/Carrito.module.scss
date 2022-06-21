@@ -349,6 +349,7 @@
                     font-family: Manrope;
                     font-weight: 400;
                     margin-bottom: 8px;
+                    line-height: 1;
                 }
                 
                 .addSubstract{
@@ -371,7 +372,6 @@
                 }
             }
 
-
             .price{
                 display: flex;
                 flex-direction: column;
@@ -383,6 +383,7 @@
                 }
                 >div:last-child{
                     font-size: 18px;
+                    line-height: 1;
                 }
             }
 
@@ -516,5 +517,55 @@
     
     h2:hover span{
         text-decoration: underline;
+    }
+}
+
+.FixedCta{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    background-color: rgba(255,255,255,0.95);
+    width: 100%;
+    z-index: 4;
+    border: 1px solid rgba(0,0,0,0.1);
+
+    .info{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 6px;
+        font-size: 17px;
+        
+        h1{
+            font-size: 17px;
+            font-weight: 400;
+            margin-right: 10px;
+            margin-right: $pxs1;
+            font-family: Silk Serif;
+            transform: translateY(2px);
+        }
+
+        .gross{
+            text-decoration: line-through;
+            margin-right: 6px;
+            color: color(g1);
+        }
+
+        .net{
+            font-weight: 500;
+            color: color(gold);
+        }
+
+    }
+
+    .cta{
+        display: flex;
+        justify-content: center;
+        
+        >button{
+            font-size: 12px;
+            padding: 10px $pxs3;
+        }
     }
 }

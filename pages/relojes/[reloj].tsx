@@ -25,12 +25,12 @@ const recommendedProducts = ["chocolate", "suela", "boom"]
 
 const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
    
-    const { addToCart } = useAppContext()
+    const { addToCart, setModal } = useAppContext()
     const [showFixedCta, setShowFixedCta] = useState<boolean>(false)
     const imgs = [1,2,3,4].map((item)=> `/relojes/${reloj.name}/reloj-de-madera-artesanal-${reloj.name}-${item}.webp`)
     const addThisToCart = () => addToCart(reloj.name)
     const specsRef = useRef<HTMLDivElement>(null)
-    const [showInstitucional, setShowInstitucional] = useState<boolean>(false)
+    const showVideo = () => setModal(<VideoPlayer src="/institucional.mp4" />)
 
     return (
         <>
@@ -38,11 +38,10 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
             <title>{capitalize(reloj.name)} | Relojes | Lengas</title>
         </Head>
         <div className={styles.Reloj}>
-            <VideoPlayer src="/institucional.mp4" show={showInstitucional} setShow={setShowInstitucional} />
             <FixedProductCta product={reloj} show={showFixedCta} addToCart={addThisToCart} />
             <TopProductSection imgs={imgs} product={reloj} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} onViewSpecs={()=>scrollTo(specsRef, -150)} />
             <div className='container'>
-                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<div onClick={()=>setShowInstitucional(true)}><ArrowCta cta={"Ver mas"} color="gray" /></div>} assetLeft={false} />
+                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} assetLeft={false} />
             </div>
             <div className={styles.Reloj__slightGray}>
                 <div className='container'>

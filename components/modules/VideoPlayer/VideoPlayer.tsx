@@ -1,24 +1,13 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import styles from './VideoPlayer.module.scss';
 
-const VideoPlayer:React.FC<{src: string, show: boolean, setShow: (show:boolean)=>void}> = ({src, show, setShow}) => {
+const VideoPlayer:React.FC<{src: string}> = ({src}) => {
         
     return (
         <>
-        <AnimatePresence>
-        {show &&
-        <motion.div 
+        <div 
         className={styles.VideoPlayer}
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        exit={{opacity: 0, transition:{delay: .15}}}
-        onClick={()=>setShow(false)}
         >
-            <motion.div
-            initial={{opacity: 0, scale: .8}}
-            animate={{opacity: 1, scale: 1, transition:{duration: .2}}}
-            exit={{opacity: 0, scale: .7, transition:{duration: .2}}}
-            transition={{stiffness: 0}}
+            <div
             onClick={(e)=>e.stopPropagation()}
             >
                 <video 
@@ -26,12 +15,12 @@ const VideoPlayer:React.FC<{src: string, show: boolean, setShow: (show:boolean)=
                 controls={true}
                 autoPlay={true}
                 playsInline={true}
+                width="1141"
+                height="641"
                 >
                 </video>
-            </motion.div>
-        </motion.div>
-        }
-        </AnimatePresence>
+            </div>
+        </div>
         </>
     )
 }
