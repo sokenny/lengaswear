@@ -95,14 +95,20 @@
                 top: 0;
                 transform: translateX(100%);
                 display: flex;
-                justify-content: center;
+                padding-left: 100px;
                 align-items: center;
+
+                div{
+                    font-size: $fs1;
+                    font-weight: 300;
+                }
 
                 @include mobile{
                     color: white;
                     transform: translate(0);
                     align-items: flex-end;
                     padding-bottom: $pxs3;
+                    padding-left: 0;
                     h2{
                         font-size: $fs2;
                     }

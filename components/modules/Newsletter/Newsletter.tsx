@@ -32,7 +32,7 @@ const Newsletter:React.FC = () => {
                 <AssetAndText 
                 assetLeft={false} 
                 title="Suscribite a nuestro Newsletter!" 
-                description="Mantenete informado acerca de nuevos lanzamientos y novedades sobre el impacto que nuestro proyecto está generando. (agregaria algo sobre dtos para incentivar)" 
+                description="Mantenete informado acerca de nuevos lanzamientos, descuentos y novedades sobre el impacto que nuestro proyecto está generando." 
                 asset="/reloj-patagonia-madera-argentina.webp" 
                 ctaSection={<NewsletterInput 
                 email={email} 

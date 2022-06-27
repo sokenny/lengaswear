@@ -79,6 +79,11 @@
     }
 
     .social{
+
+        a:hover{
+            color: color(gold);
+        }
+
         >div:first-child{
             font-weight: 600;
             margin-bottom: $pxs2;

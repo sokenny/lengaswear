@@ -41,15 +41,15 @@ const Reloj:NextPageAugmented<{reloj: ProductType}> = ({reloj}) => {
             <FixedProductCta product={reloj} show={showFixedCta} addToCart={addThisToCart} />
             <TopProductSection imgs={imgs} product={reloj} onCtaIntersect={(isIntersecting)=>setShowFixedCta(!isIntersecting)} addToCart={addThisToCart} onViewSpecs={()=>scrollTo(specsRef, -150)} />
             <div className='container'>
-                <AssetAndText title="Tratamiento natural y artesanal" description="Le damos muchisima importancia al tratamiento que adoptamos para el cuidado de la madera. Totalmente libre de quimicos nocivos. Aplicamos un acabado de aceites vegetales y lino." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} assetLeft={false} />
+                <AssetAndText title="Hecho acá, por nosotros" description="Desde la obtención de materia prima al cepillado, torneado y ensamble de la pieza. Un ciclo productivo que reúne toda una cadena de productores nacionales. Conocé más del proceso." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} assetLeft={false} />
             </div>
             <div className={styles.Reloj__slightGray}>
                 <div className='container'>
                     <SuiGeneris reloj={reloj.name} />
                     <div className={styles.Reloj__overlapSections}>
                         <AssetAndText title="La función en la simplicidad" description="Un reloj que mantiene el cuadrante, bisel y caja unidos en una pieza pura e íntegra. Logrando un frente que enamora." asset={<WatchPartAsset img={`/relojes/${reloj.name}/cuadrante.webp`} />}  assetLeft={false} />
-                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia a la pieza. Le otorga frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} />
-                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingravido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj.name}/ligero.webp`} baseScale={2} />}  assetLeft={false} />
+                        <AssetAndText title="Aluminio aeroespacial" description="Una fina base de aluminio anodizado le da el toque de clase y elegancia. A su vez otorgando frescura a la muñeca y mayor durabilidad." asset={<WatchPartAsset img={`/relojes/tapa-aluminio.webp`} />} />
+                        <AssetAndText title="Pieza ultra ligera" description="Ligero e ingrávido, con un peso de tan solo 22grs. Lo suficiente para que no moleste en la muñeca, pero lo necesario para sentirlo parte de tu cuerpo." asset={<WatchPartAsset img={`/relojes/${reloj.name}/ligero.webp`} baseScale={2} />}  assetLeft={false} />
                         <AssetAndText title="Hacemos más con menos" description="Queríamos avanzar hacia la simplicidad total, un matrimonio eficiente de forma y función. Replanteando completamente el concepto de hebillas." asset={<WatchPartAsset img={`/relojes/${reloj.name}/correas.webp`} />} />
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import { useRef, useState, useMemo, ReactNode, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps, specs } from '@/utils/index'
+import { useScrollPosition, useOnScreen, useIsMobile, formatNumber, getMotionProps, specs, productPageCopy } from '@/utils/index'
 import { returns, shipping, safePurchase, safe } from "@/utils/icons";
 import { ProductType, SpecType } from 'types';
 import Image from 'next/image';
@@ -64,8 +64,8 @@ const TopProductSection:React.FC<TopProductSectionProps> = ({imgs, product, onCt
                         </div>
                         <div>
                             <TitleWDescription 
-                            title="El tuyo es único" 
-                            description="El veteado natural de cada pieza garantiza unicidad en el reloj. Cada reloj esta construido de manera artesanal y cada madera que utilizamos tiene sus propias vetas y propiedades por lo cual cada pieza de tiempo Lengas es unica." 
+                            title={productPageCopy[product.category][product.name][0].title}
+                            description={productPageCopy[product.category][product.name][0].description}
                             />
                         </div>
                     </div>
@@ -137,10 +137,10 @@ const TopMobileInfo:React.FC<{product: ProductType, ctaRef:any, specs: SpecType[
 const PurchaseInfo:React.FC = () => {
     
     const items:{icon:ReactNode, text: string}[] = useMemo(()=>[
-        {icon: returns(20, "gray"), text: 'hasta 7 dias despues de tu compra.'},
-        {icon: shipping(20, "gray"), text: 'a todo el país.'},
-        {icon: safePurchase(20, "gray"), text: 'mediante Mercadopago, Paypal o GooglePay.'},
-        {icon: safe(20, "gray"), text: 'por 12 meses en caso de cualquier falla.'},
+        {icon: returns(20, "gray"), text: 'Devoluciones hasta 7 días tras realizada tu compra.'},
+        {icon: shipping(20, "gray"), text: 'Envíos gratis a todo el país.'},
+        {icon: safePurchase(20, "gray"), text: 'Compra segura mediante crédito, débito o efectivo.'},
+        {icon: safe(20, "gray"), text: 'Garantía por 12 meses en caso de cualquier falla.'},
     ], [])
 
     return (

@@ -14,7 +14,7 @@ export type ProductType = {
     image?: string, 
     description?:string
     stock?:number
-    category?:string
+    category:string
 }
 
 export type CheckoutType = {

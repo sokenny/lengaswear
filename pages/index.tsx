@@ -36,7 +36,7 @@ const Home: NextPage = () => {
                 <FeaturedCategories />
                 <BilleteraPromote />
                 <StoreInfo />
-                <AssetAndText title="Hecho acá, por nosotros" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} />
+                <AssetAndText title="Hecho acá, por nosotros" description="Desde la obtención de materia prima al cepillado, torneado y ensamble de la pieza. Un ciclo productivo que reúne toda una cadena de productores nacionales. Conocé más del proceso." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} />
             </div>
             <HeroStripe 
             title="Plantas un árbol" 

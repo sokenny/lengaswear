@@ -184,3 +184,31 @@ export const specs:SpecType[] = [
     {label: "Peso", value: "22g", products: ["quemanta", "tesh", "jauke", "mahai"]},
     {label: "Material", value: "Cuero genuino", products: ["chocolate", "suela", "boom"]},
 ]
+
+export const productPageCopy:any = {
+    billeteras: {
+        chocolate: [
+            {title: "La simpleza de Lengas en una billetera", description: "Llevamos las tolerancias al mínimo, logrando el punto óptimo entre confort y funcionalidad. Altamente práctica y a prueba de chupín."}
+        ],
+        suela: [
+            {title: "La simpleza de Lengas en una billetera", description: "Llevamos las tolerancias al mínimo, logrando el punto óptimo entre confort y funcionalidad. Altamente práctica y a prueba de chupín."}
+        ],
+        boom: [
+            {title: "La simpleza de Lengas en una billetera", description: "Llevamos las tolerancias al mínimo, logrando el punto óptimo entre confort y funcionalidad. Altamente práctica y a prueba de chupín."}
+        ],
+    },
+    relojes: {
+        quemanta: [
+            {title: "Etimología", description: "'Quemanta': Espiritu del arbol vivo dentro de la mitologia Ona. Quemanta viste de cortezas, ramas y hojas de las lengas. El mismo arbol sobre el cual esta forjado este reloj."}
+        ],
+        tesh: [
+            {title: "Etimología", description: "'Tesh': Derivado del término 'Raiz' en la lengua Selk'nam. Un objeto arraigado a la tierra y los valores que la preservan. Manifestando su significado en el marcado trazo de sus vetas."}
+        ],
+        jauke: [
+            {title: "Etimología", description: "'Jauke': Proveniente de la palabra 'Fuego' en la lengua Selk'nam. Le atribuimos a nuestra pieza en cancharana este título, por la resonancia de su significado con las alucinantes vetas rojizas que expone."}
+        ],
+        mahai: [
+            {title: "Etimología", description: "'Mahai': Connotación de 'Espíritu' en la lengua Selk'nam. Denominado a partir de los increíbles tonos de magenta que luce. Una tonalidad mística que terminó por establecer su nombre."}
+        ],
+    }
+}

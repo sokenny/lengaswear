@@ -29,7 +29,7 @@ const HeroBanner:React.FC<HeroBannerProps> = ({title, subtitle, cta, image, onCl
                 <div>
                     <div className={styles.overlay} />
                     <div className={styles.base}>
-                        <Image src={image} alt="craftman working" layout="fill" objectFit="cover" />
+                        <Image src={image} alt="craftman working" layout="fill" objectFit="cover" placeholder="blur" blurDataURL={`blur-${image}`} />
                     </div>
                 </div>
             </div>

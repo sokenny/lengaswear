@@ -76,9 +76,14 @@
         font-weight: 400;
     }
     >div{
-        font-size: 14px;
         font-family: Manrope;
         color: color(g1);
+        font-size: $fs1;
+        font-weight: 300;
+
+        @include mobile{
+            font-size: 14px;
+        }
     }
 }
 

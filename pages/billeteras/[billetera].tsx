@@ -56,13 +56,13 @@ const Billetera:NextPageAugmented<{billetera: ProductType}> = ({billetera}) => {
             <CarrouselSection billetera={billetera.name} />
             <div className={`container ${styles.Billetera__containsCarrousel}`}>    
                 <AssetAndText 
-                title="La simpleza de Lengas en una billetera" 
-                description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
+                title="Colores de la Patagonia" 
+                description="Manteniéndonos dentro de la impronta Lengas lanzamos estos 3 colores que vienen a conectar con la Patagonia." 
                 asset={`/billeteras/simpleza.webp`} 
                 />
                 <AssetAndText 
                 title="Creado con propósito" 
-                description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. Sino que viene a dar un toque único, estética y funcionalmente, dentro de tu hogar." 
+                description="Creemos en un consumo responsable, esto nos lleva a crear con propósito. Este taquito de madera lenga no solo es el responsable de hacer llegar tu billetera en perfectas condiciones. También viene a dar un toque único dentro de tu hogar." 
                 asset={<PropositoCarrousel />} 
                 assetLeft={false} 
                 />
