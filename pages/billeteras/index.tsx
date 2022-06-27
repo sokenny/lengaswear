@@ -14,7 +14,7 @@ const Billeteras:NextPageAugmented<{billeteras: ProductType[]}> = ({billeteras})
             </Head>
             <ProductCategory 
             title="Nuestras Billeteras" 
-            description="Podría ir, o no, un texto más aca diciendo tipo todos de maderas de distintas partes de la Patagonia, pero hechos en nuestro taller" 
+            description="Ser feliz es simple, ser simple no tanto. Nuestras billeteras vienen a proponer un andar más sencillo." 
             products={billeteras}
             />
         </>

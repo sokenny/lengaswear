@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import MainLayout from '@/components/layouts/MainLayout';
 import smoothscroll from 'smoothscroll-polyfill';
 import TagManager from 'react-gtm-module';
@@ -12,10 +13,21 @@ interface CustomAppProps extends Omit<AppProps, "Component"> {
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
 
+  const router = useRouter();
+
   useEffect(()=> {
     smoothscroll.polyfill();
     TagManager.initialize({gtmId: 'GTM-TMXKLTQ'})
   }, [])
+
+  useEffect(()=>{
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: router.pathname,
+      },
+    });
+  }, [router.pathname])
 
   return (
     <AppProvider>

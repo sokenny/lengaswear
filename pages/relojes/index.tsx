@@ -14,7 +14,7 @@ const Relojes:NextPageAugmented<{relojes: ProductType[]}> = ({relojes}) => {
             </Head>
             <ProductCategory 
             title="Nuestros Relojes" 
-            description="Podría ir, o no, un texto más aca diciendo tipo todos de maderas de distintas partes de la Patagonia, pero hechos en nuestro taller" 
+            description="Encapsulando el tiempo en un objeto simbólico que busca representar las más lindas partes de nuestra Patagonia." 
             products={relojes}
             />
         </>
