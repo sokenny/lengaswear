@@ -17,9 +17,13 @@ import BilleteraPromote from "@/components/modules/BilleteraPromote/BilleteraPro
 import styles from '../styles/Home.module.scss';
 
 const testimonials:TestimonialsType = [
-    {stars: 4, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Martina Andrade", location: "Buenos Aires, Argentina"},
-    {stars: 5, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Jose Gutierrez", location: "Buenos Aires, Argentina"},
-    {stars: 3, quote: `"El reloj es divino. Me parece super fino y delicado. Y, lo que más me hace apreciarlo es la sencillez."`, name: "Lucas Martinez", location: "Buenos Aires, Argentina"},
+    {stars: 5, quote: `"Son lo más, quedé como una reina con el regalo. Quería que fuera originalm autóctono, elegante, colmaron mis expectativas y a quién se lo regalé. Simplemente gracias por un momento especial."`, name: "@patriciadiserio", location: ""},
+    {stars: 5, quote: `"Lo compre y la verdad SUPERA LAS FOTOS.. muy lindos, puntual la entrega, una presentación espectacular...felicitaciones."`, name: "@edgardo.d.cardoso", location: ""},
+    {stars: 5, quote: `"Los super felicito! Amo mi reloj (se los compré hace 2 años) y todo lo que él representa. Me encantó verlos en Triple impacto TV!! Son un ejemplo!"`, name: "@brujamoderna_zpilar9", location: ""},
+    {stars: 5, quote: `"Es tremendo el nivel de calidad que tienen, mucho talento lo de ustedes!"`, name: "@pablo_g_ciz", location: ""},
+    {stars: 5, quote: `"Me encanta la onda, me siento orgulloso de tener un lengas..."`, name: "@luciogut1970", location: ""},
+    {stars: 5, quote: `"Hermoso reloj. En vivo es un sueño!"`, name: "@inviernodel88", location: ""},
+    {stars: 5, quote: `"Excelso producto, metódica dedicación. Encantado con el reloj. Mis felicitaciones!"`, name: "@mariano_delsel83", location: ""},
 ]
 
 const Home: NextPage = () => {

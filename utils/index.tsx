@@ -123,7 +123,7 @@ export const formatNumber = (x:number):string => {
     return ""
 }
 
-export const provincias = ["Buenos Aires", "Buenos Aires Capital", "Catamarca", "Chaco", "Chubut", "Cordoba", "Corrientes", "Entre Rios", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquen", "Rio Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucuman"]
+export const provincias = ["Buenos Aires", "CABA", "Catamarca", "Chaco", "Chubut", "Cordoba", "Corrientes", "Entre Rios", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquen", "Rio Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucuman"]
 export const fuentes = [
     {label: "Me lo mostró un amigx", value: "Referido"},
     {label: "Instagram", value: "Instagram Ads"},
@@ -199,13 +199,13 @@ export const productPageCopy:any = {
     },
     relojes: {
         quemanta: [
-            {title: "Etimología", description: "'Quemanta': Espiritu del arbol vivo dentro de la mitologia Ona. Quemanta viste de cortezas, ramas y hojas de las lengas. El mismo arbol sobre el cual esta forjado este reloj."}
+            {title: "Etimología", description: "'Quemanta': Espíritu del arbol vivo dentro de la mitología Ona. Quemanta viste de cortezas, ramas y hojas de las lengas. El mismo árbol sobre el cual esta forjado este reloj."}
         ],
         tesh: [
-            {title: "Etimología", description: "'Tesh': Derivado del término 'Raiz' en la lengua Selk'nam. Un objeto arraigado a la tierra y los valores que la preservan. Manifestando su significado en el marcado trazo de sus vetas."}
+            {title: "Etimología", description: "'Tesh': Derivado del término 'Raíz' en la lengua Selk'nam. Un objeto arraigado a la tierra y los valores que la preservan. Manifestando su significado en el marcado trazo de sus vetas."}
         ],
         jauke: [
-            {title: "Etimología", description: "'Jauke': Proveniente de la palabra 'Fuego' en la lengua Selk'nam. Le atribuimos a nuestra pieza en cancharana este título, por la resonancia de su significado con las alucinantes vetas rojizas que expone."}
+            {title: "Etimología", description: "'Jauke': Proveniente de la palabra 'Fuego' en la lengua Selk'nam. Le atribuimos a nuestra pieza en cancharana este título por la resonancia de su significado con las alucinantes vetas rojizas que expone."}
         ],
         mahai: [
             {title: "Etimología", description: "'Mahai': Connotación de 'Espíritu' en la lengua Selk'nam. Denominado a partir de los increíbles tonos de magenta que luce. Una tonalidad mística que terminó por establecer su nombre."}
