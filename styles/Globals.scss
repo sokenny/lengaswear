@@ -70,6 +70,10 @@ input{
 
   >section{
       margin-bottom: $pxs3;
+      
+      @include mobile{
+        margin-bottom: $pxs2;
+      }
   }
   >section:last-child{
       margin-bottom: 0;

@@ -35,6 +35,10 @@
             height: 400px;
         }
     }
+
+    .posterContainer:last-of-type > div{
+        margin-bottom: 0;
+    }
 }
 
 .CategoryPoster{

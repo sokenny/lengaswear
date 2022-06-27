@@ -12,12 +12,12 @@ const FeaturedCategories:React.FC = () => {
     return (
         <section className={styles.FeaturedCategories}>
             <Link href="/relojes" passHref>
-            <div>
+            <div className={styles.posterContainer}>
                 <CategoryPoster title="Inspirados en la Patagonia" image="/categoria-relojes.webp" cta="VER RELOJES" href="/relojes" />
             </div>
             </Link>
-            <Link href="/billeteras">
-            <div>
+            <Link href="/billeteras" passHref>
+            <div className={styles.posterContainer}>
                 <CategoryPoster title="Descubrí lo nuevo" image="/categoria-billeteras.webp" cta="VER BILLETERAS" href="/billeteras" />
             </div>
             </Link>

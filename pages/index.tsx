@@ -2,6 +2,8 @@ import { NextPage } from "next"
 import { useState, useRef, useEffect } from "react";
 import { useOnScreen, scrollTo, useIsMobile } from "@/utils/index";
 import { TestimonialsType } from "types";
+import { useAppContext } from "contexts/AppContext";
+import { motion } from "framer-motion";
 import ArrowCta from "@/components/elements/ArrowCta/ArrowCta";
 import HeroBanner from "@/components/modules/HeroBanner/HeroBanner";
 import FeaturedCategories from "@/components/modules/FeaturedCategories/FeaturedCategories";
@@ -11,7 +13,6 @@ import HeroStripe from "@/components/modules/HeroStripe/HeroStripe";
 import Gallery from "@/components/modules/Gallery/Gallery";
 import Testimonials from "@/components/modules/Testimonials/Testimonials";
 import Newsletter from "@/components/modules/Newsletter/Newsletter";
-import { useAppContext } from "contexts/AppContext";
 import VideoPlayer from "@/components/modules/VideoPlayer/VideoPlayer";
 import styles from '../styles/Home.module.scss';
 
@@ -33,6 +34,7 @@ const Home: NextPage = () => {
             <HeroBanner title="artesanales" subtitle="Piezas de tiempo" cta="Ver productos" image={`/banners/piezas-artesanales-2${isMobile ? '-mobile' : ''}.webp`} onClick={()=>scrollTo(productsRef, -50)} />
             <div className="container" ref={productsRef}>
                 <FeaturedCategories />
+                <BilleteraPromote />
                 <StoreInfo />
                 <AssetAndText title="Hecho acá, por nosotros" description="Aca escribir un texto, tipo intro a algun tema mas desarrollado en la parte de nosotros/historia, sobre el proceso de producción contando valores de lengas. Talvez de la historia de lengas o los relojes." asset={<ProcessVideoAsset />} ctaSection={<div onClick={showVideo}><ArrowCta cta={"Ver mas"} color="gray" /></div>} />
             </div>
@@ -65,6 +67,37 @@ export const ProcessVideoAsset:React.FC = () => {
         <div className={styles.ProcessVideoAsset} data-component="ProcessVideoAsset" ref={videoRef}>
             <video src={src} poster="/relojes/process-placeholder.webp" autoPlay muted loop playsInline></video>
         </div>
+    )
+}
+
+const BilleteraPromote:React.FC = () => {
+
+    const { setModal } = useAppContext();
+    const showVideo = () => setModal(<VideoPlayer src="/billeteras/promo-billetera.mp4" />)
+    const [previewSrc, setPreviewSrc] = useState("");
+
+    return (
+        <motion.section 
+        className={styles.BilleteraPromote} onClick={showVideo}
+        onViewportEnter={()=>setPreviewSrc("/billeteras/preview-promo-billetera.mp4")}
+        >
+            <div className={styles.content}>
+                <h3>Mucho menos que una billetera</h3>
+                <div className={styles.cta}>VER VIDEO</div>
+            </div>            
+            <div className={styles.overlay}></div>
+            <div className={styles.videoPreview}>
+                <video 
+                poster="/billeteras/poster-promo-billetera.webp"
+                autoPlay={true}
+                playsInline={true}
+                controls={false}
+                muted={true}
+                loop={true}
+                src={previewSrc}
+                />
+            </div>
+        </motion.section>
     )
 }
 
