@@ -28,7 +28,7 @@ const Footer:React.FC<FooterProps> = ({theme}) => {
                     <a href="https://www.reforestarg.org.ar/" target="_blank" rel="noreferrer">
                         <li>ReforestArg</li>
                     </a>
-                    <li>Procesos</li>
+                    <li onClick={showVideo}>Procesos</li>
                 </ul>
                 <ul>
                     <li>Productos</li>

@@ -151,7 +151,7 @@ const DesktopNav:React.FC<{carrito: string[], hasScrolled: boolean}> = ({carrito
 const StatusBar:React.FC<{show?:boolean}> = ({show=true}) => {
 
     const router = useRouter();
-    const statusBarRoutes = ['/', '/relojes/[reloj]', '/billeteras/[billetera]'];
+    const statusBarRoutes = ['/', '/relojes/[reloj]', '/billeteras/[billetera]', '/carrito'];
     const { store } = useAppContext();
     const preOrderDate = store?.config?.preOrderDate ? constructDate(new Date(store.config.preOrderDate)) : ""
 

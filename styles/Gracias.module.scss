@@ -1,0 +1,56 @@
+@import '../styles/variables';
+
+.Gracias{
+    padding: var(--sp1);
+    padding-top: var(--pt1);
+    min-height: 100vh;
+    text-align: center;
+
+    header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: $pxs2;
+
+        h1{
+            font-weight: 400;
+            font-size: 100px;
+            font-family: Silk Serif;
+            margin-bottom: 0;
+
+            @include mobile{
+                font-size: $fs6;
+            }
+        }
+        h2{
+            font-weight: 300;
+            font-size: $fs3;
+
+            @include mobile{
+                font-size: $fs2;
+            }
+
+            span{
+                font-weight: 400;
+                color: color(gold);
+            }
+        }
+    }
+
+    main{
+        font-size: $fs3;
+
+        @include mobile{
+            font-size: $fs2;
+        }
+
+        p:first-child{
+            margin-bottom: $pxs1;
+        }
+
+        p a{
+            color: color(gold);
+            text-decoration: underline;
+        }
+    }
+}
