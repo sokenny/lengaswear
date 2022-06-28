@@ -167,7 +167,7 @@ const StatusBar:React.FC<{show?:boolean}> = ({show=true}) => {
             animate={{opacity: 1, y: 0, transition: {delay: .25, stiffness: 0}}}
             exit={{opacity: 0, y: -5, transition: {duration: .25}}}
             >
-                <div className={styles.message}>Pre venta abierta - DESPACHANDO TODOS SUS PEDIDOS EL <span>{preOrderDate}</span></div>
+                <div className={styles.message}>Pre venta abierta - DESPACHANDO TODOS SUS PEDIDOS A PARTIR DEL <span>{preOrderDate}</span></div>
             </motion.div>
         </div>
         }
