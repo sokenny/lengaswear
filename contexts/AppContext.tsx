@@ -64,7 +64,7 @@ export function AppProvider(props:any){
     }, [checkout])
 
     useEffect(()=>{
-        if(!isFirstRender) setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: Math.floor(getCartGrossTotal() * 0.9)});
+        if(!isFirstRender) setCheckout({...checkout, cartGrossTotal: getCartGrossTotal(), cartNetTotal: checkout.carrito.length > 1 ? Math.floor(getCartGrossTotal() * 0.9) : getCartGrossTotal()});
     }, [cartDetail, checkout.carrito])
 
     function getCartDetail(carrito:string[]){
