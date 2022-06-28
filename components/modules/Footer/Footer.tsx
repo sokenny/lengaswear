@@ -73,7 +73,7 @@ const Footer:React.FC<FooterProps> = ({theme}) => {
                 <div>
                     Envianos un mail a 
                     <br />
-                    <a href="mailto:hola@lengaswear.com">hola@lengaswear.com</a>
+                    <a href="mailto:lengaswear@gmail.com">lengaswear@gmail.com</a>
                 </div>
                 <div className={styles.seguinos}>
                     <a href={INSTAGRAM_LINK} target="_blank" rel="noreferrer">

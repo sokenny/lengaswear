@@ -28,7 +28,7 @@ const Terminos: NextPageAugmented = () => {
             {...getMotionProps("slideVertical", true, {delay: .4})}
             >
                 <p>Estamos corriendo 🏃 al taller para armar tu pedido!</p>
-                <p>Cualquier duda podes escribirnos por <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">Whatsapp</a> o enviarnos un mail a <a href="mailto:hola@lengaswear.com" target="_blank" rel="noreferrer">hola@lengaswear.com</a></p>
+                <p>Cualquier duda podes escribirnos por <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">Whatsapp</a> o enviarnos un mail a <a href="mailto:lengaswear@gmail.com" target="_blank" rel="noreferrer">lengaswear@gmail.com</a></p>
             </motion.main>
         </div>
         </>

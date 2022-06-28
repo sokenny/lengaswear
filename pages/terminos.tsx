@@ -46,10 +46,10 @@ const Terminos: NextPageAugmented = () => {
                         El desgaste normal no está cubierto por la garantía. Se requiere comprobante de compra para todos los reclamos de garantía. Se requiere confirmación del pedido on-line.
                         <br />
                         <br />
-                        Lengas no aceptará un reclamo de garantía si un reloj tiene evidencia de exceso de desgaste o uso indebido. Si tenés preguntas sobre reemplazos de garantía, ponete en contacto con nuestro Equipo de Soporte enviándonos un mail a hola@lengaswear.com y especificando tu nombre, número de teléfono y una descripción detallada con imágenes de los problemas en cuestión.
+                        Lengas no aceptará un reclamo de garantía si un reloj tiene evidencia de exceso de desgaste o uso indebido. Si tenés preguntas sobre reemplazos de garantía, ponete en contacto con nuestro Equipo de Soporte enviándonos un mail a lengaswear@gmail.com y especificando tu nombre, número de teléfono y una descripción detallada con imágenes de los problemas en cuestión.
                         <br />
                         <br />
-                        De no recibir el pedido tal cual fue hecho, o con algún daño o falla, comunicate a la brevedad a hola@lengaswear.com. Vamos a necesitar que nos lo envíes (costos de envío corren por cuenta de Lengas) para poder enviarte uno nuevo.
+                        De no recibir el pedido tal cual fue hecho, o con algún daño o falla, comunicate a la brevedad a lengaswear@gmail.com. Vamos a necesitar que nos lo envíes (costos de envío corren por cuenta de Lengas) para poder enviarte uno nuevo.
                         <br />
                         <br />
                         La garantía al comprador es válida para compras por nuestra web o por medio de un distribuidor autorizado. Tu reloj Lengas está cubierto bajo los siguientes términos y condiciones por un período de 1 año a partir de la fecha de compra original. Tené en cuenta que se requiere comprobante de compra para todos los reclamos. En caso de vicios o defectos que afecten el correcto funcionamiento del producto vinculado a la pila del reloj, nos haremos cargo de su reparación para que el producto vuelva a reunir las condiciones óptimas de uso.
@@ -82,7 +82,7 @@ const Terminos: NextPageAugmented = () => {
                     <p>Al recibir el producto te estaremos reintegrando el importe total de tu compra. El dinero devuelto se te estará acreditando en tu cuenta de Mercado Pago Argentina.</p>
                  </div>
                  <div>
-                     <p>Cualquier duda podes escribirnos por <span><a href={WHATSAPP_LINK} style={{textDecoration: "underline"}}>Whatsapp</a></span> o enviarnos un mail a hola@lengaswear.com</p>
+                     <p>Cualquier duda podes escribirnos por <span><a href={WHATSAPP_LINK} style={{textDecoration: "underline"}}>Whatsapp</a></span> o enviarnos un mail a lengaswear@gmail.com</p>
                  </div>
 
             </main>
