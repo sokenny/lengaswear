@@ -11,8 +11,6 @@ type ProductCategoryProps = {
     products: ProductType[]
 }
 
-console.log('ENV: ', process.env)
-
 const ProductCategory:React.FC<ProductCategoryProps> = ({title, description, products}) => {
     return (
         <div className={styles.ProductCategory}>

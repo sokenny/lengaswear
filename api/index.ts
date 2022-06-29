@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CheckoutType } from '../types/index'
 
-const ENDPOINT:string = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api`;
+const ENDPOINT:string = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`;
 
 export const registerCheckout = (data:CheckoutType) => axios.post(`${ENDPOINT}/register-checkout`, data);
 export const subscribeToNewsletter = (data:{email:string, name?:string}) => axios.post(`${ENDPOINT}/newsletter`, data);
