@@ -34,6 +34,7 @@ export type CheckoutType = {
     calle: string,
     altura: string,
     dpto: string,
+    codigoPostal: string,
     mpCredentials: "juan" | "fran" | null
 }
 

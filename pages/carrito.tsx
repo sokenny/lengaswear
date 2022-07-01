@@ -281,12 +281,13 @@ const StepThree:React.FC = () => {
                     </div>
                     <LabelAndInput label="Localidad" type="text" value={checkout.localidad} onChange={(localidad)=>setCheckout({...checkout, localidad})} placeholder="Nuñez" />
                 </div>
-                <div className={`${styles.inputRow} ${styles['inputRow-full']}`}>
+                <div className={styles.inputRow}>
                     <LabelAndInput label="Calle" type="text" value={checkout.calle} onChange={(calle)=>setCheckout({...checkout, calle})} placeholder="Av. del Libertador" />
+                    <LabelAndInput label="Altura" type="text" value={checkout?.altura } onChange={(altura)=>setCheckout({...checkout, altura})} placeholder="1010" />
                 </div>
                 <div className={styles.inputRow}>
-                    <LabelAndInput label="Altura" type="text" value={checkout?.altura } onChange={(altura)=>setCheckout({...checkout, altura})} placeholder="1010" />
                     <LabelAndInput label="Dpto (opcional)" type="text" value={checkout?.dpto} onChange={(dpto)=>setCheckout({...checkout, dpto})} placeholder="1C" />
+                    <LabelAndInput label="Código postal" type="text" value={checkout.codigoPostal} onChange={(codigoPostal)=>setCheckout({...checkout, codigoPostal})} placeholder="1429" />
                 </div>
             </motion.section>
             <div className={styles.cta}>

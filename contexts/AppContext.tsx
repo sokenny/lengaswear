@@ -32,6 +32,7 @@ const initialCheckoutValue:CheckoutType = {
     calle: "",
     altura: "",
     dpto: "",
+    codigoPostal: "",
     mpCredentials: null
 } 
 
