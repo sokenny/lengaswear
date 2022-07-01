@@ -245,7 +245,7 @@ const StepTwo:React.FC = () => {
 const StepThree:React.FC = () => {
 
     const { checkout, setCheckout } = useAppContext();
-    const stepIsValid = checkout.pais !== "" && checkout.provincia !== "" && checkout.localidad !== "" && checkout.calle !== "" && checkout.numero !== "";
+    const stepIsValid = checkout.pais !== "" && checkout.provincia !== "" && checkout.localidad !== "" && checkout.calle !== "" && checkout.altura !== "";
     const [loading, setLoading] = useState<boolean>(false);
     
     async function handleIrAPagar () {
@@ -285,7 +285,7 @@ const StepThree:React.FC = () => {
                     <LabelAndInput label="Calle" type="text" value={checkout.calle} onChange={(calle)=>setCheckout({...checkout, calle})} placeholder="Av. del Libertador" />
                 </div>
                 <div className={styles.inputRow}>
-                    <LabelAndInput label="Número" type="text" value={checkout?.numero } onChange={(numero)=>setCheckout({...checkout, numero})} placeholder="1010" />
+                    <LabelAndInput label="Altura" type="text" value={checkout?.altura } onChange={(altura)=>setCheckout({...checkout, altura})} placeholder="1010" />
                     <LabelAndInput label="Dpto (opcional)" type="text" value={checkout?.dpto} onChange={(dpto)=>setCheckout({...checkout, dpto})} placeholder="1C" />
                 </div>
             </motion.section>

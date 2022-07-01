@@ -30,7 +30,7 @@ const initialCheckoutValue:CheckoutType = {
     provincia: "",
     localidad: "",
     calle: "",
-    numero: "",
+    altura: "",
     dpto: "",
     mpCredentials: null
 } 

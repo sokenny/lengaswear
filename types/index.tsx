@@ -32,7 +32,7 @@ export type CheckoutType = {
     provincia: string,
     localidad: string,
     calle: string,
-    numero: string,
+    altura: string,
     dpto: string,
     mpCredentials: "juan" | "fran" | null
 }
