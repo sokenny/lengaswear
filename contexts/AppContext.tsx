@@ -82,7 +82,7 @@ export function AppProvider(props:any){
             Object.keys(cartDetail).forEach(prdName => {
                 const qty = cartDetail[prdName];
                 const product:ProductType = store.products.filter((prd:any)=>prd.name.toLowerCase() === prdName.toLowerCase())[0];
-                total += qty * product.price;
+                total += qty * product.sellingPrice;
             });
         }
         return total;
