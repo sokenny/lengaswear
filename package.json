@@ -14,7 +14,7 @@
     "@types/smoothscroll-polyfill": "^0.3.1",
     "axios": "^0.27.2",
     "framer-motion": "^6.3.3",
-    "mongoose": "^6.3.4",
+    "mongoose": "^8.0.3",
     "next": "12.1.6",
     "next-sitemap": "^3.1.7",
     "react": "18.0.0",
@@ -25,11 +25,14 @@
     "swiper": "^8.1.4"
   },
   "devDependencies": {
-    "@types/node": "17.0.25",
+    "@types/node": "^20",
     "@types/react": "18.0.5",
     "@types/react-dom": "18.0.1",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",
-    "typescript": "4.6.3"
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
