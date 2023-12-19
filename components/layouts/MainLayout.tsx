@@ -31,6 +31,7 @@ const MainLayout: React.FC<Props>  = ({nav, footer, children}) => {
         <div>
             <Head>
                 <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+                <script async src="http://localhost:8080/api/clientjs" data-stellar-api-key="your_api_public_key"></script>
             </Head>
             {nav ? nav : <Nav />}
             <AppModal />
